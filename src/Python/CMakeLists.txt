@@ -19,7 +19,7 @@ source_group("Source Files\\Visualization" FILES ${PY_VISUALIZATION_SOURCE_FILES
 # find the python site-packages location
 execute_process(COMMAND ${PYTHON_EXECUTABLE} -m site --user-site OUTPUT_VARIABLE PYTHON_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-project(py3d)
+project(open3d)
 pybind11_add_module(${PROJECT_NAME}
 	${PY_ALL_HEADER_FILES} ${PY_ALL_SOURCE_FILES}
 	${PY_CORE_SOURCE_FILES} ${PY_CORE_HEADER_FILES}
