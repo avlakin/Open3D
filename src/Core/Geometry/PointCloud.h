@@ -116,24 +116,25 @@ std::shared_ptr<PointCloud> CreatePointCloudFromRGBDImage(
         const RGBDImage &image, const PinholeCameraIntrinsic &intrinsic,
         const Eigen::Matrix4d &extrinsic = Eigen::Matrix4d::Identity());
 
-/// Function to select points from input pointcloud into output pointcloud
+/// Function to select points from \param input pointcloud into
+/// \return output pointcloud
 /// Points with indices in \param indices are selected.
 std::shared_ptr<PointCloud> SelectDownSample(const PointCloud &input,
         const std::vector<size_t> &indices);
 
-/// Function to downsample input pointcloud into output pointcloud with a voxel
+/// Function to downsample \param input pointcloud into output pointcloud with a voxel
 /// \param voxel_size defines the resolution of the voxel grid, smaller value
 /// leads to denser output point cloud.
 /// Normals and colors are averaged if they exist.
 std::shared_ptr<PointCloud> VoxelDownSample(const PointCloud &input,
         double voxel_size);
 
-/// Function to downsample input pointcloud into output pointcloud uniformly
+/// Function to downsample \param input pointcloud into output pointcloud uniformly
 /// \param every_k_points indicates the sample rate.
 std::shared_ptr<PointCloud> UniformDownSample(const PointCloud &input,
         size_t every_k_points);
 
-/// Function to crop input pointcloud into output pointcloud
+/// Function to crop \param input pointcloud into output pointcloud
 /// All points with coordinates less than \param min_bound or larger than
 /// \param max_bound are clipped.
 std::shared_ptr<PointCloud> CropPointCloud(const PointCloud &input,
@@ -143,39 +144,44 @@ std::shared_ptr<PointCloud> CropPointCloud(const PointCloud &input,
 /// \param cloud is the input point cloud. It also stores the output normals.
 /// Normals are oriented with respect to the input point cloud if normals exist
 /// in the input.
+/// \param search_param The KDTree search parameters
 bool EstimateNormals(PointCloud &cloud,
         const KDTreeSearchParam &search_param = KDTreeSearchParamKNN());
 
 /// Function to orient the normals of a point cloud
 /// \param cloud is the input point cloud. It must have normals.
-/// Normals are oriented with respect to \param orientation_reference.
+/// Normals are oriented with respect to \param orientation_reference
 bool OrientNormalsToAlignWithDirection(PointCloud &cloud,
         const Eigen::Vector3d &orientation_reference =
         Eigen::Vector3d(0.0, 0.0, 1.0));
 
 /// Function to orient the normals of a point cloud
 /// \param cloud is the input point cloud. It also stores the output normals.
-/// Normals are oriented with towards \param camera_location.
+/// Normals are oriented with towards \param camera_location
 bool OrientNormalsTowardsCameraLocation(PointCloud &cloud,
         const Eigen::Vector3d &camera_location = Eigen::Vector3d::Zero());
 
 /// Function to compute the ponit to point distances between point clouds
-/// \param distances is the output distance. It has the same size as the number
-/// of points in \param source.
+/// \param source is the first point cloud.
+/// \param target is the second point cloud.
+/// \return the output distance. It has the same size as the number
+/// of points in \param source
 std::vector<double> ComputePointCloudToPointCloudDistance(
         const PointCloud &source, const PointCloud &target);
 
-/// Function to compute the mean and covariance matrix of a point cloud
+/// Function to compute the mean and covariance matrix
+/// of an \param input point cloud
 std::tuple<Eigen::Vector3d, Eigen::Matrix3d> ComputePointCloudMeanAndCovariance(
         const PointCloud &input);
 
-/// Function to compute the Mahalanobis distance for points in a point cloud
+/// Function to compute the Mahalanobis distance for points
+/// in an \param input point cloud
 /// https://en.wikipedia.org/wiki/Mahalanobis_distance
 std::vector<double> ComputePointCloudMahalanobisDistance(
         const PointCloud &input);
 
 /// Function to compute the distance from a point to its nearest neighbor in the
-/// point cloud
+/// \param input point cloud
 std::vector<double> ComputePointCloudNearestNeighborDistance(
         const PointCloud &input);
 

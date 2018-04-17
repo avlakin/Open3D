@@ -128,7 +128,8 @@ public:
 std::shared_ptr<TriangleMesh> CreateMeshFromFile(const std::string &filename);
 
 /// Factory function to create a sphere mesh (TriangleMeshFactory.cpp)
-/// The sphere will be centered at (0, 0, 0). Its axis is aligned with z-axis.
+/// The sphere with \param radius will be centered at (0, 0, 0).
+/// Its axis is aligned with z-axis.
 /// The longitudes will be split into \param resolution segments.
 /// The latitudes will be split into \param resolution * 2 segments.
 std::shared_ptr<TriangleMesh> CreateMeshSphere(double radius = 1.0,
@@ -136,30 +137,36 @@ std::shared_ptr<TriangleMesh> CreateMeshSphere(double radius = 1.0,
 
 /// Factory function to create a cylinder mesh (TriangleMeshFactory.cpp)
 /// The axis of the cylinder will be from (0, 0, -height/2) to (0, 0, height/2).
-/// The circle will be split into \param resolution segments.
-/// The height will be split into \param split segments.
+/// The circle with \param radius will be split into \param resolution segments.
+/// The \param height will be split into \param split segments.
 std::shared_ptr<TriangleMesh> CreateMeshCylinder(double radius = 1.0,
         double height = 2.0, int resolution = 20, int split = 4);
 
 /// Factory function to create a cone mesh (TriangleMeshFactory.cpp)
-/// The axis of the cone will be from (0, 0, 0) to (0, 0, height).
-/// The circle will be split into \param resolution segments.
+/// The axis of the cone will be from (0, 0, 0) to (0, 0, \param height).
+/// The circle with \param radius will be split into \param resolution segments.
 /// The height will be split into \param split segments.
 std::shared_ptr<TriangleMesh> CreateMeshCone(double radius = 1.0,
         double height = 2.0, int resolution = 20, int split = 1);
 
 /// Factory function to create an arrow mesh (TriangleMeshFactory.cpp)
-/// The axis of the cone will be along the z-axis. The cylinder is from
-/// (0, 0, 0) to (0, 0, cylinder_height), and the cone is from
-/// (0, 0, cylinder_height) to (0, 0, cylinder_height + cone_height).
+/// The axis of the cone with \param cone_radius will be along the z-axis.
+/// The cylinder with \param cylinder_radius is from
+/// (0, 0, 0) to (0, 0, cylinder_height), and
+/// the cone is from (0, 0, cylinder_height)
+/// to (0, 0, cylinder_height + cone_height).
+/// The cone will be split into \param resolution segments.
+/// The \param cylinder_height will be split into \param cylinder_split segments.
+/// The \param cone_height will be split into \param cone_split segments.
 std::shared_ptr<TriangleMesh> CreateMeshArrow(double cylinder_radius = 1.0,
         double cone_radius = 1.5, double cylinder_height = 5.0,
         double cone_height = 4.0, int resolution = 20, int cylinder_split = 4,
         int cone_split = 1);
 
 /// Factory function to create a coordinate frame mesh (TriangleMeshFactory.cpp)
-/// The coordinate frame will be centered at \param origin. The x, y, z axis
-/// will be rendered as red, green, and blue arrows respectively.
+/// The coordinate frame will be centered at \param origin
+/// The x, y, z axis will be rendered as red, green, and blue arrows respectively.
+/// \param size is the length of the axes.
 std::shared_ptr<TriangleMesh> CreateMeshCoordinateFrame(double size = 1.0,
         const Eigen::Vector3d &origin = Eigen::Vector3d(0.0, 0.0, 0.0));
 
