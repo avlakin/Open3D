@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,34 +33,34 @@
 
 int main(int argc, char **argv)
 {
-	using namespace three;
-	using namespace flann;
+    using namespace three;
+    using namespace flann;
 
-	SetVerbosityLevel(VerbosityLevel::VerboseAlways);
+    SetVerbosityLevel(VerbosityLevel::VerboseAlways);
 
-	if (argc < 2) {
-		PrintInfo("Usage:\n");
-		PrintInfo("    > TestFlann [filename] [ascii|binary|compressed]\n");
-		PrintInfo("    The program will :\n");
-		PrintInfo("    1. load the pointcloud in [filename].\n");
-		PrintInfo("    2. visualize the point cloud.\n");
-		PrintInfo("    3. if a save method is specified, write the point cloud into data.pcd.\n");
-		return 0;
-	}
+    if (argc < 2) {
+        PrintInfo("Usage:\n");
+        PrintInfo("    > TestFlann [filename] [ascii|binary|compressed]\n");
+        PrintInfo("    The program will :\n");
+        PrintInfo("    1. load the pointcloud in [filename].\n");
+        PrintInfo("    2. visualize the point cloud.\n");
+        PrintInfo("    3. if a save method is specified, write the point cloud into data.pcd.\n");
+        return 0;
+    }
 
-	auto cloud_ptr = CreatePointCloudFromFile(argv[1]);
-	DrawGeometries({cloud_ptr}, "TestPCDFileFormat", 1920, 1080);
+    auto cloud_ptr = CreatePointCloudFromFile(argv[1]);
+    DrawGeometries({cloud_ptr}, "TestPCDFileFormat", 1920, 1080);
 
-	if (argc >= 3) {
-		std::string method(argv[2]);
-		if (method == "ascii") {
-			WritePointCloud("data.pcd", *cloud_ptr, true);
-		} else if (method == "binary") {
-			WritePointCloud("data.pcd", *cloud_ptr, false, false);
-		} else if (method == "compressed") {
-			WritePointCloud("data.pcd", *cloud_ptr, false, true);
-		}
-	}
+    if (argc >= 3) {
+        std::string method(argv[2]);
+        if (method == "ascii") {
+            WritePointCloud("data.pcd", *cloud_ptr, true);
+        } else if (method == "binary") {
+            WritePointCloud("data.pcd", *cloud_ptr, false, false);
+        } else if (method == "compressed") {
+            WritePointCloud("data.pcd", *cloud_ptr, false, true);
+        }
+    }
 
-	return 0;
+    return 0;
 }

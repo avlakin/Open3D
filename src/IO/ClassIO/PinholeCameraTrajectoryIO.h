@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -35,18 +38,18 @@ namespace three {
 /// The function calls read functions based on the extension name of filename.
 /// \return If the read function is successful.
 bool ReadPinholeCameraTrajectory(const std::string &filename,
-		PinholeCameraTrajectory &trajectory);
+        PinholeCameraTrajectory &trajectory);
 
 /// The general entrance for writing a PinholeCameraTrajectory to a file
 /// The function calls write functions based on the extension name of filename.
 /// \return If the write function is successful.
 bool WritePinholeCameraTrajectory(const std::string &filename,
-		const PinholeCameraTrajectory &trajectory);
+        const PinholeCameraTrajectory &trajectory);
 
 bool ReadPinholeCameraTrajectoryFromLOG(const std::string &filename,
-		PinholeCameraTrajectory &trajectory);
+        PinholeCameraTrajectory &trajectory);
 
 bool WritePinholeCameraTrajectoryToLOG(const std::string &filename,
-		const PinholeCameraTrajectory &trajectory);
+        const PinholeCameraTrajectory &trajectory);
 
-}	// namespace three
+}   // namespace three

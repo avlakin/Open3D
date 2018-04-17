@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,26 +36,26 @@ namespace three {
 class OdometryOption
 {
 public:
-	OdometryOption(
-			double minimum_correspondence_ratio = 0.1,
-			const std::vector<int> &iteration_number_per_pyramid_level =
-			{ 20, 10, 5 } /* {smaller image size to original image size} */,
-			double max_depth_diff = 0.03,
-			double min_depth = 0.0,
-			double max_depth = 4.0) :
-			minimum_correspondence_ratio_(minimum_correspondence_ratio),
-			iteration_number_per_pyramid_level_
-			(iteration_number_per_pyramid_level),
-			max_depth_diff_(max_depth_diff), min_depth_(min_depth),
-			max_depth_(max_depth) {}
-	~OdometryOption() {}
+    OdometryOption(
+            double minimum_correspondence_ratio = 0.1,
+            const std::vector<int> &iteration_number_per_pyramid_level =
+            { 20, 10, 5 } /* {smaller image size to original image size} */,
+            double max_depth_diff = 0.03,
+            double min_depth = 0.0,
+            double max_depth = 4.0) :
+            minimum_correspondence_ratio_(minimum_correspondence_ratio),
+            iteration_number_per_pyramid_level_
+            (iteration_number_per_pyramid_level),
+            max_depth_diff_(max_depth_diff), min_depth_(min_depth),
+            max_depth_(max_depth) {}
+    ~OdometryOption() {}
 
 public:
-	double minimum_correspondence_ratio_;
-	std::vector<int> iteration_number_per_pyramid_level_;
-	double max_depth_diff_;
-	double min_depth_;
-	double max_depth_;
+    double minimum_correspondence_ratio_;
+    std::vector<int> iteration_number_per_pyramid_level_;
+    double max_depth_diff_;
+    double min_depth_;
+    double max_depth_;
 };
 
 }

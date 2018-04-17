@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -54,26 +57,26 @@ namespace detail {
 
 template <typename T, typename Class_>
 void bind_default_constructor(Class_ &cl) {
-	cl.def(py::init([]() {
-		return new T();
-	}), "Default constructor");
+    cl.def(py::init([]() {
+        return new T();
+    }), "Default constructor");
 }
 
 template <typename T, typename Class_>
 void bind_copy_functions(Class_ &cl) {
-	cl.def(py::init([](const T &cp) {
-		return new T(cp);
-	}), "Copy constructor");
-	cl.def("__copy__", [](T &v) {
-		return T(v);
-	});
-	cl.def("__deepcopy__", [](T &v, py::dict &memo) {
-		return T(v);
-	});
+    cl.def(py::init([](const T &cp) {
+        return new T(cp);
+    }), "Copy constructor");
+    cl.def("__copy__", [](T &v) {
+        return T(v);
+    });
+    cl.def("__deepcopy__", [](T &v, py::dict &memo) {
+        return T(v);
+    });
 }
 
-}	// namespace pybind11::detail
-}	// namespace pybind11
+}   // namespace pybind11::detail
+}   // namespace pybind11
 
 void pybind_eigen(py::module &m);
 

@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -42,46 +45,46 @@ bool ReadPointCloud(const std::string &filename, PointCloud &pointcloud);
 /// two parameters will be used. Otherwise they will be ignored.
 /// \return return true if the write function is successful, false otherwise.
 bool WritePointCloud(const std::string &filename, const PointCloud &pointcloud,
-		bool write_ascii = false, bool compressed = false);
+        bool write_ascii = false, bool compressed = false);
 
 bool ReadPointCloudFromXYZ(const std::string &filename, PointCloud &pointcloud);
 
 bool WritePointCloudToXYZ(const std::string &filename,
-		const PointCloud &pointcloud, bool write_ascii = false,
-		bool compressed = false);
+        const PointCloud &pointcloud, bool write_ascii = false,
+        bool compressed = false);
 
 bool ReadPointCloudFromXYZN(const std::string &filename,
-		PointCloud &pointcloud);
+        PointCloud &pointcloud);
 
 bool WritePointCloudToXYZN(const std::string &filename,
-		const PointCloud &pointcloud, bool write_ascii = false,
-		bool compressed = false);
+        const PointCloud &pointcloud, bool write_ascii = false,
+        bool compressed = false);
 
 bool ReadPointCloudFromXYZRGB(const std::string &filename,
-		PointCloud &pointcloud);
+        PointCloud &pointcloud);
 
 bool WritePointCloudToXYZRGB(const std::string &filename,
-		const PointCloud &pointcloud, bool write_ascii = false,
-		bool compressed = false);
+        const PointCloud &pointcloud, bool write_ascii = false,
+        bool compressed = false);
 
 bool ReadPointCloudFromPLY(
-		const std::string &filename,
-		PointCloud &pointcloud);
+        const std::string &filename,
+        PointCloud &pointcloud);
 
 bool WritePointCloudToPLY(const std::string &filename,
-		const PointCloud &pointcloud, bool write_ascii = false,
-		bool compressed = false);
+        const PointCloud &pointcloud, bool write_ascii = false,
+        bool compressed = false);
 
 bool ReadPointCloudFromPCD(const std::string &filename, PointCloud &pointcloud);
 
 bool WritePointCloudToPCD(const std::string &filename,
-		const PointCloud &pointcloud, bool write_ascii = false,
-		bool compressed = false);
+        const PointCloud &pointcloud, bool write_ascii = false,
+        bool compressed = false);
 
 bool ReadPointCloudFromPTS(const std::string &filename, PointCloud &pointcloud);
 
 bool WritePointCloudToPTS(const std::string &filename,
-		const PointCloud &pointcloud, bool write_ascii = false,
-		bool compressed = false);
+        const PointCloud &pointcloud, bool write_ascii = false,
+        bool compressed = false);
 
-}	// namespace three
+}   // namespace three

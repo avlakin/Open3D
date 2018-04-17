@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -45,22 +48,22 @@ typedef std::vector<Eigen::Vector4i> CorrespondenceSetPixelWise;
 class RGBDOdometryJacobian
 {
 public:
-	RGBDOdometryJacobian() {}
-	virtual ~RGBDOdometryJacobian() {}
+    RGBDOdometryJacobian() {}
+    virtual ~RGBDOdometryJacobian() {}
 
 public:
-	/// Function to compute i-th row of J and r
-	/// the vector form of J_r is basically 6x1 matrix, but it can be
-	/// easily extendable to 6xn matrix.
-	/// See RGBDOdometryJacobianFromHybridTerm for this case.
-	virtual void ComputeJacobianAndResidual(
-			int row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
-			const RGBDImage &source, const RGBDImage &target,
-			const Image &source_xyz,
-			const RGBDImage &target_dx, const RGBDImage &target_dy,
-			const Eigen::Matrix3d &intrinsic,
-			const Eigen::Matrix4d &extrinsic,
-			const CorrespondenceSetPixelWise &corresps) const = 0;
+    /// Function to compute i-th row of J and r
+    /// the vector form of J_r is basically 6x1 matrix, but it can be
+    /// easily extendable to 6xn matrix.
+    /// See RGBDOdometryJacobianFromHybridTerm for this case.
+    virtual void ComputeJacobianAndResidual(
+            int row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
+            const RGBDImage &source, const RGBDImage &target,
+            const Image &source_xyz,
+            const RGBDImage &target_dx, const RGBDImage &target_dy,
+            const Eigen::Matrix3d &intrinsic,
+            const Eigen::Matrix4d &extrinsic,
+            const CorrespondenceSetPixelWise &corresps) const = 0;
 };
 
 /// Function to Compute Jacobian using color term
@@ -72,18 +75,18 @@ public:
 class RGBDOdometryJacobianFromColorTerm : public RGBDOdometryJacobian
 {
 public:
-	RGBDOdometryJacobianFromColorTerm() {}
-	~RGBDOdometryJacobianFromColorTerm() override {}
+    RGBDOdometryJacobianFromColorTerm() {}
+    ~RGBDOdometryJacobianFromColorTerm() override {}
 
 public:
-	void ComputeJacobianAndResidual(
-			int row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
-			const RGBDImage &source, const RGBDImage &target,
-			const Image &source_xyz,
-			const RGBDImage &target_dx, const RGBDImage &target_dy,
-			const Eigen::Matrix3d &intrinsic,
-			const Eigen::Matrix4d &extrinsic,
-			const CorrespondenceSetPixelWise &corresps) const override;
+    void ComputeJacobianAndResidual(
+            int row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
+            const RGBDImage &source, const RGBDImage &target,
+            const Image &source_xyz,
+            const RGBDImage &target_dx, const RGBDImage &target_dy,
+            const Eigen::Matrix3d &intrinsic,
+            const Eigen::Matrix4d &extrinsic,
+            const CorrespondenceSetPixelWise &corresps) const override;
 };
 
 /// Function to Compute Jacobian using hybrid term
@@ -94,18 +97,18 @@ public:
 class RGBDOdometryJacobianFromHybridTerm : public RGBDOdometryJacobian
 {
 public:
-	RGBDOdometryJacobianFromHybridTerm() {}
-	~RGBDOdometryJacobianFromHybridTerm() override {}
+    RGBDOdometryJacobianFromHybridTerm() {}
+    ~RGBDOdometryJacobianFromHybridTerm() override {}
 
 public:
-	void ComputeJacobianAndResidual(
-			int row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
-			const RGBDImage &source, const RGBDImage &target,
-			const Image &source_xyz,
-			const RGBDImage &target_dx, const RGBDImage &target_dy,
-			const Eigen::Matrix3d &intrinsic,
-			const Eigen::Matrix4d &extrinsic,
-			const CorrespondenceSetPixelWise &corresps) const override;
+    void ComputeJacobianAndResidual(
+            int row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
+            const RGBDImage &source, const RGBDImage &target,
+            const Image &source_xyz,
+            const RGBDImage &target_dx, const RGBDImage &target_dy,
+            const Eigen::Matrix3d &intrinsic,
+            const Eigen::Matrix4d &extrinsic,
+            const CorrespondenceSetPixelWise &corresps) const override;
 };
 
-}	// namespace three
+}   // namespace three

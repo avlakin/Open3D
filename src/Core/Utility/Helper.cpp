@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,17 +32,17 @@
 namespace three {
 
 void SplitString(std::vector<std::string> &tokens, const std::string &str,
-		const std::string &delimiters/* = " "*/, bool trim_empty_str/* = true*/)
+        const std::string &delimiters/* = " "*/, bool trim_empty_str/* = true*/)
 {
-	std::string::size_type pos = 0, new_pos = 0, last_pos = 0;
-	while (pos != std::string::npos) {
-		pos = str.find_first_of(delimiters, last_pos);
-		new_pos = (pos == std::string::npos ? str.length() : pos);
-		if (new_pos != last_pos || !trim_empty_str) {
-			tokens.push_back(str.substr(last_pos, new_pos - last_pos));
-		}
-		last_pos = new_pos + 1;
-	}
+    std::string::size_type pos = 0, new_pos = 0, last_pos = 0;
+    while (pos != std::string::npos) {
+        pos = str.find_first_of(delimiters, last_pos);
+        new_pos = (pos == std::string::npos ? str.length() : pos);
+        if (new_pos != last_pos || !trim_empty_str) {
+            tokens.push_back(str.substr(last_pos, new_pos - last_pos));
+        }
+        last_pos = new_pos + 1;
+    }
 }
 
-}	// namespace three
+}   // namespace three

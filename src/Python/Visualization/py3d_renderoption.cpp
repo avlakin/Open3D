@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,21 +36,21 @@ using namespace three;
 
 void pybind_renderoption(py::module &m)
 {
-	py::class_<RenderOption, std::shared_ptr<RenderOption>>
-			renderoption(m, "RenderOption");
-	py::detail::bind_default_constructor<RenderOption>(renderoption);
-	renderoption
-		.def("__repr__", [](const RenderOption &vc) {
-			return std::string("RenderOption");
-		})
-		.def("load_from_json", [](RenderOption &ro, const std::string &filename) {
-			ReadIJsonConvertible(filename, ro);
-		}, "Function to load RenderOption from a JSON file", "filename"_a)
-		.def("save_to_json", [](RenderOption &ro, const std::string &filename) {
-			WriteIJsonConvertible(filename, ro);
-		}, "Function to save RenderOption to a JSON file", "filename"_a)
-		.def_readwrite("background_color", &RenderOption::background_color_)
-		.def_readwrite("light_on", &RenderOption::light_on_);
+    py::class_<RenderOption, std::shared_ptr<RenderOption>>
+            renderoption(m, "RenderOption");
+    py::detail::bind_default_constructor<RenderOption>(renderoption);
+    renderoption
+        .def("__repr__", [](const RenderOption &vc) {
+            return std::string("RenderOption");
+        })
+        .def("load_from_json", [](RenderOption &ro, const std::string &filename) {
+            ReadIJsonConvertible(filename, ro);
+        }, "Function to load RenderOption from a JSON file", "filename"_a)
+        .def("save_to_json", [](RenderOption &ro, const std::string &filename) {
+            WriteIJsonConvertible(filename, ro);
+        }, "Function to save RenderOption to a JSON file", "filename"_a)
+        .def_readwrite("background_color", &RenderOption::background_color_)
+        .def_readwrite("light_on", &RenderOption::light_on_);
 }
 
 void pybind_renderoption_method(py::module &m)

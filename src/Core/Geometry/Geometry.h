@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,30 +34,30 @@ namespace three {
 class Geometry
 {
 public:
-	enum class GeometryType {
-		Unspecified = 0,
-		PointCloud = 1,
-		LineSet = 2,
-		TriangleMesh = 3,
-		Image = 4,
-	};
+    enum class GeometryType {
+        Unspecified = 0,
+        PointCloud = 1,
+        LineSet = 2,
+        TriangleMesh = 3,
+        Image = 4,
+    };
 
 public:
-	virtual ~Geometry() {}
+    virtual ~Geometry() {}
 
 protected:
-	Geometry(GeometryType type, int dimension) : geometry_type_(type),
-			dimension_(dimension) {}
+    Geometry(GeometryType type, int dimension) : geometry_type_(type),
+            dimension_(dimension) {}
 
 public:
-	virtual void Clear() = 0;
-	virtual bool IsEmpty() const = 0;
-	GeometryType GetGeometryType() const { return geometry_type_; }
-	int Dimension() const { return dimension_; }
+    virtual void Clear() = 0;
+    virtual bool IsEmpty() const = 0;
+    GeometryType GetGeometryType() const { return geometry_type_; }
+    int Dimension() const { return dimension_; }
 
 private:
-	GeometryType geometry_type_ = GeometryType::Unspecified;
-	int dimension_ = 3;
+    GeometryType geometry_type_ = GeometryType::Unspecified;
+    int dimension_ = 3;
 };
 
-}	// namespace three
+}   // namespace three

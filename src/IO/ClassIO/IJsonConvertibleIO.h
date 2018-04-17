@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -35,24 +38,24 @@ namespace three {
 /// The function calls read functions based on the extension name of filename.
 /// \return return true if the read function is successful, false otherwise.
 bool ReadIJsonConvertible(const std::string &filename,
-		IJsonConvertible &object);
+        IJsonConvertible &object);
 
 /// The general entrance for writing an IJsonConvertible to a file
 /// The function calls write functions based on the extension name of filename.
 /// \return return true if the write function is successful, false otherwise.
 bool WriteIJsonConvertible(const std::string &filename,
-		const IJsonConvertible &object);
+        const IJsonConvertible &object);
 
 bool ReadIJsonConvertibleFromJSON(const std::string &filename,
-		IJsonConvertible &object);
+        IJsonConvertible &object);
 
 bool WriteIJsonConvertibleToJSON(const std::string &filename,
-		const IJsonConvertible &object);
+        const IJsonConvertible &object);
 
 bool ReadIJsonConvertibleFromJSONString(const std::string &json_string,
-		IJsonConvertible &object);
+        IJsonConvertible &object);
 
 bool WriteIJsonConvertibleToJSONString(std::string &json_string,
-		const IJsonConvertible &object);
+        const IJsonConvertible &object);
 
-}	// namespace three
+}   // namespace three

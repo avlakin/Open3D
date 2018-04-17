@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -35,54 +38,54 @@ namespace three{
 namespace {
 
 static const std::unordered_map<std::string,
-		std::function<bool(const std::string &, IJsonConvertible &)>>
-		file_extension_to_ijsonconvertible_read_function
-		{{"json", ReadIJsonConvertibleFromJSON},
-		};
+        std::function<bool(const std::string &, IJsonConvertible &)>>
+        file_extension_to_ijsonconvertible_read_function
+        {{"json", ReadIJsonConvertibleFromJSON},
+        };
 
 static const std::unordered_map<std::string,
-		std::function<bool(const std::string &, const IJsonConvertible &)>>
-		file_extension_to_ijsonconvertible_write_function
-		{{"json", WriteIJsonConvertibleToJSON},
-		};
+        std::function<bool(const std::string &, const IJsonConvertible &)>>
+        file_extension_to_ijsonconvertible_write_function
+        {{"json", WriteIJsonConvertibleToJSON},
+        };
 
-}	// unnamed namespace
+}   // unnamed namespace
 
 bool ReadIJsonConvertible(const std::string &filename,
-		IJsonConvertible &object)
+        IJsonConvertible &object)
 {
-	std::string filename_ext =
-			filesystem::GetFileExtensionInLowerCase(filename);
-	if (filename_ext.empty()) {
-		PrintWarning("Read IJsonConvertible failed: unknown file extension.\n");
-		return false;
-	}
-	auto map_itr =
-			file_extension_to_ijsonconvertible_read_function.find(filename_ext);
-	if (map_itr == file_extension_to_ijsonconvertible_read_function.end()) {
-		PrintWarning("Read IJsonConvertible failed: unknown file extension.\n");
-		return false;
-	}
-	return map_itr->second(filename, object);
+    std::string filename_ext =
+            filesystem::GetFileExtensionInLowerCase(filename);
+    if (filename_ext.empty()) {
+        PrintWarning("Read IJsonConvertible failed: unknown file extension.\n");
+        return false;
+    }
+    auto map_itr =
+            file_extension_to_ijsonconvertible_read_function.find(filename_ext);
+    if (map_itr == file_extension_to_ijsonconvertible_read_function.end()) {
+        PrintWarning("Read IJsonConvertible failed: unknown file extension.\n");
+        return false;
+    }
+    return map_itr->second(filename, object);
 }
 
 bool WriteIJsonConvertible(const std::string &filename,
-		const IJsonConvertible &object)
+        const IJsonConvertible &object)
 {
-	std::string filename_ext =
-			filesystem::GetFileExtensionInLowerCase(filename);
-	if (filename_ext.empty()) {
-		PrintWarning("Write IJsonConvertible failed: unknown file extension.\n");
-		return false;
-	}
-	auto map_itr =
-			file_extension_to_ijsonconvertible_write_function.find(
-			filename_ext);
-	if (map_itr == file_extension_to_ijsonconvertible_write_function.end()) {
-		PrintWarning("Write IJsonConvertible failed: unknown file extension.\n");
-		return false;
-	}
-	return map_itr->second(filename, object);
+    std::string filename_ext =
+            filesystem::GetFileExtensionInLowerCase(filename);
+    if (filename_ext.empty()) {
+        PrintWarning("Write IJsonConvertible failed: unknown file extension.\n");
+        return false;
+    }
+    auto map_itr =
+            file_extension_to_ijsonconvertible_write_function.find(
+            filename_ext);
+    if (map_itr == file_extension_to_ijsonconvertible_write_function.end()) {
+        PrintWarning("Write IJsonConvertible failed: unknown file extension.\n");
+        return false;
+    }
+    return map_itr->second(filename, object);
 }
 
-}	// namespace three
+}   // namespace three

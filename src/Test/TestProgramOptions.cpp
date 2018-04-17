@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,42 +32,42 @@
 
 void PrintHelp()
 {
-	using namespace three;
-	PrintInfo("Usage :\n");
-	PrintInfo("    > TestProgramOptions [--help] [--switch] [--int i] [--double d] [--string str] [--vector (x,y,z,...)]\n");
+    using namespace three;
+    PrintInfo("Usage :\n");
+    PrintInfo("    > TestProgramOptions [--help] [--switch] [--int i] [--double d] [--string str] [--vector (x,y,z,...)]\n");
 }
 
 int main(int argc, char *argv[])
 {
-	using namespace three;
-	if (argc == 1 || ProgramOptionExists(argc, argv, "--help")) {
-		PrintHelp();
-		return 1;
-	}
+    using namespace three;
+    if (argc == 1 || ProgramOptionExists(argc, argv, "--help")) {
+        PrintHelp();
+        return 1;
+    }
 
-	PrintInfo("Switch is %s.\n", 
-			ProgramOptionExists(argc, argv, "--switch") ? "ON" : "OFF");
-	PrintInfo("Int is %d\n", GetProgramOptionAsInt(argc, argv, "--int"));
-	PrintInfo("Double is %.10f\n", 
-			GetProgramOptionAsDouble(argc, argv, "--double"));
-	PrintInfo("String is %s\n", 
-			GetProgramOptionAsString(argc, argv, "--string").c_str());
-	std::vector<std::string> strs;
-	SplitString(strs, GetProgramOptionAsString(argc, argv, "--string"), ",.",
-			true);
-	for (auto &str : strs) {
-		PrintInfo("\tSubstring : %s\n", str.c_str());
-	}
-	Eigen::VectorXd vec = GetProgramOptionAsEigenVectorXd(argc, argv,
-			"--vector");
-	PrintInfo("Vector is (");
-	for (auto i = 0; i < vec.size(); i++) {
-		if (i == 0) {
-			PrintInfo("%.2f", vec(i));
-		} else {
-			PrintInfo(",%.2f", vec(i));
-		}
-	}
-	PrintInfo(")\n");
-	return 1;
+    PrintInfo("Switch is %s.\n",
+            ProgramOptionExists(argc, argv, "--switch") ? "ON" : "OFF");
+    PrintInfo("Int is %d\n", GetProgramOptionAsInt(argc, argv, "--int"));
+    PrintInfo("Double is %.10f\n",
+            GetProgramOptionAsDouble(argc, argv, "--double"));
+    PrintInfo("String is %s\n",
+            GetProgramOptionAsString(argc, argv, "--string").c_str());
+    std::vector<std::string> strs;
+    SplitString(strs, GetProgramOptionAsString(argc, argv, "--string"), ",.",
+            true);
+    for (auto &str : strs) {
+        PrintInfo("\tSubstring : %s\n", str.c_str());
+    }
+    Eigen::VectorXd vec = GetProgramOptionAsEigenVectorXd(argc, argv,
+            "--vector");
+    PrintInfo("Vector is (");
+    for (auto i = 0; i < vec.size(); i++) {
+        if (i == 0) {
+            PrintInfo("%.2f", vec(i));
+        } else {
+            PrintInfo(",%.2f", vec(i));
+        }
+    }
+    PrintInfo(")\n");
+    return 1;
 }

@@ -51,8 +51,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Open3D'
-copyright = u'2018, Qianyi Zhou and Jaesik Park'
-author = u'Qianyi Zhou and Jaesik Park'
+copyright = u'2018, Hamdi Sahloul'
+author = u'Hamdi Sahloul'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -132,7 +132,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'Open3D.tex', u'Open3D Documentation',
-     u'Qianyi Zhou', 'manual'),
+     u'Hamdi Sahloul', 'manual'),
 ]
 
 

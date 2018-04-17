@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,65 +36,65 @@
 namespace three {
 
 namespace glsl {
-	
+
 class SimpleBlackShader : public ShaderWrapper
 {
 public:
-	~SimpleBlackShader() override { Release(); }
+    ~SimpleBlackShader() override { Release(); }
 
 protected:
-	SimpleBlackShader(const std::string &name) : ShaderWrapper(name) { Compile(); }
+    SimpleBlackShader(const std::string &name) : ShaderWrapper(name) { Compile(); }
 
 protected:
-	bool Compile() final;
-	void Release() final;
-	bool BindGeometry(const Geometry &geometry, const RenderOption &option,
-			const ViewControl &view) final;
-	bool RenderGeometry(const Geometry &geometry, const RenderOption &option,
-			const ViewControl &view) final;
-	void UnbindGeometry() final;
+    bool Compile() final;
+    void Release() final;
+    bool BindGeometry(const Geometry &geometry, const RenderOption &option,
+            const ViewControl &view) final;
+    bool RenderGeometry(const Geometry &geometry, const RenderOption &option,
+            const ViewControl &view) final;
+    void UnbindGeometry() final;
 
 protected:
-	virtual bool PrepareRendering(const Geometry &geometry,
-			const RenderOption &option, const ViewControl &view) = 0;
-	virtual bool PrepareBinding(const Geometry &geometry,
-			const RenderOption &option, const ViewControl &view,
-			std::vector<Eigen::Vector3f> &points) = 0;
+    virtual bool PrepareRendering(const Geometry &geometry,
+            const RenderOption &option, const ViewControl &view) = 0;
+    virtual bool PrepareBinding(const Geometry &geometry,
+            const RenderOption &option, const ViewControl &view,
+            std::vector<Eigen::Vector3f> &points) = 0;
 
 protected:
-	GLuint vertex_position_;
-	GLuint vertex_position_buffer_;
-	GLuint MVP_;
+    GLuint vertex_position_;
+    GLuint vertex_position_buffer_;
+    GLuint MVP_;
 };
-	
+
 class SimpleBlackShaderForPointCloudNormal : public SimpleBlackShader
 {
 public:
-	SimpleBlackShaderForPointCloudNormal() :
-			SimpleBlackShader("SimpleBlackShaderForPointCloudNormal") {}
+    SimpleBlackShaderForPointCloudNormal() :
+            SimpleBlackShader("SimpleBlackShaderForPointCloudNormal") {}
 
 protected:
-	bool PrepareRendering(const Geometry &geometry,
-			const RenderOption &option, const ViewControl &view) final;
-	bool PrepareBinding(const Geometry &geometry,
-			const RenderOption &option, const ViewControl &view,
-			std::vector<Eigen::Vector3f> &points) final;
+    bool PrepareRendering(const Geometry &geometry,
+            const RenderOption &option, const ViewControl &view) final;
+    bool PrepareBinding(const Geometry &geometry,
+            const RenderOption &option, const ViewControl &view,
+            std::vector<Eigen::Vector3f> &points) final;
 };
 
 class SimpleBlackShaderForTriangleMeshWireFrame : public SimpleBlackShader
 {
 public:
-	SimpleBlackShaderForTriangleMeshWireFrame() :
-			SimpleBlackShader("SimpleBlackShaderForTriangleMeshWireFrame") {}
+    SimpleBlackShaderForTriangleMeshWireFrame() :
+            SimpleBlackShader("SimpleBlackShaderForTriangleMeshWireFrame") {}
 
 protected:
-	bool PrepareRendering(const Geometry &geometry,
-			const RenderOption &option, const ViewControl &view) final;
-	bool PrepareBinding(const Geometry &geometry,
-			const RenderOption &option, const ViewControl &view,
-			std::vector<Eigen::Vector3f> &points) final;
+    bool PrepareRendering(const Geometry &geometry,
+            const RenderOption &option, const ViewControl &view) final;
+    bool PrepareBinding(const Geometry &geometry,
+            const RenderOption &option, const ViewControl &view,
+            std::vector<Eigen::Vector3f> &points) final;
 };
 
-}	// namespace three::glsl
+}   // namespace three::glsl
 
-}	// namespace three
+}   // namespace three

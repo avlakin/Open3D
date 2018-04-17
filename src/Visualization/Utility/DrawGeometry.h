@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -43,31 +46,31 @@ class Visualizer;
 /// until the window is closed.
 
 bool DrawGeometries(
-		const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
-		const std::string &window_name = "Open3D", 
-		int width = 640, int height = 480, int left = 50, int top = 50);
+        const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
+        const std::string &window_name = "Open3D",
+        int width = 640, int height = 480, int left = 50, int top = 50);
 
 bool DrawGeometriesWithCustomAnimation(
-		const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
-		const std::string &window_name = "Open3D", 
-		int width = 640, int height = 480, int left = 50, int top = 50,
-		const std::string &json_filename = "");
+        const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
+        const std::string &window_name = "Open3D",
+        int width = 640, int height = 480, int left = 50, int top = 50,
+        const std::string &json_filename = "");
 
 bool DrawGeometriesWithAnimationCallback(
-		const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
-		std::function<bool(Visualizer *)> callback_func,
-		const std::string &window_name = "Open3D", 
-		int width = 640, int height = 480, int left = 50, int top = 50);
+        const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
+        std::function<bool(Visualizer *)> callback_func,
+        const std::string &window_name = "Open3D",
+        int width = 640, int height = 480, int left = 50, int top = 50);
 
 bool DrawGeometriesWithKeyCallbacks(
-		const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
-		const std::map<int, std::function<bool(Visualizer *)>> &key_to_callback,
-		const std::string &window_name = "Open3D",
-		int width = 640, int height = 480, int left = 50, int top = 50);
+        const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
+        const std::map<int, std::function<bool(Visualizer *)>> &key_to_callback,
+        const std::string &window_name = "Open3D",
+        int width = 640, int height = 480, int left = 50, int top = 50);
 
 bool DrawGeometriesWithEditing(
-		const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
-		const std::string &window_name = "Open3D", 
-		int width = 640, int height = 480, int left = 50, int top = 50);
+        const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
+        const std::string &window_name = "Open3D",
+        int width = 640, int height = 480, int left = 50, int top = 50);
 
-}	// namespace three
+}   // namespace three

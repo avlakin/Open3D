@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,42 +37,42 @@ namespace three {
 class PinholeCameraIntrinsic : public IJsonConvertible
 {
 public:
-	static const PinholeCameraIntrinsic PrimeSenseDefault;
+    static const PinholeCameraIntrinsic PrimeSenseDefault;
 
 public:
-	PinholeCameraIntrinsic();
-	PinholeCameraIntrinsic(int width, int height, double fx, double fy,
-			double cx, double cy);
-	~PinholeCameraIntrinsic() override;
+    PinholeCameraIntrinsic();
+    PinholeCameraIntrinsic(int width, int height, double fx, double fy,
+            double cx, double cy);
+    ~PinholeCameraIntrinsic() override;
 
 public:
-	void SetIntrinsics(int width, int height, double fx, double fy, double cx,
-			double cy) {
-		width_ = width; height_ = height;
-		intrinsic_matrix_.setIdentity();
-		intrinsic_matrix_(0, 0) = fx; intrinsic_matrix_(1, 1) = fy;
-		intrinsic_matrix_(0, 2) = cx; intrinsic_matrix_(1, 2) = cy;
-	}
+    void SetIntrinsics(int width, int height, double fx, double fy, double cx,
+            double cy) {
+        width_ = width; height_ = height;
+        intrinsic_matrix_.setIdentity();
+        intrinsic_matrix_(0, 0) = fx; intrinsic_matrix_(1, 1) = fy;
+        intrinsic_matrix_(0, 2) = cx; intrinsic_matrix_(1, 2) = cy;
+    }
 
-	std::pair<double, double> GetFocalLength() const {
-		return std::make_pair(intrinsic_matrix_(0, 0), intrinsic_matrix_(1, 1));
-	}
+    std::pair<double, double> GetFocalLength() const {
+        return std::make_pair(intrinsic_matrix_(0, 0), intrinsic_matrix_(1, 1));
+    }
 
-	std::pair<double, double> GetPrincipalPoint() const {
-		return std::make_pair(intrinsic_matrix_(0, 2), intrinsic_matrix_(1, 2));
-	}
+    std::pair<double, double> GetPrincipalPoint() const {
+        return std::make_pair(intrinsic_matrix_(0, 2), intrinsic_matrix_(1, 2));
+    }
 
-	double GetSkew() const { return intrinsic_matrix_(0, 1); }
+    double GetSkew() const { return intrinsic_matrix_(0, 1); }
 
-	bool IsValid() const { return (width_ > 0 && height_ > 0); }
+    bool IsValid() const { return (width_ > 0 && height_ > 0); }
 
-	bool ConvertToJsonValue(Json::Value &value) const override;
-	bool ConvertFromJsonValue(const Json::Value &value) override;
+    bool ConvertToJsonValue(Json::Value &value) const override;
+    bool ConvertFromJsonValue(const Json::Value &value) override;
 
 public:
-	int width_ = -1;
-	int height_ = -1;
-	Eigen::Matrix3d intrinsic_matrix_;
+    int width_ = -1;
+    int height_ = -1;
+    Eigen::Matrix3d intrinsic_matrix_;
 };
 
-}	// namespace three
+}   // namespace three

@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,52 +34,52 @@ namespace three {
 class KDTreeSearchParam
 {
 public:
-	enum class SearchType {
-		Knn = 0,
-		Radius = 1,
-		Hybrid = 2,
-	};
+    enum class SearchType {
+        Knn = 0,
+        Radius = 1,
+        Hybrid = 2,
+    };
 
 public:
-	virtual ~KDTreeSearchParam() {}
+    virtual ~KDTreeSearchParam() {}
 
 protected:
-	KDTreeSearchParam(SearchType type) : search_type_(type) {}
+    KDTreeSearchParam(SearchType type) : search_type_(type) {}
 
 public:
-	SearchType GetSearchType() const { return search_type_; }
+    SearchType GetSearchType() const { return search_type_; }
 
 private:
-	SearchType search_type_;
+    SearchType search_type_;
 };
 
 class KDTreeSearchParamKNN : public KDTreeSearchParam
 {
 public:
-	KDTreeSearchParamKNN(int knn = 30) :
-			KDTreeSearchParam(SearchType::Knn), knn_(knn) {}
+    KDTreeSearchParamKNN(int knn = 30) :
+            KDTreeSearchParam(SearchType::Knn), knn_(knn) {}
 public:
-	int knn_;
+    int knn_;
 };
 
 class KDTreeSearchParamRadius : public KDTreeSearchParam
 {
 public:
-	KDTreeSearchParamRadius(double radius) :
-			KDTreeSearchParam(SearchType::Radius), radius_(radius) {}
+    KDTreeSearchParamRadius(double radius) :
+            KDTreeSearchParam(SearchType::Radius), radius_(radius) {}
 public:
-	double radius_;
+    double radius_;
 };
 
 class KDTreeSearchParamHybrid : public KDTreeSearchParam
 {
 public:
-	KDTreeSearchParamHybrid(double radius, int max_nn) :
-			KDTreeSearchParam(SearchType::Hybrid), radius_(radius),
-			max_nn_(max_nn) {}
+    KDTreeSearchParamHybrid(double radius, int max_nn) :
+            KDTreeSearchParam(SearchType::Hybrid), radius_(radius),
+            max_nn_(max_nn) {}
 public:
-	double radius_;
-	int max_nn_;
+    double radius_;
+    int max_nn_;
 };
 
-}	// namespace three
+}   // namespace three

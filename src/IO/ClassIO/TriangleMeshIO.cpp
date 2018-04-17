@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -35,59 +38,59 @@ namespace three{
 namespace {
 
 static const std::unordered_map<std::string,
-		std::function<bool(const std::string &, TriangleMesh &)>>
-		file_extension_to_trianglemesh_read_function
-		{{"ply", ReadTriangleMeshFromPLY},
-		};
+        std::function<bool(const std::string &, TriangleMesh &)>>
+        file_extension_to_trianglemesh_read_function
+        {{"ply", ReadTriangleMeshFromPLY},
+        };
 
 static const std::unordered_map<std::string,
-		std::function<bool(const std::string &, const TriangleMesh &,
-		const bool, const bool)>>
-		file_extension_to_trianglemesh_write_function
-		{{"ply", WriteTriangleMeshToPLY},
-		};
+        std::function<bool(const std::string &, const TriangleMesh &,
+        const bool, const bool)>>
+        file_extension_to_trianglemesh_write_function
+        {{"ply", WriteTriangleMeshToPLY},
+        };
 
-}	// unnamed namespace
+}   // unnamed namespace
 
 bool ReadTriangleMesh(const std::string &filename, TriangleMesh &mesh)
 {
-	std::string filename_ext =
-			filesystem::GetFileExtensionInLowerCase(filename);
-	if (filename_ext.empty()) {
-		PrintWarning("Read TriangleMesh failed: unknown file extension.\n");
-		return false;
-	}
-	auto map_itr =
-			file_extension_to_trianglemesh_read_function.find(filename_ext);
-	if (map_itr == file_extension_to_trianglemesh_read_function.end()) {
-		PrintWarning("Read TriangleMesh failed: unknown file extension.\n");
-		return false;
-	}
-	bool success = map_itr->second(filename, mesh);
-	PrintDebug("Read TriangleMesh: %d triangles and %d vertices.\n",
-			(int)mesh.triangles_.size(), (int)mesh.vertices_.size());
-	return success;
+    std::string filename_ext =
+            filesystem::GetFileExtensionInLowerCase(filename);
+    if (filename_ext.empty()) {
+        PrintWarning("Read TriangleMesh failed: unknown file extension.\n");
+        return false;
+    }
+    auto map_itr =
+            file_extension_to_trianglemesh_read_function.find(filename_ext);
+    if (map_itr == file_extension_to_trianglemesh_read_function.end()) {
+        PrintWarning("Read TriangleMesh failed: unknown file extension.\n");
+        return false;
+    }
+    bool success = map_itr->second(filename, mesh);
+    PrintDebug("Read TriangleMesh: %d triangles and %d vertices.\n",
+            (int)mesh.triangles_.size(), (int)mesh.vertices_.size());
+    return success;
 }
 
 bool WriteTriangleMesh(const std::string &filename, const TriangleMesh &mesh,
-		bool write_ascii/* = false*/, bool compressed/* = false*/)
+        bool write_ascii/* = false*/, bool compressed/* = false*/)
 {
-	std::string filename_ext =
-			filesystem::GetFileExtensionInLowerCase(filename);
-	if (filename_ext.empty()) {
-		PrintWarning("Write TriangleMesh failed: unknown file extension.\n");
-		return false;
-	}
-	auto map_itr =
-			file_extension_to_trianglemesh_write_function.find(filename_ext);
-	if (map_itr == file_extension_to_trianglemesh_write_function.end()) {
-		PrintWarning("Write TriangleMesh failed: unknown file extension.\n");
-		return false;
-	}
-	bool success = map_itr->second(filename, mesh, write_ascii, compressed);
-	PrintDebug("Write TriangleMesh: %d triangles and %d vertices.\n",
-			(int)mesh.triangles_.size(), (int)mesh.vertices_.size());
-	return success;
+    std::string filename_ext =
+            filesystem::GetFileExtensionInLowerCase(filename);
+    if (filename_ext.empty()) {
+        PrintWarning("Write TriangleMesh failed: unknown file extension.\n");
+        return false;
+    }
+    auto map_itr =
+            file_extension_to_trianglemesh_write_function.find(filename_ext);
+    if (map_itr == file_extension_to_trianglemesh_write_function.end()) {
+        PrintWarning("Write TriangleMesh failed: unknown file extension.\n");
+        return false;
+    }
+    bool success = map_itr->second(filename, mesh, write_ascii, compressed);
+    PrintDebug("Write TriangleMesh: %d triangles and %d vertices.\n",
+            (int)mesh.triangles_.size(), (int)mesh.vertices_.size());
+    return success;
 }
 
-}	// namespace three
+}   // namespace three

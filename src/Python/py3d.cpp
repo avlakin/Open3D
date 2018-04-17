@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,15 +30,15 @@
 #include "py3d.h"
 
 PYBIND11_MODULE(py3d, m) {
-	m.doc() = "Python binding of Open3D";
+    m.doc() = "Python binding of Open3D";
 
-	pybind_eigen(m);
+    pybind_eigen(m);
 
-	pybind_core_classes(m);
-	pybind_io_classes(m);
-	pybind_visualization_classes(m);
+    pybind_core_classes(m);
+    pybind_io_classes(m);
+    pybind_visualization_classes(m);
 
-	pybind_core_methods(m);
-	pybind_io_methods(m);
-	pybind_visualization_methods(m);
+    pybind_core_methods(m);
+    pybind_io_methods(m);
+    pybind_visualization_methods(m);
 }

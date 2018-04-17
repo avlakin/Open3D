@@ -10,11 +10,11 @@ This guide gets you started programming with Open3D. The basic tools you need ar
 Compiling from source
 ========================
 
-Download source code from the `repository <https://github.com/IntelVCL/Open3D>`_.
+Download source code from the `repository <https://github.com/Sahloul/Open3D>`_.
 
 .. code-block:: bash
 
-    git clone https://github.com/IntelVCL/Open3D
+    git clone https://github.com/Sahloul/Open3D
 
 .. _getting_started_compilation_ubuntu:
 
@@ -111,7 +111,7 @@ For quick sanity check, try importing the library from the python interactive sh
 
     >>> import py3d
 
-.. error:: If there is an issue, check whether the Python version detected by cmake (see log from cmake) and the Python version for command line environment (type python -V). They should match. If it is not, please follow :ref:`python_binding` in docs. In addition, `python binding issue  <https://github.com/IntelVCL/Open3D/issues?utf8=%E2%9C%93&q=is%3Aissue+label%3A%22python+binding%22+>`_ on Github repository has helpful notes from Open3D users.
+.. error:: If there is an issue, check whether the Python version detected by cmake (see log from cmake) and the Python version for command line environment (type python -V). They should match. If it is not, please follow :ref:`python_binding` in docs.
 
 Python tutorials
 ------------------

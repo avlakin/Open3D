@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,29 +31,29 @@
 
 void pybind_core_classes(py::module &m)
 {
-	pybind_console(m);
-	pybind_geometry(m);
-	pybind_pointcloud(m);
-	pybind_trianglemesh(m);
-	pybind_image(m);
-	pybind_kdtreeflann(m);
-	pybind_feature(m);
-	pybind_camera(m);
-	pybind_registration(m);
-	pybind_odometry(m);
-	pybind_globaloptimization(m);
-	pybind_integration(m);
+    pybind_console(m);
+    pybind_geometry(m);
+    pybind_pointcloud(m);
+    pybind_trianglemesh(m);
+    pybind_image(m);
+    pybind_kdtreeflann(m);
+    pybind_feature(m);
+    pybind_camera(m);
+    pybind_registration(m);
+    pybind_odometry(m);
+    pybind_globaloptimization(m);
+    pybind_integration(m);
 }
 
 void pybind_core_methods(py::module &m)
 {
-	pybind_pointcloud_methods(m);
-	pybind_trianglemesh_methods(m);
-	pybind_image_methods(m);
-	pybind_feature_methods(m);
-	pybind_camera_methods(m);
-	pybind_registration_methods(m);
-	pybind_odometry_methods(m);
-	pybind_globaloptimization_methods(m);
-	pybind_integration_methods(m);
+    pybind_pointcloud_methods(m);
+    pybind_trianglemesh_methods(m);
+    pybind_image_methods(m);
+    pybind_feature_methods(m);
+    pybind_camera_methods(m);
+    pybind_registration_methods(m);
+    pybind_odometry_methods(m);
+    pybind_globaloptimization_methods(m);
+    pybind_integration_methods(m);
 }

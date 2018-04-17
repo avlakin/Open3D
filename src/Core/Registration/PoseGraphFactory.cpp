@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,11 +34,11 @@
 namespace three{
 
 std::shared_ptr<PoseGraph> CreatePoseGraphFromFile(
-		const std::string &filename)
+        const std::string &filename)
 {
-	auto pose_graph = std::make_shared<PoseGraph>();
-	ReadPoseGraph(filename, *pose_graph);
-	return pose_graph;
+    auto pose_graph = std::make_shared<PoseGraph>();
+    ReadPoseGraph(filename, *pose_graph);
+    return pose_graph;
 }
 
-}	// namespace three
+}   // namespace three

@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,46 +32,46 @@
 
 void PrintHelp()
 {
-	printf("Usage:\n");
-	printf("    > MergeMesh source_directory target_file [option]\n");
-	printf("      Merge mesh files under <source_directory>.\n");
-	printf("\n");
-	printf("Options (listed in the order of execution priority):\n");
-	printf("    --help, -h                : Print help information.\n");
-	printf("    --verbose n               : Set verbose level (0-4).\n");
-	printf("    --purge                   : Clear duplicated and non-manifold vertices and\n");
-	printf("                                triangles.\n");
+    printf("Usage:\n");
+    printf("    > MergeMesh source_directory target_file [option]\n");
+    printf("      Merge mesh files under <source_directory>.\n");
+    printf("\n");
+    printf("Options (listed in the order of execution priority):\n");
+    printf("    --help, -h                : Print help information.\n");
+    printf("    --verbose n               : Set verbose level (0-4).\n");
+    printf("    --purge                   : Clear duplicated and non-manifold vertices and\n");
+    printf("                                triangles.\n");
  }
 
 int main(int argc, char **argv)
 {
-	using namespace three;
-	using namespace three::filesystem;
+    using namespace three;
+    using namespace three::filesystem;
 
-	SetVerbosityLevel(VerbosityLevel::VerboseAlways);
-	if (argc <= 2 || ProgramOptionExists(argc, argv, "--help")) {
-		PrintHelp();
-		return 0;
-	}
-	int verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
-	SetVerbosityLevel((VerbosityLevel)verbose);
+    SetVerbosityLevel(VerbosityLevel::VerboseAlways);
+    if (argc <= 2 || ProgramOptionExists(argc, argv, "--help")) {
+        PrintHelp();
+        return 0;
+    }
+    int verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
+    SetVerbosityLevel((VerbosityLevel)verbose);
 
-	std::string directory(argv[1]);
-	std::vector<std::string> filenames;
-	ListFilesInDirectory(directory, filenames);
+    std::string directory(argv[1]);
+    std::vector<std::string> filenames;
+    ListFilesInDirectory(directory, filenames);
 
-	auto merged_mesh_ptr = std::make_shared<TriangleMesh>();
-	for (const auto &filename : filenames) {
-		auto mesh_ptr = std::make_shared<TriangleMesh>();
-		if (ReadTriangleMesh(filename, *mesh_ptr)) {
-			*merged_mesh_ptr += *mesh_ptr;
-		}
-	}
+    auto merged_mesh_ptr = std::make_shared<TriangleMesh>();
+    for (const auto &filename : filenames) {
+        auto mesh_ptr = std::make_shared<TriangleMesh>();
+        if (ReadTriangleMesh(filename, *mesh_ptr)) {
+            *merged_mesh_ptr += *mesh_ptr;
+        }
+    }
 
-	if (ProgramOptionExists(argc, argv, "--purge")) {
-		merged_mesh_ptr->Purge();
-	}
-	WriteTriangleMesh(argv[2], *merged_mesh_ptr);
+    if (ProgramOptionExists(argc, argv, "--purge")) {
+        merged_mesh_ptr->Purge();
+    }
+    WriteTriangleMesh(argv[2], *merged_mesh_ptr);
 
-	return 1;
+    return 1;
 }

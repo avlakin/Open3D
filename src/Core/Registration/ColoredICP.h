@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -39,9 +42,9 @@ class RegistrationResult;
 /// J. Park, Q.-Y. Zhou, V. Koltun,
 /// Colored Point Cloud Registration Revisited, ICCV 2017
 RegistrationResult RegistrationColoredICP(const PointCloud &source,
-		const PointCloud &target, double max_distance,
-		const Eigen::Matrix4d &init = Eigen::Matrix4d::Identity(),
-		const ICPConvergenceCriteria &criteria = ICPConvergenceCriteria(),
-		double lambda_geometric = 0.968);
+        const PointCloud &target, double max_distance,
+        const Eigen::Matrix4d &init = Eigen::Matrix4d::Identity(),
+        const ICPConvergenceCriteria &criteria = ICPConvergenceCriteria(),
+        double lambda_geometric = 0.968);
 
-}	// namespace three
+}   // namespace three

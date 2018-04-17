@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,14 +35,14 @@
 namespace three{
 
 std::shared_ptr<LineSet> CreateLineSetFromPointCloudCorrespondences(
-		const PointCloud &cloud0, const PointCloud &cloud1,
-		const std::vector<std::pair<int, int>> &correspondences)
+        const PointCloud &cloud0, const PointCloud &cloud1,
+        const std::vector<std::pair<int, int>> &correspondences)
 {
-	auto lineset_ptr = std::make_shared<LineSet>();
-	lineset_ptr->point_set_[0] = cloud0.points_;
-	lineset_ptr->point_set_[1] = cloud1.points_;
-	lineset_ptr->lines_ = correspondences;
-	return lineset_ptr;
+    auto lineset_ptr = std::make_shared<LineSet>();
+    lineset_ptr->point_set_[0] = cloud0.points_;
+    lineset_ptr->point_set_[1] = cloud1.points_;
+    lineset_ptr->lines_ = correspondences;
+    return lineset_ptr;
 }
 
-}	// namespace three
+}   // namespace three

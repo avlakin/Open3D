@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -43,32 +46,32 @@ namespace three {
 class TSDFVolume
 {
 public:
-	TSDFVolume(double voxel_length, double sdf_trunc, bool with_color) :
-			voxel_length_(voxel_length), sdf_trunc_(sdf_trunc),
-			with_color_(with_color) {}
-	virtual ~TSDFVolume() {}
+    TSDFVolume(double voxel_length, double sdf_trunc, bool with_color) :
+            voxel_length_(voxel_length), sdf_trunc_(sdf_trunc),
+            with_color_(with_color) {}
+    virtual ~TSDFVolume() {}
 
 public:
-	/// Function to reset the TSDFVolume
-	virtual void Reset() = 0;
+    /// Function to reset the TSDFVolume
+    virtual void Reset() = 0;
 
-	/// Function to integrate an RGB-D image into the volume
-	virtual void Integrate(const RGBDImage &image,
-			const PinholeCameraIntrinsic &intrinsic,
-			const Eigen::Matrix4d &extrinsic) = 0;
+    /// Function to integrate an RGB-D image into the volume
+    virtual void Integrate(const RGBDImage &image,
+            const PinholeCameraIntrinsic &intrinsic,
+            const Eigen::Matrix4d &extrinsic) = 0;
 
-	/// Function to extract a point cloud with normals, using the marching cubes
-	/// algorithm (https://en.wikipedia.org/wiki/Marching_cubes)
-	virtual std::shared_ptr<PointCloud> ExtractPointCloud() = 0;
+    /// Function to extract a point cloud with normals, using the marching cubes
+    /// algorithm (https://en.wikipedia.org/wiki/Marching_cubes)
+    virtual std::shared_ptr<PointCloud> ExtractPointCloud() = 0;
 
-	/// Function to extract a triangle mesh, using the marching cubes algorithm
-	/// (https://en.wikipedia.org/wiki/Marching_cubes)
-	virtual std::shared_ptr<TriangleMesh> ExtractTriangleMesh() = 0;
+    /// Function to extract a triangle mesh, using the marching cubes algorithm
+    /// (https://en.wikipedia.org/wiki/Marching_cubes)
+    virtual std::shared_ptr<TriangleMesh> ExtractTriangleMesh() = 0;
 
 public:
-	double voxel_length_;
-	double sdf_trunc_;
-	bool with_color_;
+    double voxel_length_;
+    double sdf_trunc_;
+    bool with_color_;
 };
 
-}	// namespace three
+}   // namespace three

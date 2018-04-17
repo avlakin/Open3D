@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,16 +31,16 @@
 
 void pybind_visualization_classes(py::module &m)
 {
-	pybind_renderoption(m);
-	pybind_viewcontrol(m);
-	pybind_visualizer(m);
-	pybind_utility(m);
+    pybind_renderoption(m);
+    pybind_viewcontrol(m);
+    pybind_visualizer(m);
+    pybind_utility(m);
 }
 
 void pybind_visualization_methods(py::module &m)
 {
-	pybind_renderoption_method(m);
-	pybind_viewcontrol_method(m);
-	pybind_visualizer_method(m);
-	pybind_utility_methods(m);
+    pybind_renderoption_method(m);
+    pybind_viewcontrol_method(m);
+    pybind_visualizer_method(m);
+    pybind_utility_methods(m);
 }

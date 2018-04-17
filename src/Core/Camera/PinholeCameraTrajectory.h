@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,22 +39,22 @@ namespace three {
 class PinholeCameraTrajectory : public IJsonConvertible
 {
 public:
-	PinholeCameraTrajectory();
-	~PinholeCameraTrajectory() override;
+    PinholeCameraTrajectory();
+    ~PinholeCameraTrajectory() override;
 
 public:
-	bool ConvertToJsonValue(Json::Value &value) const override;
-	bool ConvertFromJsonValue(const Json::Value &value) override;
+    bool ConvertToJsonValue(Json::Value &value) const override;
+    bool ConvertFromJsonValue(const Json::Value &value) override;
 
 public:
-	PinholeCameraIntrinsic intrinsic_;
-	std::vector<Eigen::Matrix4d> extrinsic_;
+    PinholeCameraIntrinsic intrinsic_;
+    std::vector<Eigen::Matrix4d> extrinsic_;
 };
 
 /// Factory function to create a PinholeCameraTrajectory from a file
 /// (PinholeCameraTrajectoryFactory.cpp)
 /// Return an empty PinholeCameraTrajectory if fail to read the file.
 std::shared_ptr<PinholeCameraTrajectory> CreatePinholeCameraTrajectoryFromFile(
-		const std::string &filename);
+        const std::string &filename);
 
-}	// namespace three
+}   // namespace three

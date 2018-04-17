@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -43,51 +46,51 @@ typedef std::vector<Eigen::Vector2i> CorrespondenceSet;
 class TransformationEstimation
 {
 public:
-	TransformationEstimation() {}
-	virtual ~TransformationEstimation() {}
+    TransformationEstimation() {}
+    virtual ~TransformationEstimation() {}
 
 public:
-	virtual double ComputeRMSE(const PointCloud &source,
-			const PointCloud &target,
-			const CorrespondenceSet &corres) const = 0;
-	virtual Eigen::Matrix4d ComputeTransformation(const PointCloud &source,
-			const PointCloud &target,
-			const CorrespondenceSet &corres) const = 0;
+    virtual double ComputeRMSE(const PointCloud &source,
+            const PointCloud &target,
+            const CorrespondenceSet &corres) const = 0;
+    virtual Eigen::Matrix4d ComputeTransformation(const PointCloud &source,
+            const PointCloud &target,
+            const CorrespondenceSet &corres) const = 0;
 };
 
 /// Estimate a transformation for point to point distance
 class TransformationEstimationPointToPoint : public TransformationEstimation
 {
 public:
-	TransformationEstimationPointToPoint(bool with_scaling = false) :
-		with_scaling_(with_scaling) {}
-	~TransformationEstimationPointToPoint() override {}
+    TransformationEstimationPointToPoint(bool with_scaling = false) :
+        with_scaling_(with_scaling) {}
+    ~TransformationEstimationPointToPoint() override {}
 
 public:
-	double ComputeRMSE(const PointCloud &source, const PointCloud &target,
-			const CorrespondenceSet &corres) const override;
-	Eigen::Matrix4d ComputeTransformation(const PointCloud &source,
-			const PointCloud &target,
-			const CorrespondenceSet &corres) const override;
+    double ComputeRMSE(const PointCloud &source, const PointCloud &target,
+            const CorrespondenceSet &corres) const override;
+    Eigen::Matrix4d ComputeTransformation(const PointCloud &source,
+            const PointCloud &target,
+            const CorrespondenceSet &corres) const override;
 
 public:
-	bool with_scaling_ = false;
+    bool with_scaling_ = false;
 };
 
 /// Estimate a transformation for point to plane distance
 class TransformationEstimationPointToPlane : public TransformationEstimation
 {
 public:
-	TransformationEstimationPointToPlane() {}
-	~TransformationEstimationPointToPlane() override {}
+    TransformationEstimationPointToPlane() {}
+    ~TransformationEstimationPointToPlane() override {}
 
 public:
-	double ComputeRMSE(const PointCloud &source, const PointCloud &target,
-			const CorrespondenceSet &corres) const override;
-	Eigen::Matrix4d ComputeTransformation(const PointCloud &source,
-			const PointCloud &target,
-			const CorrespondenceSet &corres) const override;
+    double ComputeRMSE(const PointCloud &source, const PointCloud &target,
+            const CorrespondenceSet &corres) const override;
+    Eigen::Matrix4d ComputeTransformation(const PointCloud &source,
+            const PointCloud &target,
+            const CorrespondenceSet &corres) const override;
 };
 
 
-}	// namespace three
+}   // namespace three

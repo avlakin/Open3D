@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -40,22 +43,22 @@ typedef Eigen::Matrix<GLfloat, 4, 1, Eigen::ColMajor> GLVector4f;
 typedef Eigen::Matrix<GLfloat, 4, 4, Eigen::ColMajor> GLMatrix4f;
 
 GLMatrix4f LookAt(const Eigen::Vector3d &eye, const Eigen::Vector3d &lookat,
-		const Eigen::Vector3d &up);
-	
-GLMatrix4f Perspective(double field_of_view_, double aspect, double z_near, 
-		double z_far);
+        const Eigen::Vector3d &up);
+
+GLMatrix4f Perspective(double field_of_view_, double aspect, double z_near,
+        double z_far);
 
 GLMatrix4f Ortho(double left, double right, double bottom, double top,
-		double z_near, double z_far);
+        double z_near, double z_far);
 
-Eigen::Vector3d Project(const Eigen::Vector3d &point, 
-		const GLMatrix4f &mvp_matrix, const int width, const int height);
+Eigen::Vector3d Project(const Eigen::Vector3d &point,
+        const GLMatrix4f &mvp_matrix, const int width, const int height);
 
 Eigen::Vector3d Unproject(const Eigen::Vector3d &screen_point,
-		const GLMatrix4f &mvp_matrix, const int width, const int height);
+        const GLMatrix4f &mvp_matrix, const int width, const int height);
 
 int ColorCodeToPickIndex(const Eigen::Vector4i &color);
 
-}	// namespace GLHelper
+}   // namespace GLHelper
 
-}	// namespace three
+}   // namespace three

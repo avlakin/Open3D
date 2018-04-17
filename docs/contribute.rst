@@ -3,7 +3,8 @@
 Contributing to Open3D
 ##########################
 
-The Open3D project was started by `Qianyi Zhou <http://qianyi.info>`_ and `Jaesik Park <http://jaesik.info>`_. The project is developed and maintained by a community effort. To contribute to the project, you need to
+Although the Open3D project was started by `Qianyi Zhou` and `Jaesik Park`, it is now developed and maintained by `Hamdi Sahloul` and any future contributor is highly welcomed.
+To contribute to the project, you need to
 
 * Know how to use Open3D;
 * Know basic development rules such as coding style, issues, and pull requests;
@@ -14,8 +15,8 @@ Issues and pull requests
 
 The ``master`` branch is used only for stable development versions of Open3D. Any code change is made through four steps using the `issues and pull requests system <https://help.github.com/categories/collaborating-with-issues-and-pull-requests/>`_.
 
-1. An `issue <https://github.com/IntelVCL/Open3D/issues>`_ is opened for a feature request or a bug fix.
-2. A contributor starts a new branch or forks the repository, makes changes, and submits a `pull request <https://github.com/IntelVCL/Open3D/pulls>`_.
+1. An `issue <https://github.com/Sahloul/Open3D/issues>`_ is opened for a feature request or a bug fix.
+2. A contributor starts a new branch or forks the repository, makes changes, and submits a `pull request <https://github.com/Sahloul/Open3D/pulls>`_.
 3. Code change is reviewed and discussed in the pull request. Modifications are made to address the issues raised in the discussion.
 4. One of the admins merges the pull request to the master branch.
 
@@ -49,7 +50,6 @@ Consistent coding style is an important factor of code readability. Some princip
 
 We generally follow the `Google C++ Style Guide <https://google.github.io/styleguide/cppguide.html>`_, with a few modifications:
 
-* Use tab for indent. In IDE it should be 4 spaces wide. Use two indents for a forced line break (usually due to the 80 character length limit).
 * Use ``#pragma once`` for header guard.
 * All Open3D classes and functions are nested in namespace ``three``.
 * Avoid using naked pointers. Use ``std::shared_ptr`` and ``std::unique_ptr`` instead.

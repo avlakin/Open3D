@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +37,7 @@ BoundingBox::BoundingBox()
 
 BoundingBox::BoundingBox(const Geometry3D &geometry)
 {
-	FitInGeometry(geometry);
+    FitInGeometry(geometry);
 }
 
 BoundingBox::~BoundingBox()
@@ -43,25 +46,25 @@ BoundingBox::~BoundingBox()
 
 void BoundingBox::Reset()
 {
-	min_bound_.setZero();
-	max_bound_.setZero();
+    min_bound_.setZero();
+    max_bound_.setZero();
 }
 
 void BoundingBox::FitInGeometry(const Geometry3D &geometry)
 {
-	if (GetSize() == 0.0) {	// empty box
-		min_bound_ = geometry.GetMinBound();
-		max_bound_ = geometry.GetMaxBound();
-	} else {
-		auto geometry_min_bound = geometry.GetMinBound();
-		auto geometry_max_bound = geometry.GetMaxBound();
-		min_bound_(0) = std::min(min_bound_(0), geometry_min_bound(0));
-		min_bound_(1) = std::min(min_bound_(1), geometry_min_bound(1));
-		min_bound_(2) = std::min(min_bound_(2), geometry_min_bound(2));
-		max_bound_(0) = std::max(max_bound_(0), geometry_max_bound(0));
-		max_bound_(1) = std::max(max_bound_(1), geometry_max_bound(1));
-		max_bound_(2) = std::max(max_bound_(2), geometry_max_bound(2));
-	}
+    if (GetSize() == 0.0) { // empty box
+        min_bound_ = geometry.GetMinBound();
+        max_bound_ = geometry.GetMaxBound();
+    } else {
+        auto geometry_min_bound = geometry.GetMinBound();
+        auto geometry_max_bound = geometry.GetMaxBound();
+        min_bound_(0) = std::min(min_bound_(0), geometry_min_bound(0));
+        min_bound_(1) = std::min(min_bound_(1), geometry_min_bound(1));
+        min_bound_(2) = std::min(min_bound_(2), geometry_min_bound(2));
+        max_bound_(0) = std::max(max_bound_(0), geometry_max_bound(0));
+        max_bound_(1) = std::max(max_bound_(1), geometry_max_bound(1));
+        max_bound_(2) = std::max(max_bound_(2), geometry_max_bound(2));
+    }
 }
 
-}	// namespace three
+}   // namespace three

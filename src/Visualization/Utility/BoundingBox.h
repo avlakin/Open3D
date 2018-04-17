@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,46 +39,46 @@ namespace three {
 class BoundingBox
 {
 public:
-	BoundingBox();
-	BoundingBox(const Geometry3D &geometry);
-	~BoundingBox();
+    BoundingBox();
+    BoundingBox(const Geometry3D &geometry);
+    ~BoundingBox();
 
 public:
-	void Reset();
-	void FitInGeometry(const Geometry3D &geometry);
+    void Reset();
+    void FitInGeometry(const Geometry3D &geometry);
 
 public:
-	Eigen::Vector3d GetCenter() const {
-		return (min_bound_ + max_bound_) * 0.5;
-	}
+    Eigen::Vector3d GetCenter() const {
+        return (min_bound_ + max_bound_) * 0.5;
+    }
 
-	double GetSize() const {
-		return (max_bound_ - min_bound_).maxCoeff();
-	}
+    double GetSize() const {
+        return (max_bound_ - min_bound_).maxCoeff();
+    }
 
-	double GetXPercentage(double x) const {
-		return (x - min_bound_(0)) / (max_bound_(0) - min_bound_(0));
-	}
+    double GetXPercentage(double x) const {
+        return (x - min_bound_(0)) / (max_bound_(0) - min_bound_(0));
+    }
 
-	double GetYPercentage(double y) const {
-		return (y - min_bound_(1)) / (max_bound_(1) - min_bound_(1));
-	}
+    double GetYPercentage(double y) const {
+        return (y - min_bound_(1)) / (max_bound_(1) - min_bound_(1));
+    }
 
-	double GetZPercentage(double z) const {
-		return (z - min_bound_(2)) / (max_bound_(2) - min_bound_(2));
-	}
+    double GetZPercentage(double z) const {
+        return (z - min_bound_(2)) / (max_bound_(2) - min_bound_(2));
+    }
 
-	std::string GetPrintInfo() const {
-		char buffer[DEFAULT_IO_BUFFER_SIZE];
-		snprintf(buffer, DEFAULT_IO_BUFFER_SIZE, "[(%.4f, %.4f, %.4f) - (%.4f, %.4f, %.4f)]",
-				min_bound_(0), min_bound_(1), min_bound_(2),
-				max_bound_(0), max_bound_(1), max_bound_(2));
-		return std::string(buffer);
-	}
+    std::string GetPrintInfo() const {
+        char buffer[DEFAULT_IO_BUFFER_SIZE];
+        snprintf(buffer, DEFAULT_IO_BUFFER_SIZE, "[(%.4f, %.4f, %.4f) - (%.4f, %.4f, %.4f)]",
+                min_bound_(0), min_bound_(1), min_bound_(2),
+                max_bound_(0), max_bound_(1), max_bound_(2));
+        return std::string(buffer);
+    }
 
 public:
-	Eigen::Vector3d min_bound_ = Eigen::Vector3d::Zero();
-	Eigen::Vector3d max_bound_ = Eigen::Vector3d::Zero();
+    Eigen::Vector3d min_bound_ = Eigen::Vector3d::Zero();
+    Eigen::Vector3d max_bound_ = Eigen::Vector3d::Zero();
 };
 
-}	// namespace three
+}   // namespace three

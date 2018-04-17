@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------------
-// -                        Open3D: www.open3d.org                            -
+// -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
 // The MIT License (MIT)
 //
-// Copyright (c) 2018 www.open3d.org
+// Initial project was copyrighted (c) 2016-2018, www.open3d.org
+// A fork of their project is avilable at www.github.com/Sahloul/Open3D-legacy
+//
+// Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -60,11 +63,11 @@ bool FileExists(const std::string &filename);
 bool RemoveFile(const std::string &filename);
 
 bool ListFilesInDirectory(const std::string &directory,
-		std::vector<std::string> &filenames);
+        std::vector<std::string> &filenames);
 
 bool ListFilesInDirectoryWithExtension(const std::string &directory,
-		const std::string &extname, std::vector<std::string> &filenames);
+        const std::string &extname, std::vector<std::string> &filenames);
 
-}	// namespace three::filesystem
+}   // namespace three::filesystem
 
-}	// namespace three
+}   // namespace three
