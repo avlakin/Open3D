@@ -31,7 +31,7 @@
 #include "py3d_core_trampoline.h"
 
 #include <Core/Geometry/KDTreeFlann.h>
-using namespace three;
+using namespace open3d;
 
 void pybind_kdtreeflann(py::module &m)
 {

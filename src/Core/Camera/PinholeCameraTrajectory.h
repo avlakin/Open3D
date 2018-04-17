@@ -34,7 +34,7 @@
 
 #include <Core/Camera/PinholeCameraIntrinsic.h>
 
-namespace three {
+namespace open3d {
 
 class PinholeCameraTrajectory : public IJsonConvertible
 {
@@ -57,4 +57,4 @@ public:
 std::shared_ptr<PinholeCameraTrajectory> CreatePinholeCameraTrajectoryFromFile(
         const std::string &filename);
 
-}   // namespace three
+}   // namespace open3d

@@ -36,7 +36,7 @@
 #include <Core/Registration/GlobalOptimizationConvergenceCriteria.h>
 #include <IO/ClassIO/PoseGraphIO.h>
 
-using namespace three;
+using namespace open3d;
 
 template <class GlobalOptimizationMethodBase = GlobalOptimizationMethod>
 class PyGlobalOptimizationMethod : public GlobalOptimizationMethodBase

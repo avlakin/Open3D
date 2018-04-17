@@ -32,7 +32,7 @@
 #include <Core/Utility/Console.h>
 #include <Core/Utility/FileSystem.h>
 
-namespace three{
+namespace open3d {
 
 bool ReadFeature(const std::string &filename, Feature &feature)
 {
@@ -44,4 +44,4 @@ bool WriteFeature(const std::string &filename, const Feature &feature)
     return WriteFeatureToBIN(filename, feature);
 }
 
-}   // namespace three
+}   // namespace open3d

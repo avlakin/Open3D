@@ -39,7 +39,7 @@
 #include <Core/Camera/PinholeCameraIntrinsic.h>
 #include <Core/Utility/Eigen.h>
 
-namespace three {
+namespace open3d {
 
 class RGBDImage;
 
@@ -54,4 +54,4 @@ std::tuple<bool, Eigen::Matrix4d, Eigen::Matrix6d>
         RGBDOdometryJacobianFromHybridTerm(),
         const OdometryOption &option = OdometryOption());
 
-}   // namespace three
+}   // namespace open3d

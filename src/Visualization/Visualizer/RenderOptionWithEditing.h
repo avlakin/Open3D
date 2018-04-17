@@ -33,7 +33,7 @@
 
 #include <Visualization/Visualizer/RenderOption.h>
 
-namespace three {
+namespace open3d {
 
 class RenderOptionWithEditing : public RenderOption
 {
@@ -72,4 +72,4 @@ public:
     double pointcloud_picker_sphere_size_ = PICKER_SPHERE_SIZE_DEFAULT;
 };
 
-}   // namespace three
+}   // namespace open3d

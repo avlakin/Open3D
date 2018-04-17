@@ -33,7 +33,7 @@
 #include <Visualization/Utility/SelectionPolygon.h>
 #include <Visualization/Visualizer/RenderOptionWithEditing.h>
 
-namespace three{
+namespace open3d {
 
 namespace glsl {
 
@@ -181,6 +181,6 @@ bool Simple2DShaderForSelectionPolygon::PrepareBinding(const Geometry &geometry,
     return true;
 }
 
-}   // namespace three::glsl
+}   // namespace open3d::glsl
 
-}   // namespace three
+}   // namespace open3d

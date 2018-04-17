@@ -31,7 +31,7 @@
 
 #include <IO/ClassIO/PoseGraphIO.h>
 
-namespace three{
+namespace open3d {
 
 std::shared_ptr<PoseGraph> CreatePoseGraphFromFile(
         const std::string &filename)
@@ -41,4 +41,4 @@ std::shared_ptr<PoseGraph> CreatePoseGraphFromFile(
     return pose_graph;
 }
 
-}   // namespace three
+}   // namespace open3d

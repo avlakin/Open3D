@@ -33,7 +33,7 @@
 #include <Eigen/Core>
 #include <Visualization/Shader/ShaderWrapper.h>
 
-namespace three {
+namespace open3d {
 
 namespace glsl {
 
@@ -95,6 +95,6 @@ protected:
             std::vector<Eigen::Vector3f> &points) final;
 };
 
-}   // namespace three::glsl
+}   // namespace open3d::glsl
 
-}   // namespace three
+}   // namespace open3d

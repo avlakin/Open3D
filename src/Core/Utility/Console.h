@@ -34,7 +34,7 @@
 
 #include <Eigen/Core>
 
-namespace three {
+namespace open3d {
 
 #define DEFAULT_IO_BUFFER_SIZE 1024
 
@@ -85,4 +85,4 @@ bool ProgramOptionExists(int argc, char **argv, const std::string &option);
 bool ProgramOptionExistsAny(int argc, char **argv,
         const std::vector<std::string> &options);
 
-}   // namespace three
+}   // namespace open3d

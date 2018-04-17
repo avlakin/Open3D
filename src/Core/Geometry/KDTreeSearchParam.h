@@ -29,7 +29,7 @@
 
 #pragma once
 
-namespace three {
+namespace open3d {
 
 class KDTreeSearchParam
 {
@@ -82,4 +82,4 @@ public:
     int max_nn_;
 };
 
-}   // namespace three
+}   // namespace open3d

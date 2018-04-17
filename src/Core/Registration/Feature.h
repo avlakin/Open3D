@@ -34,7 +34,7 @@
 #include <Eigen/Core>
 #include <Core/Geometry/KDTreeSearchParam.h>
 
-namespace three {
+namespace open3d {
 
 class PointCloud;
 
@@ -53,4 +53,4 @@ public:
 std::shared_ptr<Feature> ComputeFPFHFeature(const PointCloud &input,
         const KDTreeSearchParam &search_param = KDTreeSearchParamKNN());
 
-}   // namespace three
+}   // namespace open3d

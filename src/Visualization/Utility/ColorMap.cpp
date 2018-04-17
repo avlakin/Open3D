@@ -31,7 +31,7 @@
 
 #include <Core/Utility/Console.h>
 
-namespace three{
+namespace open3d {
 
 namespace {
 
@@ -143,4 +143,4 @@ void SetGlobalColorMap(ColorMap::ColorMapOption option)
     }
 }
 
-}   // namespace three
+}   // namespace open3d

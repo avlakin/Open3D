@@ -33,7 +33,7 @@
 
 #include <Core/Utility/Console.h>
 
-namespace three{
+namespace open3d {
 
 Timer::Timer() :
         start_time_in_milliseconds_(0.0), end_time_in_milliseconds_(0.0)
@@ -116,4 +116,4 @@ void FPSTimer::Signal()
     }
 }
 
-}   // namespace three
+}   // namespace open3d

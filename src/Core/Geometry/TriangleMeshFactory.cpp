@@ -31,7 +31,7 @@
 
 #include <IO/ClassIO/TriangleMeshIO.h>
 
-namespace three{
+namespace open3d {
 
 std::shared_ptr<TriangleMesh> CreateMeshFromFile(const std::string &filename)
 {
@@ -238,4 +238,4 @@ std::shared_ptr<TriangleMesh> CreateMeshCoordinateFrame(double size/* = 1.0*/,
     return mesh_frame;
 }
 
-}   // namespace three
+}   // namespace open3d

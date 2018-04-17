@@ -34,7 +34,7 @@
 #include <Eigen/Core>
 #include <Core/Geometry/Geometry3D.h>
 
-namespace three {
+namespace open3d {
 
 class PointCloud;
 
@@ -58,4 +58,4 @@ public:
     std::vector<size_t> picked_indices_;
 };
 
-}   // namespace three
+}   // namespace open3d

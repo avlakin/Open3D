@@ -32,7 +32,7 @@
 #include <string>
 #include <Core/Registration/PoseGraph.h>
 
-namespace three {
+namespace open3d {
 
 /// The general entrance for reading a PoseGraph from a file.
 /// The function calls read functions based on the extension name of filename.
@@ -44,4 +44,4 @@ bool ReadPoseGraph(const std::string &filename, PoseGraph &pose_graph);
 /// \return return true if the write function is successful, false otherwise.
 bool WritePoseGraph(const std::string &filename, const PoseGraph &pose_graph);
 
-}   // namespace three
+}   // namespace open3d

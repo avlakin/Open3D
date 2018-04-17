@@ -33,7 +33,7 @@
 
 #include <IO/ClassIO/IJsonConvertible.h>
 
-namespace three {
+namespace open3d {
 
 class RenderOption : public IJsonConvertible
 {
@@ -190,4 +190,4 @@ public:
     bool show_coordinate_frame_ = false;
 };
 
-}   // namespace three
+}   // namespace open3d

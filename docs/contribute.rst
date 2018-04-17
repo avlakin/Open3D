@@ -51,7 +51,7 @@ Consistent coding style is an important factor of code readability. Some princip
 We generally follow the `Google C++ Style Guide <https://google.github.io/styleguide/cppguide.html>`_, with a few modifications:
 
 * Use ``#pragma once`` for header guard.
-* All Open3D classes and functions are nested in namespace ``three``.
+* All Open3D classes and functions are nested in namespace ``open3d``.
 * Avoid using naked pointers. Use ``std::shared_ptr`` and ``std::unique_ptr`` instead.
 * C++11 features are recommended.
 

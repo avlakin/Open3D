@@ -40,7 +40,7 @@ const std::vector<double> Sobel31 = { -1.0, 0.0, 1.0 };
 const std::vector<double> Sobel32 = { 1.0, 2.0, 1.0 };
 }   //unnamed namespace
 
-namespace three {
+namespace open3d {
 
 void Image::Clear()
 {
@@ -299,4 +299,4 @@ std::shared_ptr<Image> FlipImage(const Image &input)
     return output;
 }
 
-}   // namespace three
+}   // namespace open3d

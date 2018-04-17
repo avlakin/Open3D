@@ -29,7 +29,7 @@
 
 #pragma once
 
-namespace three {
+namespace open3d {
 
 class Geometry
 {
@@ -60,4 +60,4 @@ private:
     int dimension_ = 3;
 };
 
-}   // namespace three
+}   // namespace open3d

@@ -35,7 +35,7 @@
 #include <Core/Utility/Helper.h>
 #include <Core/Integration/MarchingCubesConst.h>
 
-namespace three{
+namespace open3d {
 
 UniformTSDFVolume::UniformTSDFVolume(double length, int resolution,
         double sdf_trunc, bool with_color,
@@ -360,4 +360,4 @@ double UniformTSDFVolume::GetTSDFAt(const Eigen::Vector3d &p)
             ));
 }
 
-}   // namespace three
+}   // namespace open3d

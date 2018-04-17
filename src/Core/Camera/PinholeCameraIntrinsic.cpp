@@ -33,7 +33,7 @@
 #include <json/json.h>
 #include <Core/Utility/Console.h>
 
-namespace three{
+namespace open3d {
 
 const PinholeCameraIntrinsic PinholeCameraIntrinsic::PrimeSenseDefault =
         PinholeCameraIntrinsic(640, 480, 525.0, 525.0, 319.5, 239.5);
@@ -79,4 +79,4 @@ bool PinholeCameraIntrinsic::ConvertFromJsonValue(const Json::Value &value)
     return true;
 }
 
-}   // namespace three
+}   // namespace open3d

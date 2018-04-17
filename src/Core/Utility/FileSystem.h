@@ -32,7 +32,7 @@
 #include <string>
 #include <vector>
 
-namespace three {
+namespace open3d {
 
 namespace filesystem {
 
@@ -68,6 +68,6 @@ bool ListFilesInDirectory(const std::string &directory,
 bool ListFilesInDirectoryWithExtension(const std::string &directory,
         const std::string &extname, std::vector<std::string> &filenames);
 
-}   // namespace three::filesystem
+}   // namespace open3d::filesystem
 
-}   // namespace three
+}   // namespace open3d

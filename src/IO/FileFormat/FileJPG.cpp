@@ -32,7 +32,7 @@
 #include <jpeglib.h>
 #include <Core/Utility/Console.h>
 
-namespace three{
+namespace open3d {
 
 bool ReadImageFromJPG(const std::string &filename, Image &image)
 {
@@ -140,4 +140,4 @@ bool WriteImageToJPG(const std::string &filename, const Image &image,
     return true;
 }
 
-}   // namespace three
+}   // namespace open3d

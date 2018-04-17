@@ -34,7 +34,7 @@
 #include <Core/Camera/PinholeCameraTrajectory.h>
 #include <IO/ClassIO/IJsonConvertibleIO.h>
 #include <IO/ClassIO/PinholeCameraTrajectoryIO.h>
-using namespace three;
+using namespace open3d;
 
 void pybind_camera(py::module &m)
 {

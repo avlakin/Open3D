@@ -34,7 +34,7 @@
 #include <Eigen/Core>
 #include <Core/Geometry/Geometry3D.h>
 
-namespace three {
+namespace open3d {
 
 class PointCloud;
 
@@ -89,4 +89,4 @@ std::shared_ptr<LineSet> CreateLineSetFromPointCloudCorrespondences(
         const PointCloud &cloud0, const PointCloud &cloud1,
         const std::vector<std::pair<int, int>> &correspondences);
 
-}   // namespace three
+}   // namespace open3d

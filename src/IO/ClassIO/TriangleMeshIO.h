@@ -32,7 +32,7 @@
 #include <string>
 #include <Core/Geometry/TriangleMesh.h>
 
-namespace three {
+namespace open3d {
 
 /// The general entrance for reading a TriangleMesh from a file
 /// The function calls read functions based on the extension name of filename.
@@ -53,4 +53,4 @@ bool WriteTriangleMeshToPLY(const std::string &filename,
         const TriangleMesh &mesh, bool write_ascii = false,
         bool compressed = false);
 
-}   // namespace three
+}   // namespace open3d

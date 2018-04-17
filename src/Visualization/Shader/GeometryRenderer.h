@@ -40,7 +40,7 @@
 #include <Visualization/Shader/ImageMaskShader.h>
 #include <Visualization/Shader/PickingShader.h>
 
-namespace three {
+namespace open3d {
 
 namespace glsl {
 
@@ -196,6 +196,6 @@ protected:
     PhongShaderForTriangleMesh phong_shader_;
 };
 
-}   // namespace three::glsl
+}   // namespace open3d::glsl
 
-}   // namespace three
+}   // namespace open3d

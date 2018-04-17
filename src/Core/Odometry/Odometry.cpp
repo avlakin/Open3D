@@ -36,7 +36,7 @@
 #include <Core/Utility/Eigen.h>
 #include <Core/Utility/Timer.h>
 
-namespace three {
+namespace open3d {
 
 namespace {
 
@@ -542,4 +542,4 @@ std::tuple<bool, Eigen::Matrix4d, Eigen::Matrix6d>
     }
 }
 
-}   // namespace three
+}   // namespace open3d

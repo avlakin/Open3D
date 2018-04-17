@@ -35,7 +35,7 @@
 
 #include <Core/Geometry/Geometry3D.h>
 
-namespace three {
+namespace open3d {
 
 class TriangleMesh : public Geometry3D
 {
@@ -163,4 +163,4 @@ std::shared_ptr<TriangleMesh> CreateMeshArrow(double cylinder_radius = 1.0,
 std::shared_ptr<TriangleMesh> CreateMeshCoordinateFrame(double size = 1.0,
         const Eigen::Vector3d &origin = Eigen::Vector3d(0.0, 0.0, 0.0));
 
-}   // namespace three
+}   // namespace open3d

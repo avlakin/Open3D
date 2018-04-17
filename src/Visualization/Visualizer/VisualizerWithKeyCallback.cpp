@@ -29,7 +29,7 @@
 
 #include "VisualizerWithKeyCallback.h"
 
-namespace three{
+namespace open3d {
 
 VisualizerWithKeyCallback::VisualizerWithKeyCallback()
 {
@@ -125,4 +125,4 @@ std::string VisualizerWithKeyCallback::PrintKeyToString(int key)
     return std::string("Unknown");
 }
 
-}   // namespace three
+}   // namespace open3d

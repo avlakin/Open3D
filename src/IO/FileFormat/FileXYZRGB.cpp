@@ -32,7 +32,7 @@
 #include <cstdio>
 #include <Core/Utility/Console.h>
 
-namespace three{
+namespace open3d {
 
 bool ReadPointCloudFromXYZRGB(const std::string &filename,
         PointCloud &pointcloud)
@@ -89,4 +89,4 @@ bool WritePointCloudToXYZRGB(const std::string &filename,
     return true;
 }
 
-}   // namespace three
+}   // namespace open3d

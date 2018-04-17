@@ -33,7 +33,7 @@
 #include <Core/Utility/Console.h>
 #include <Core/Geometry/PointCloud.h>
 
-namespace three{
+namespace open3d {
 
 bool CorrespondenceCheckerBasedOnEdgeLength::Check(const PointCloud &source,
         const PointCloud &target, const CorrespondenceSet &corres,
@@ -91,4 +91,4 @@ bool CorrespondenceCheckerBasedOnNormal::Check(const PointCloud &source,
     return true;
 }
 
-}   // namespace three
+}   // namespace open3d

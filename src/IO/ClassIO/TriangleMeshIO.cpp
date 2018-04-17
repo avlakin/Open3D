@@ -33,7 +33,7 @@
 #include <Core/Utility/Console.h>
 #include <Core/Utility/FileSystem.h>
 
-namespace three{
+namespace open3d {
 
 namespace {
 
@@ -93,4 +93,4 @@ bool WriteTriangleMesh(const std::string &filename, const TriangleMesh &mesh,
     return success;
 }
 
-}   // namespace three
+}   // namespace open3d

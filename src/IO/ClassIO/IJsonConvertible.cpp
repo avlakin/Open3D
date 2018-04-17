@@ -31,7 +31,7 @@
 
 #include <json/json.h>
 
-namespace three{
+namespace open3d {
 
 bool IJsonConvertible::EigenVector3dFromJsonArray(Eigen::Vector3d &vec,
         const Json::Value &value)
@@ -150,4 +150,4 @@ bool IJsonConvertible::EigenMatrix6dToJsonArray(const Eigen::Matrix6d &mat,
     return true;
 }
 
-}   // namespace three
+}   // namespace open3d

@@ -39,7 +39,7 @@ bool ReadLogFile(const std::string &filename,
         std::vector<std::tuple<int, int, int>> &metadata,
         std::vector<Eigen::Matrix4d> &transformations)
 {
-    using namespace three;
+    using namespace open3d;
     metadata.clear();
     transformations.clear();
     FILE * f = fopen(filename.c_str(), "r");
@@ -107,7 +107,7 @@ void PrintHelp()
 
 int main(int argc, char *argv[])
 {
-    using namespace three;
+    using namespace open3d;
 
     if (argc <= 1 || ProgramOptionExists(argc, argv, "--help") ||
             ProgramOptionExists(argc, argv, "-h")) {

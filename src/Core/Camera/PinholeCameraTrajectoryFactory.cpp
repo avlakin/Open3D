@@ -31,7 +31,7 @@
 
 #include <IO/ClassIO/PinholeCameraTrajectoryIO.h>
 
-namespace three{
+namespace open3d {
 
 std::shared_ptr<PinholeCameraTrajectory> CreatePinholeCameraTrajectoryFromFile(
         const std::string &filename)
@@ -41,4 +41,4 @@ std::shared_ptr<PinholeCameraTrajectory> CreatePinholeCameraTrajectoryFromFile(
     return trajectory;
 }
 
-}   // namespace three
+}   // namespace open3d

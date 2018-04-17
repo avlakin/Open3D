@@ -37,7 +37,7 @@
 #include <Core/Geometry/KDTreeFlann.h>
 #include <Core/Registration/Feature.h>
 
-namespace three {
+namespace open3d {
 
 namespace {
 
@@ -403,4 +403,4 @@ Eigen::Matrix6d GetInformationMatrixFromPointClouds(
     return std::move(GTG);
 }
 
-}   // namespace three
+}   // namespace open3d

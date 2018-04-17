@@ -37,7 +37,7 @@
 #include <Visualization/Visualizer/ViewControlWithCustomAnimation.h>
 #include <IO/ClassIO/IJsonConvertibleIO.h>
 
-namespace three{
+namespace open3d {
 
 VisualizerWithCustomAnimation::VisualizerWithCustomAnimation()
 {
@@ -309,4 +309,4 @@ void VisualizerWithCustomAnimation::MouseButtonCallback(GLFWwindow* window,
     }
 }
 
-}   // namespace three
+}   // namespace open3d

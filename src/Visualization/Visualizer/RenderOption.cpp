@@ -32,7 +32,7 @@
 #include <Core/Utility/Console.h>
 #include <json/json.h>
 
-namespace three{
+namespace open3d {
 
 const double RenderOption::POINT_SIZE_MAX = 25.0;
 const double RenderOption::POINT_SIZE_MIN = 1.0;
@@ -231,4 +231,4 @@ bool RenderOption::ConvertFromJsonValue(const Json::Value &value)
     return true;
 }
 
-}   // namespace three
+}   // namespace open3d

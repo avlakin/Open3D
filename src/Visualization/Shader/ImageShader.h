@@ -32,7 +32,7 @@
 #include <Core/Geometry/Image.h>
 #include <Visualization/Shader/ShaderWrapper.h>
 
-namespace three {
+namespace open3d {
 
 namespace glsl {
 
@@ -85,6 +85,6 @@ protected:
             Image &render_image) final;
 };
 
-}   // namespace three::glsl
+}   // namespace open3d::glsl
 
-}   // namespace three
+}   // namespace open3d

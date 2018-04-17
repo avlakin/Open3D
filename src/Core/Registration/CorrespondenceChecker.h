@@ -36,7 +36,7 @@
 
 #include <Core/Registration/TransformationEstimation.h>
 
-namespace three {
+namespace open3d {
 
 class PointCloud;
 
@@ -120,4 +120,4 @@ public:
     double normal_angle_threshold_;
 };
 
-}   // namespace three
+}   // namespace open3d

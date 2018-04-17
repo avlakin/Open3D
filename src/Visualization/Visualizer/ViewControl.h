@@ -35,7 +35,7 @@
 #include <Visualization/Utility/BoundingBox.h>
 #include <Visualization/Utility/GLHelper.h>
 
-namespace three {
+namespace open3d {
 
 class ViewControl
 {
@@ -158,4 +158,4 @@ protected:
     GLHelper::GLMatrix4f MVP_matrix_;
 };
 
-}   // namespace three
+}   // namespace open3d

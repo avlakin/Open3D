@@ -37,7 +37,7 @@
 #include <Core/Registration/TransformationEstimation.h>
 #include <Core/Utility/Eigen.h>
 
-namespace three {
+namespace open3d {
 
 class PointCloud;
 class Feature;
@@ -137,4 +137,4 @@ Eigen::Matrix6d GetInformationMatrixFromPointClouds(
         double max_correspondence_distance,
         const Eigen::Matrix4d &transformation);
 
-}   // namespace three
+}   // namespace open3d

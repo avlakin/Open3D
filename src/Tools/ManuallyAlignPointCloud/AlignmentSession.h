@@ -32,7 +32,7 @@
 #include <IO/IO.h>
 #include <Visualization/Visualization.h>
 
-namespace three {
+namespace open3d {
 
 class AlignmentSession : public IJsonConvertible
 {
@@ -51,4 +51,4 @@ public:
     bool with_scaling_ = true;
 };
 
-}       // namespace three
+}       // namespace open3d

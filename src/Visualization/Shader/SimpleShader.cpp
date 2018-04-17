@@ -35,7 +35,7 @@
 #include <Visualization/Shader/Shader.h>
 #include <Visualization/Utility/ColorMap.h>
 
-namespace three{
+namespace open3d {
 
 namespace glsl {
 
@@ -319,6 +319,6 @@ bool SimpleShaderForTriangleMesh::PrepareBinding(const Geometry &geometry,
     return true;
 }
 
-}   // namespace three::glsl
+}   // namespace open3d::glsl
 
-}   // namespace three
+}   // namespace open3d

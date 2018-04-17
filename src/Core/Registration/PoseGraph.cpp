@@ -32,7 +32,7 @@
 #include <json/json.h>
 #include <Core/Utility/Console.h>
 
-namespace three{
+namespace open3d {
 
 PoseGraphNode::~PoseGraphNode()
 {
@@ -211,4 +211,4 @@ bool PoseGraph::ConvertFromJsonValue(const Json::Value &value)
     return true;
 }
 
-}   // namespace three
+}   // namespace open3d

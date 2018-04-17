@@ -35,7 +35,7 @@
 #include <Core/Geometry/Geometry2D.h>
 #include <Core/Geometry/Image.h>
 
-namespace three {
+namespace open3d {
 
 class PointCloud;
 class ViewControl;
@@ -86,4 +86,4 @@ public:
     SectionPolygonType polygon_type_ = SectionPolygonType::Unfilled;
 };
 
-}   // namespace three
+}   // namespace open3d

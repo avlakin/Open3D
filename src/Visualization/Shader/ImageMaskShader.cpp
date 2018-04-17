@@ -35,7 +35,7 @@
 #include <Visualization/Shader/Shader.h>
 #include <Visualization/Visualizer/RenderOptionWithEditing.h>
 
-namespace three{
+namespace open3d {
 
 namespace glsl {
 
@@ -213,4 +213,4 @@ bool ImageMaskShaderForImage::PrepareBinding(const Geometry &geometry,
 
 }   // namespace glsl
 
-}   // namespace three
+}   // namespace open3d

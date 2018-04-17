@@ -31,7 +31,7 @@
 
 #include <Visualization/Visualizer/ViewControl.h>
 
-namespace three {
+namespace open3d {
 
 class ViewControlWithEditing : public ViewControl
 {
@@ -90,4 +90,4 @@ protected:
     bool is_view_locked_ = false;
 };
 
-}   // namespace three
+}   // namespace open3d

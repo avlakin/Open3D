@@ -35,7 +35,7 @@
 #include <IO/ClassIO/IJsonConvertible.h>
 #include <Core/Utility/Eigen.h>
 
-namespace three {
+namespace open3d {
 
 class PoseGraphNode : public IJsonConvertible
 {
@@ -109,4 +109,4 @@ public:
 std::shared_ptr<PoseGraph> CreatePoseGraphFromFile(
         const std::string &filename);
 
-}   // namespace three
+}   // namespace open3d

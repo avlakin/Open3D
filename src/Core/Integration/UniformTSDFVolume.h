@@ -31,7 +31,7 @@
 
 #include <Core/Integration/TSDFVolume.h>
 
-namespace three {
+namespace open3d {
 
 class UniformTSDFVolume : public TSDFVolume {
 public:
@@ -80,4 +80,4 @@ private:
     double GetTSDFAt(const Eigen::Vector3d &p);
 };
 
-}   // namespace three
+}   // namespace open3d
