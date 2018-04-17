@@ -3,7 +3,7 @@ project(glew C)
 cmake_minimum_required(VERSION 3.0.0)
 set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS true)
 
-if (Open3D_HEADLESS_RENDERING)
+if (OPEN3D_HEADLESS_RENDERING)
 	set(GLEW_OSMESA ON)
 else ()
 	set(GLEW_OSMESA OFF)
@@ -22,7 +22,7 @@ if (GLEW_OSMESA)
 	set (X11_LIBRARIES)
 endif ()
 
-include_directories("${Open3D_SOURCE_DIR}/External/glew/include")
+include_directories("${CMAKE_SOURCE_DIR}/External/glew/include")
 
 # SET LIBNAME
 set(GLEW_LIBRARY glew)
@@ -40,7 +40,7 @@ set_target_properties(${GLEW_LIBRARY} PROPERTIES
 		FOLDER "External"
 )
 
-set(GLEW_INCLUDE_DIRS "${Open3D_SOURCE_DIR}/External/glew/include")
+set(GLEW_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/External/glew/include")
 set(GLEW_LIBRARIES "glew")
 set(GLEW_INCLUDE_DIRS ${GLEW_INCLUDE_DIRS} PARENT_SCOPE)
 set(GLEW_LIBRARIES ${GLEW_LIBRARIES} PARENT_SCOPE)

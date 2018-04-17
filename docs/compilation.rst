@@ -18,23 +18,19 @@ We use `pybind11 <https://github.com/pybind/pybind11>`_ to build the Python bind
 
 .. Note:: Python binding issues can also refer to `pybind11 document page <http://pybind11.readthedocs.io/en/stable/faq.html>`_.
 
-If you do not want Python binding, turn off the compilation options ``Open3D_BUILD_PYTHON_BINDING`` and ``Open3D_BUILD_PYTHON_BINDING_TESTS``.
+If you do not want Python binding, turn off the compilation options ``OPEN3D_BUILD_PYTHON_BINDING`` and ``OPEN3D_BUILD_PYTHON_BINDING_TESTS``.
 
 Dependencies
 ================
 
 On Windows, all dependent libraries are built from source code. Dependencies are included in ``src/External`` folder.
 
-On Linux and OS X, the default behavior of Open3D is to find packages installed on the OS and link to them. If the required package(s) is not found, it is built from source code. This avoids compilation of dependent libraries as much as possible, and thus significantly reduces compilation time. However, sometimes there can be compatibility issues due to version conflict. In this case, you can manual turn off the compilation option ``Open3D_USE_NATIVE_DEPENDENCY_BUILD`` to force building dependent libraries from source code:
-
-.. code-block:: bash
-
-    cmake -DOpen3D_USE_NATIVE_DEPENDENCY_BUILD=OFF ../src
+On Linux and OS X, the default behavior of Open3D is to find packages installed on the OS and link to them. If the required package(s) is not found, it is built from source code. This avoids compilation of dependent libraries as much as possible, and thus significantly reduces compilation time.
 
 OpenMP
 ==========
 
-We automatically detect if the C++ compiler supports OpenMP and compile Open3D with it if the compilation option ``Open3D_USE_OPENMP`` is ``ON``. OpenMP can greatly accelerate computation on a multi-core CPU.
+We automatically detect if the C++ compiler supports OpenMP and compile Open3D with it if the compilation option ``OPEN3D_USE_OPENMP`` is ``ON``. OpenMP can greatly accelerate computation on a multi-core CPU.
 
 The default LLVM compiler on OS X does not support OpenMP. A workaround is to install a C++ compiler with OpenMP support, such as gcc, then use it to compile Open3D. For example, starting from a clean build directory, run
 

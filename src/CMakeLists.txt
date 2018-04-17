@@ -4,23 +4,24 @@ if (NOT CMAKE_VERSION VERSION_LESS "3.0")
     cmake_policy(SET CMP0054 OLD)
 endif()
 
-project(Open3D)
+project(open3d)
 
-set(Open3D_VERSION_MAJOR "1")
-set(Open3D_VERSION_MINOR "0")
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${Open3D_SOURCE_DIR}/CMake)
+set(OPEN3D_VERSION_MAJOR "0")
+set(OPEN3D_VERSION_MINOR "1")
+set(OPEN3D_VERSION_PATCH "1")
+set(OPEN3D_VERSION "${OPEN3D_VERSION_MAJOR}.${OPEN3D_VERSION_MINOR}.${OPEN3D_VERSION_PATCH}")
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/CMake)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # config options
-option(Open3D_BUILD_TESTS "Build the Open3D test programs" ON)
-option(Open3D_BUILD_LIBREALSENSE "Build support for Intel RealSense camera" ON)
-option(Open3D_USE_OPENMP "Use OpenMP multi-threading" ON)
-option(Open3D_BUILD_PYTHON_BINDING "Build Python binding for Open3D" ON)
-option(Open3D_BUILD_PYTHON_BINDING_TESTS "Copy test files for Open3D Python binding" ON)
-option(Open3D_BUILD_PYTHON_BINDING_TUTORIALS "Copy tutorial files for Open3D Python binding" ON)
-option(Open3D_USE_NATIVE_DEPENDENCY_BUILD "Prioritize using native dependency build" ON)
-option(Open3D_HEADLESS_RENDERING "Use OSMesa for headless rendering" OFF)
+option(OPEN3D_BUILD_TESTS "Build the Open3D test programs" ON)
+option(OPEN3D_BUILD_LIBREALSENSE "Build support for Intel RealSense camera" ON)
+option(OPEN3D_USE_OPENMP "Use OpenMP multi-threading" ON)
+option(OPEN3D_BUILD_PYTHON_BINDING "Build Python binding for Open3D" ON)
+option(OPEN3D_BUILD_PYTHON_BINDING_TESTS "Copy test files for Open3D Python binding" ON)
+option(OPEN3D_BUILD_PYTHON_BINDING_TUTORIALS "Copy tutorial files for Open3D Python binding" ON)
+option(OPEN3D_HEADLESS_RENDERING "Use OSMesa for headless rendering" OFF)
 
 # default built type
 if(NOT CMAKE_BUILD_TYPE)
@@ -31,18 +32,18 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 # set include directories
 include_directories(
-	${Open3D_SOURCE_DIR}
-	${Open3D_SOURCE_DIR}/External
-	${Open3D_SOURCE_DIR}/External/librealsense/include
+	${CMAKE_SOURCE_DIR}
+	${CMAKE_SOURCE_DIR}/External
+	${CMAKE_SOURCE_DIR}/External/librealsense/include
 	)
 
 # all static link, no dynamic links
-set(Open3D_LIB_TYPE STATIC)
+set(OPEN3D_LIB_TYPE STATIC)
 
 # if dynamic link is added, use if (WIN32) macro
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${Open3D_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${Open3D_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${Open3D_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Set OS-specific things here
 if(WIN32)
@@ -78,12 +79,12 @@ elseif(UNIX)
 	# disable BUILD_LIBREALSENSE since it is not fully supported on Linux
 	message(STATUS "Compiling on Unix")
 	message(STATUS "Disable BUILD_LIBREALSENSE since it is not fully supported on Linux.")
-	set(Open3D_BUILD_LIBREALSENSE OFF)
+	set(OPEN3D_BUILD_LIBREALSENSE OFF)
 endif(WIN32)
 
 # Set OpenMP
-message(STATUS "Open3D_USE_OPENMP=${Open3D_USE_OPENMP}")
-if (Open3D_USE_OPENMP)
+message(STATUS "OPEN3D_USE_OPENMP=${OPEN3D_USE_OPENMP}")
+if (OPEN3D_USE_OPENMP)
 	find_package(OpenMP)
 	if(OPENMP_FOUND)
 		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
@@ -94,9 +95,9 @@ if (Open3D_USE_OPENMP)
 	endif()
 endif()
 
-message(STATUS "Open3D_BUILD_LIBREALSENSE=${Open3D_BUILD_LIBREALSENSE}")
-message(STATUS "Open3D_BUILD_PYTHON_BINDING=${Open3D_BUILD_PYTHON_BINDING}")
-message(STATUS "Open3D_BUILD_PYTHON_BINDING_TESTS=${Open3D_BUILD_PYTHON_BINDING_TESTS}")
+message(STATUS "OPEN3D_BUILD_LIBREALSENSE=${OPEN3D_BUILD_LIBREALSENSE}")
+message(STATUS "OPEN3D_BUILD_PYTHON_BINDING=${OPEN3D_BUILD_PYTHON_BINDING}")
+message(STATUS "OPEN3D_BUILD_PYTHON_BINDING_TESTS=${OPEN3D_BUILD_PYTHON_BINDING_TESTS}")
 
 # Handling dependencies
 add_subdirectory(External)
@@ -113,17 +114,17 @@ add_subdirectory(Tools)
 add_subdirectory(IO)
 add_subdirectory(Visualization)
 
-message(STATUS "Open3D_BUILD_TESTS=${Open3D_BUILD_TESTS}")
-if(Open3D_BUILD_TESTS)
+message(STATUS "OPEN3D_BUILD_TESTS=${OPEN3D_BUILD_TESTS}")
+if(OPEN3D_BUILD_TESTS)
 	add_subdirectory(Test)
-endif(Open3D_BUILD_TESTS)
+endif(OPEN3D_BUILD_TESTS)
 
-if(EXISTS "${Open3D_SOURCE_DIR}/Experimental/CMakeLists.txt")
+if(EXISTS "${CMAKE_SOURCE_DIR}/Experimental/CMakeLists.txt")
 	message(STATUS "Build experimental projects")
 	add_subdirectory(Experimental)
-endif(EXISTS "${Open3D_SOURCE_DIR}/Experimental/CMakeLists.txt")
+endif(EXISTS "${CMAKE_SOURCE_DIR}/Experimental/CMakeLists.txt")
 
 # Python binding
-if (Open3D_BUILD_PYTHON_BINDING)
+if (OPEN3D_BUILD_PYTHON_BINDING)
 	add_subdirectory(Python)
-endif(Open3D_BUILD_PYTHON_BINDING)
+endif(OPEN3D_BUILD_PYTHON_BINDING)

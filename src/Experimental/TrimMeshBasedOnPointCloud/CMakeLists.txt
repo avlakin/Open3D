@@ -1,7 +1,8 @@
 file(GLOB HEADER_FILES "*.h")
 file(GLOB SOURCE_FILES "*.cpp")
-add_executable(TrimMeshBasedOnPointCloud ${HEADER_FILES} ${SOURCE_FILES})
-target_link_libraries(TrimMeshBasedOnPointCloud Visualization IO Core)
-set_target_properties(TrimMeshBasedOnPointCloud PROPERTIES
+project(TrimMeshBasedOnPointCloud)
+add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
+target_link_libraries(${PROJECT_NAME} Visualization IO Core)
+set_target_properties(${PROJECT_NAME} PROPERTIES
 		FOLDER "Experimental"
 	RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Experimental")
