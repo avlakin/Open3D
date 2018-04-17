@@ -16,8 +16,8 @@ def draw_registration_result_original_color(source, target, transformation):
 if __name__ == "__main__":
 
     print("1. Load two point clouds and show initial pose")
-    source = read_point_cloud("../../TestData/ColoredICP/frag_115.ply")
-    target = read_point_cloud("../../TestData/ColoredICP/frag_116.ply")
+    source = read_point_cloud("../../../test/TestData/ColoredICP/frag_115.ply")
+    target = read_point_cloud("../../../test/TestData/ColoredICP/frag_116.ply")
 
     # draw initial alignment
     current_transformation = np.identity(4)

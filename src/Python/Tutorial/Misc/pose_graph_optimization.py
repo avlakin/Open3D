@@ -21,7 +21,7 @@ if __name__ == "__main__":
     print("")
 
     print("Optimizing Fragment PoseGraph using open3d ...")
-    data_path = "../../TestData/GraphOptimization/"
+    data_path = "../../../test/TestData/GraphOptimization/"
     pose_graph_fragment = read_pose_graph(data_path +
             "pose_graph_example_fragment.json")
     print(pose_graph_fragment)

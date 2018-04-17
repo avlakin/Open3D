@@ -13,13 +13,13 @@ if __name__ == "__main__":
 
     print("Testing image in open3d ...")
     print("Convert an image to numpy and draw it with matplotlib.")
-    x = read_image("../../TestData/image.PNG")
+    x = read_image("../../../test/TestData/image.PNG")
     print(x)
     plt.imshow(np.asarray(x))
     plt.show()
 
     print("Convet a numpy image to Image and show it with DrawGeomtries().")
-    y = mpimg.imread("../../TestData/lena_color.jpg")
+    y = mpimg.imread("../../../test/TestData/lena_color.jpg")
     print(y.shape)
     yy = Image(y)
     print(yy)
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     plt.show()
 
     print("Testing basic image processing module.")
-    im_raw = mpimg.imread("../../TestData/lena_color.jpg")
+    im_raw = mpimg.imread("../../../test/TestData/lena_color.jpg")
     im = Image(im_raw)
     im_g3 = filter_image(im, ImageFilterType.Gaussian3)
     im_g5 = filter_image(im, ImageFilterType.Gaussian5)

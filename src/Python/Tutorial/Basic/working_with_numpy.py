@@ -22,10 +22,10 @@ if __name__ == "__main__":
     # Pass xyz to Open3D.PointCloud and visualize
     pcd = PointCloud()
     pcd.points = Vector3dVector(xyz)
-    write_point_cloud("../../TestData/sync.ply", pcd)
+    write_point_cloud("../../../test/TestData/sync.ply", pcd)
 
     # Load saved point cloud and transform it into numpy array
-    pcd_load = read_point_cloud("../../TestData/sync.ply")
+    pcd_load = read_point_cloud("../../../test/TestData/sync.ply")
     xyz_load = np.asarray(pcd_load.points)
     print('xyz_load')
     print(xyz_load)
