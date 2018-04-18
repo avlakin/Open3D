@@ -7,14 +7,14 @@ from trajectory_io import *
 import numpy as np
 
 if __name__ == "__main__":
-    camera_poses = read_trajectory("../../../test/TestData/RGBD/odometry.log")
+    camera_poses = read_trajectory("../../../../data/RGBD/odometry.log")
     volume = ScalableTSDFVolume(voxel_length = 4.0 / 512.0,
             sdf_trunc = 0.04, with_color = True)
 
     for i in range(len(camera_poses)):
         print("Integrate {:d}-th image into the volume.".format(i))
-        color = read_image("../../../test/TestData/RGBD/color/{:05d}.jpg".format(i))
-        depth = read_image("../../../test/TestData/RGBD/depth/{:05d}.png".format(i))
+        color = read_image("../../../../data/RGBD/color/{:05d}.jpg".format(i))
+        depth = read_image("../../../../data/RGBD/depth/{:05d}.png".format(i))
         rgbd = create_rgbd_image_from_color_and_depth(color, depth,
                 depth_trunc = 4.0, convert_rgb_to_intensity = False)
         volume.integrate(rgbd, PinholeCameraIntrinsic.get_prime_sense_default(),

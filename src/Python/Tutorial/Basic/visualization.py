@@ -8,7 +8,7 @@ from open3d import *
 if __name__ == "__main__":
 
     print("Load a ply point cloud, print it, and render it")
-    pcd = read_point_cloud("../../../test/TestData/fragment.ply")
+    pcd = read_point_cloud("../../../../data/fragment.ply")
     draw_geometries([pcd])
 
     print('Lets draw some primitives')

@@ -14,10 +14,10 @@ def evaluate(pcd_target, pcd_source, feature_target, feature_source):
     return pt_dis
 
 if __name__ == "__main__":
-    pcd_target = read_point_cloud("../../../test/TestData/Feature/cloud_bin_0.pcd")
-    pcd_source = read_point_cloud("../../../test/TestData/Feature/cloud_bin_1.pcd")
-    feature_target = read_feature("../../../test/TestData/Feature/cloud_bin_0.fpfh.bin")
-    feature_source = read_feature("../../../test/TestData/Feature/cloud_bin_1.fpfh.bin")
+    pcd_target = read_point_cloud("../../../../data/Feature/cloud_bin_0.pcd")
+    pcd_source = read_point_cloud("../../../../data/Feature/cloud_bin_1.pcd")
+    feature_target = read_feature("../../../../data/Feature/cloud_bin_0.fpfh.bin")
+    feature_source = read_feature("../../../../data/Feature/cloud_bin_1.fpfh.bin")
     pt_dis = evaluate(pcd_target, pcd_source, feature_target, feature_source)
     num_good = sum(pt_dis < 0.075)
     print("{:.2f}% points in source pointcloud successfully found their correspondence.".format(num_good * 100.0 / len(pcd_source.points)))

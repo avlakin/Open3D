@@ -107,7 +107,7 @@ This should print the following:
     :
     Capture image 00030
 
-Rendered images are at ~/Open3D/build/lib/TestData/depth and image folder.
+Rendered images are at Open3D/data/depth and image folder.
 
 .. Note:: ``headless_rendering.py`` saves png files. This may take some time. Try tweak the script for your purpose.
 

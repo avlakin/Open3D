@@ -28,7 +28,7 @@ def custom_draw_geometry_load_option(pcd):
     vis.create_window()
     vis.add_geometry(pcd)
     vis.get_render_option().load_from_json(
-            "../../../test/TestData/renderoption.json")
+            "../../../../data/renderoption.json")
     vis.run()
     vis.destroy_window()
 
@@ -39,7 +39,7 @@ def custom_draw_geometry_with_key_callback(pcd):
         return False
     def load_render_option(vis):
         vis.get_render_option().load_from_json(
-                "../../../test/TestData/renderoption.json")
+                "../../../../data/renderoption.json")
         return False
     def capture_depth(vis):
         depth = vis.capture_depth_float_buffer()
@@ -62,12 +62,12 @@ def custom_draw_geometry_with_camera_trajectory(pcd):
     custom_draw_geometry_with_camera_trajectory.index = -1
     custom_draw_geometry_with_camera_trajectory.trajectory =\
             read_pinhole_camera_trajectory(
-                    "../../../test/TestData/camera_trajectory.json")
+                    "../../../../data/camera_trajectory.json")
     custom_draw_geometry_with_camera_trajectory.vis = Visualizer()
-    if not os.path.exists("../../../test/TestData/image/"):
-        os.makedirs("../../../test/TestData/image/")
-    if not os.path.exists("../../../test/TestData/depth/"):
-        os.makedirs("../../../test/TestData/depth/")
+    if not os.path.exists("../../../../data/image/"):
+        os.makedirs("../../../../data/image/")
+    if not os.path.exists("../../../../data/depth/"):
+        os.makedirs("../../../../data/depth/")
     def move_forward(vis):
         # This function is called within the Visualizer::run() loop
         # The run loop calls the function, then re-render
@@ -82,9 +82,9 @@ def custom_draw_geometry_with_camera_trajectory(pcd):
             print("Capture image {:05d}".format(glb.index))
             depth = vis.capture_depth_float_buffer(False)
             image = vis.capture_screen_float_buffer(False)
-            plt.imsave("../../../test/TestData/depth/{:05d}.png".format(glb.index),\
+            plt.imsave("../../../../data/depth/{:05d}.png".format(glb.index),\
                     np.asarray(depth), dpi = 1)
-            plt.imsave("../../../test/TestData/image/{:05d}.png".format(glb.index),\
+            plt.imsave("../../../../data/image/{:05d}.png".format(glb.index),\
                     np.asarray(image), dpi = 1)
             #vis.capture_depth_image("depth/{:05d}.png".format(glb.index), False)
             #vis.capture_screen_image("image/{:05d}.png".format(glb.index), False)
@@ -99,13 +99,13 @@ def custom_draw_geometry_with_camera_trajectory(pcd):
     vis = custom_draw_geometry_with_camera_trajectory.vis
     vis.create_window()
     vis.add_geometry(pcd)
-    vis.get_render_option().load_from_json("../../../test/TestData/renderoption.json")
+    vis.get_render_option().load_from_json("../../../../data/renderoption.json")
     vis.register_animation_callback(move_forward)
     vis.run()
     vis.destroy_window()
 
 if __name__ == "__main__":
-    pcd = read_point_cloud("../../../test/TestData/fragment.ply")
+    pcd = read_point_cloud("../../../../data/fragment.ply")
 
     print("1. Customized visualization to mimic DrawGeometry")
     custom_draw_geometry(pcd)

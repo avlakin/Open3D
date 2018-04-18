@@ -111,6 +111,3 @@ target_link_libraries(${PROJECT_NAME} Visualization Core IO)
 set_target_properties(${PROJECT_NAME} PROPERTIES
 		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
-
-#file(GLOB TEST_DATA_FILES "TestData/*.*")
-#file(COPY ${TEST_DATA_FILES} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/TestData)

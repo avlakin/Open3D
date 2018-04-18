@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     print("Read SUN dataset")
-    color_raw = read_image("../../../test/TestData/RGBD/other_formats/SUN_color.jpg")
-    depth_raw = read_image("../../../test/TestData/RGBD/other_formats/SUN_depth.png")
+    color_raw = read_image("../../../../data/RGBD/other_formats/SUN_color.jpg")
+    depth_raw = read_image("../../../../data/RGBD/other_formats/SUN_depth.png")
     rgbd_image = create_rgbd_image_from_sun_format(color_raw, depth_raw);
     print(rgbd_image)
     plt.subplot(1, 2, 1)
