@@ -101,7 +101,7 @@ Running Open3D tutorials
 ========================================
 
 Importing open3d module
-----------------------
+-----------------------
 
 For quick sanity check, try importing the library from the python interactive shell:
 
@@ -111,7 +111,7 @@ For quick sanity check, try importing the library from the python interactive sh
 
     >>> import open3d
 
-.. error:: If there is an issue, check whether the Python version detected by cmake (see log from cmake) and the Python version for command line environment (type python -V). They should match. If it is not, please follow :ref:`python_binding` in docs.
+.. error:: If there is an issue, check whether the Python version detected by cmake (see log from cmake) and the Python version for command line environment (type python -V). They should match. If it is not, please follow :ref:`python_binding` in the documentation.
 
 Python tutorials
 ------------------

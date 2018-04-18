@@ -45,14 +45,14 @@ The default LLVM compiler on OS X does not support OpenMP. A workaround is to in
 Documentation
 ===============
 
-Documentation is written in `reStructuredText <http://www.sphinx-doc.org/en/stable/rest.html>`_ and compiled with `sphinx <http://www.sphinx-doc.org/>`_. From ``docs`` folder, run
+Documentation is written in `reStructuredText <http://www.sphinx-doc.org/en/stable/rest.html>`_ and compiled with `sphinx <http://www.sphinx-doc.org/>`_. From ``doc`` folder, run
 
 .. code-block:: bash
 
     pip install sphinx sphinx-autobuild sphinx-rtd-theme
     make html
 
-Documentation for C++ API is made with `Doxygen <http://www.stack.nl/~dimitri/doxygen/>`_. Follow the `Doxygen installation instruction <http://www.stack.nl/~dimitri/doxygen/manual/install.html>`_. From Open3D root folder, run
+Documentation for C++ API is made with `Doxygen <http://www.stack.nl/~dimitri/doxygen/>`_. Follow the `Doxygen installation instruction <http://www.stack.nl/~dimitri/doxygen/manual/install.html>`_. From ``doc`` folder, run
 
 .. code-block:: bash
 

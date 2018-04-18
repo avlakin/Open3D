@@ -1,9 +1,9 @@
 #!/bin/sh
 
-# open-3d.org/docs
+# docs.open-3d.org
 pip install sphinx sphinx-autobuild sphinx-rtd-theme
-cd docs && make html && cd ..
+cd doc && make html && cd ..
 
-# open-3d.org/cppapi
+# api.open-3d.org
 sudo apt-get -y install doxygen
-doxygen Doxyfile
+cd doc && doxygen Doxyfile && cd ..

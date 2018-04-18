@@ -29,5 +29,5 @@ Resources
 
 * Website: `www.open-3d.org <http://www.open-3d.org>`_
 * Code: `github.com/Sahloul/Open3D <https://github.com/Sahloul/Open3D>`_
-* Document: `www.open-3d.org/docs <http://www.open-3d.org/docs>`_
+* Documentation: `docs.open-3d.org <http://docs.open-3d.org>`_
 * License: `The MIT license <https://opensource.org/licenses/MIT>`_
