@@ -7,7 +7,7 @@
 
 Open3D is an open-source library that supports rapid development of software that deals with 3D data. The Open3D frontend exposes a set of carefully selected data structures and algorithms in both C++ and Python. The backend is highly optimized and is set up for parallelization. We welcome contributions from the open-source community.
 
-Although the Open3D project is currently maintained by `Hamdi Sahloul`, it was initiated by `Qianyi Zhou` and `Jaesik Park`, who have wrote [a paper](http://www.open3d.org/paper.pdf), and they ask you to kindly cite it! Their project is [archived here](https://github.com/Sahloul/Open3D-legacy).
+Although the Open3D project is currently maintained by `Hamdi Sahloul`, it was initiated by `Qianyi Zhou` and `Jaesik Park`, who have wrote [a paper](http://www.open3d.org/paper.pdf), and they ask you to kindly cite it! Their project is [archived here](http://legacy-code.open-3d.org).
 
 ## Core features
 
@@ -27,6 +27,6 @@ Although the Open3D project is currently maintained by `Hamdi Sahloul`, it was i
 ## Resources
 
 * Website: [www.open-3d.org](http://www.open-3d.org)
-* Code: [github.com/Sahloul/Open3D](https://github.com/Sahloul/Open3D)
+* Code: [code.open-3d.org](http://code.open-3d.org)
 * Documentation: [docs.open-3d.org](http://docs.open-3d.org)
 * License: [The MIT license](https://opensource.org/licenses/MIT)

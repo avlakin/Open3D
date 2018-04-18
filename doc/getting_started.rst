@@ -10,11 +10,11 @@ This guide gets you started programming with Open3D. The basic tools you need ar
 Compiling from source
 ========================
 
-Download source code from the `repository <https://github.com/Sahloul/Open3D>`_.
+Download source code from the `repository <http://code.open-3d.org>`_.
 
 .. code-block:: bash
 
-    git clone https://github.com/Sahloul/Open3D
+    git clone http://code.open-3d.org
 
 .. _getting_started_compilation_ubuntu:
 
