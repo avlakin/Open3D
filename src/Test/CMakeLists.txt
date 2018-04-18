@@ -2,84 +2,84 @@ project(TestPointCloud)
 add_executable(${PROJECT_NAME} TestPointCloud.cpp)
 target_link_libraries(${PROJECT_NAME} Visualization IO Core)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestCameraPoseTrajectory)
 add_executable(${PROJECT_NAME} TestCameraPoseTrajectory)
 target_link_libraries(${PROJECT_NAME} Visualization IO Core)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestLineSet)
 add_executable(${PROJECT_NAME} TestLineSet.cpp)
 target_link_libraries(${PROJECT_NAME} Visualization IO Core)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestTriangleMesh)
 add_executable(${PROJECT_NAME} TestTriangleMesh.cpp)
 target_link_libraries(${PROJECT_NAME} Visualization IO Core)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestVisualizer)
 add_executable(${PROJECT_NAME} TestVisualizer.cpp)
 target_link_libraries(${PROJECT_NAME} Visualization IO Core)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestOpenMP)
 add_executable(${PROJECT_NAME} TestOpenMP.cpp)
 target_link_libraries(${PROJECT_NAME} Core)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestFlann)
 add_executable(${PROJECT_NAME} TestFlann.cpp)
 target_link_libraries(${PROJECT_NAME} Visualization IO Core)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestFileSystem)
 add_executable(${PROJECT_NAME} TestFileSystem.cpp)
 target_link_libraries(${PROJECT_NAME} IO Core)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestProgramOptions)
 add_executable(${PROJECT_NAME} TestProgramOptions.cpp)
 target_link_libraries(${PROJECT_NAME} Core)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestDepthCapture)
 add_executable(${PROJECT_NAME} TestDepthCapture.cpp)
 target_link_libraries(${PROJECT_NAME} Core Visualization IO)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestPCDFileFormat)
 add_executable(${PROJECT_NAME} TestPCDFileFormat.cpp)
 target_link_libraries(${PROJECT_NAME} Core Visualization IO)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestFileDialog)
 add_executable(${PROJECT_NAME} TestFileDialog.cpp)
 target_link_libraries(${PROJECT_NAME} Core IO tinyfiledialogs)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 if(OPEN3D_BUILD_LIBREALSENSE)
@@ -87,7 +87,7 @@ if(OPEN3D_BUILD_LIBREALSENSE)
 add_executable(${PROJECT_NAME} TestRealSense.cpp)
     target_link_libraries(${PROJECT_NAME} Visualization realsense)
     set_target_properties(${PROJECT_NAME} PROPERTIES
-			FOLDER "Test"
+			FOLDER "apps/test"
 			RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 endif(OPEN3D_BUILD_LIBREALSENSE)
 
@@ -95,21 +95,21 @@ project(TestImage)
 add_executable(${PROJECT_NAME} TestImage.cpp)
 target_link_libraries(${PROJECT_NAME} Core IO)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestPoseGraph)
 add_executable(${PROJECT_NAME} TestPoseGraph.cpp)
 target_link_libraries(${PROJECT_NAME} Core IO)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 project(TestRegistrationRANSAC)
 add_executable(${PROJECT_NAME} TestRegistrationRANSAC.cpp)
 target_link_libraries(${PROJECT_NAME} Visualization Core IO)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Test"
+		FOLDER "apps/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test")
 
 #file(GLOB TEST_DATA_FILES "TestData/*.*")

@@ -4,5 +4,5 @@ project(ViewDistances)
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 target_link_libraries(${PROJECT_NAME} Visualization IO Core)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		FOLDER "Experimental"
+		FOLDER "apps/experimental"
 	RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Experimental")
