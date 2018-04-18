@@ -75,7 +75,7 @@ script:
   # Build commands
   - mkdir build
   - cd build
-  - cmake -DBUILD_SHARED_LIBS:BOOL=$SHARED ../src/
+  - cmake -DBUILD_SHARED_LIBS:BOOL=$SHARED ..
   # make -j brings 'virtual memory exhausted: Cannot allocate memory' message
   # this is presumably due to limited memory space of travis-ci
   - make

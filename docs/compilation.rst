@@ -14,7 +14,7 @@ We use `pybind11 <https://github.com/pybind/pybind11>`_ to build the Python bind
 
 .. code-block:: bash
 
-    cmake -DPYTHON_EXECUTABLE:FILEPATH=<path-to-python-executable> ../src
+    cmake -DPYTHON_EXECUTABLE:FILEPATH=<path-to-python-executable> ..
 
 .. Note:: Python binding issues can also refer to `pybind11 document page <http://pybind11.readthedocs.io/en/stable/faq.html>`_.
 
@@ -23,7 +23,7 @@ If you do not want Python binding, turn off the compilation options ``OPEN3D_BUI
 Dependencies
 ================
 
-On Windows, all dependent libraries are built from source code. Dependencies are included in ``src/3rdparty`` folder.
+On Windows, all dependent libraries are built from source code. Dependencies are included in ``3rdparty`` folder.
 
 On Linux and OS X, the default behavior of Open3D is to find packages installed on the OS and link to them. If the required package(s) is not found, it is built from source code. This avoids compilation of dependent libraries as much as possible, and thus significantly reduces compilation time.
 
@@ -37,10 +37,10 @@ The default LLVM compiler on OS X does not support OpenMP. A workaround is to in
 .. code-block:: bash
 
     brew install gcc --without-multilib
-    cmake -DCMAKE_C_COMPILER=gcc-6 -DCMAKE_CXX_COMPILER=g++-6 ../src
+    cmake -DCMAKE_C_COMPILER=gcc-6 -DCMAKE_CXX_COMPILER=g++-6 ..
     make -j
 
-.. note:: This workaround has some compatibility issues with the source code of GLFW included in ``src/3rdparty``. Make sure Open3D is linked against GLFW installed on the OS.
+.. note:: This workaround has some compatibility issues with the source code of GLFW included in ``3rdparty``. Make sure Open3D is linked against GLFW installed on the OS.
 
 Documentation
 ===============

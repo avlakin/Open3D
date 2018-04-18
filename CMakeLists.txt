@@ -11,7 +11,7 @@ set(OPEN3D_VERSION_MINOR "1")
 set(OPEN3D_VERSION_PATCH "1")
 set(OPEN3D_VERSION "${OPEN3D_VERSION_MAJOR}.${OPEN3D_VERSION_MINOR}.${OPEN3D_VERSION_PATCH}")
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/CMake)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # config options
@@ -33,7 +33,7 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 # set include directories
 include_directories(
-	${CMAKE_SOURCE_DIR}
+	${CMAKE_SOURCE_DIR}/src
 	${CMAKE_SOURCE_DIR}/3rdparty
 	${CMAKE_SOURCE_DIR}/3rdparty/librealsense/include
 	)
@@ -112,22 +112,22 @@ link_directories(${GLFW_LIBRARY_DIRS})
 link_directories(${JSONCPP_LIBRARY_DIRS})
 
 # Open3D libraries
-add_subdirectory(Core)
-add_subdirectory(Tools)
-add_subdirectory(IO)
-add_subdirectory(Visualization)
+add_subdirectory(src/Core)
+add_subdirectory(src/Tools)
+add_subdirectory(src/IO)
+add_subdirectory(src/Visualization)
 
 message(STATUS "OPEN3D_BUILD_TESTS=${OPEN3D_BUILD_TESTS}")
 if(OPEN3D_BUILD_TESTS)
-	add_subdirectory(Test)
+	add_subdirectory(src/Test)
 endif(OPEN3D_BUILD_TESTS)
 
-if(EXISTS "${CMAKE_SOURCE_DIR}/Experimental/CMakeLists.txt")
+if(EXISTS "${CMAKE_SOURCE_DIR}/src/Experimental/CMakeLists.txt")
 	message(STATUS "Build experimental projects")
-	add_subdirectory(Experimental)
-endif(EXISTS "${CMAKE_SOURCE_DIR}/Experimental/CMakeLists.txt")
+	add_subdirectory(src/Experimental)
+endif(EXISTS "${CMAKE_SOURCE_DIR}/src/Experimental/CMakeLists.txt")
 
 # Python binding
 if (OPEN3D_BUILD_PYTHON_BINDING)
-	add_subdirectory(Python)
+	add_subdirectory(src/Python)
 endif(OPEN3D_BUILD_PYTHON_BINDING)

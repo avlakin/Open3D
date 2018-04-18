@@ -883,7 +883,7 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                = src/3rdparty \
+EXCLUDE                = 3rdparty \
 						 src/Python \
 						 src/Test \
 						 src/Tools \

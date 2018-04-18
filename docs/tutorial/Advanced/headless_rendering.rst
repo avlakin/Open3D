@@ -72,7 +72,7 @@ As a result, the cmake command is the following
 
     (py3env) $ cmake -DOPEN3D_HEADLESS_RENDERING=ON \
             -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3 \
-            ../src
+            ..
 
 Note that ``-DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3`` is the same path what was used for :ref:`install_virtualenv`.
 

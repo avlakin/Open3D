@@ -39,5 +39,5 @@ install:
 build_script:
 - mkdir build
 - cd build
-- cmake -G "%CMAKE_GENERATOR%" -A "%CMAKE_ARCH%" -DBUILD_SHARED_LIBS:BOOL=%SHARED% ../src
+- cmake -G "%CMAKE_GENERATOR%" -A "%CMAKE_ARCH%" -DBUILD_SHARED_LIBS:BOOL=%SHARED% ..
 - cmake --build . --config %CONFIG% --target ALL_BUILD
