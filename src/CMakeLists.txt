@@ -34,8 +34,8 @@ endif(NOT CMAKE_BUILD_TYPE)
 # set include directories
 include_directories(
 	${CMAKE_SOURCE_DIR}
-	${CMAKE_SOURCE_DIR}/External
-	${CMAKE_SOURCE_DIR}/External/librealsense/include
+	${CMAKE_SOURCE_DIR}/3rdparty
+	${CMAKE_SOURCE_DIR}/3rdparty/librealsense/include
 	)
 
 # if dynamic link is added, use if (WIN32) macro
@@ -103,7 +103,7 @@ message(STATUS "OPEN3D_BUILD_PYTHON_BINDING=${OPEN3D_BUILD_PYTHON_BINDING}")
 message(STATUS "OPEN3D_BUILD_PYTHON_BINDING_TESTS=${OPEN3D_BUILD_PYTHON_BINDING_TESTS}")
 
 # Handling dependencies
-add_subdirectory(External)
+add_subdirectory(3rdparty)
 include_directories(${EIGEN3_INCLUDE_DIRS})
 include_directories(${GLEW_INCLUDE_DIRS})
 include_directories(${GLFW_INCLUDE_DIRS})
