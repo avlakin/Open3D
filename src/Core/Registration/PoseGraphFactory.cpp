@@ -33,12 +33,6 @@
 
 namespace open3d {
 
-std::shared_ptr<PoseGraph> CreatePoseGraphFromFile(
-        const std::string &filename)
-{
-    auto pose_graph = std::make_shared<PoseGraph>();
-    ReadPoseGraph(filename, *pose_graph);
-    return pose_graph;
-}
+
 
 }   // namespace open3d

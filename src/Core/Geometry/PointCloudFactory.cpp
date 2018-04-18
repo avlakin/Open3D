@@ -101,14 +101,6 @@ std::shared_ptr<PointCloud> CreatePointCloudFromRGBDImageT(
 
 }   // unnamed namespace
 
-std::shared_ptr<PointCloud> CreatePointCloudFromFile(
-        const std::string &filename)
-{
-    auto pointcloud = std::make_shared<PointCloud>();
-    ReadPointCloud(filename, *pointcloud);
-    return pointcloud;
-}
-
 std::shared_ptr<PointCloud> CreatePointCloudFromDepthImage(
         const Image &depth, const PinholeCameraIntrinsic &intrinsic,
         const Eigen::Matrix4d &extrinsic/* = Eigen::Matrix4d::Identity()*/,

@@ -35,8 +35,10 @@
 
 namespace open3d {
 
-const PinholeCameraIntrinsic PinholeCameraIntrinsic::PrimeSenseDefault =
-        PinholeCameraIntrinsic(640, 480, 525.0, 525.0, 319.5, 239.5);
+const PinholeCameraIntrinsic PinholeCameraIntrinsic::GetPrimeSenseDefault()
+{
+        return PinholeCameraIntrinsic(640, 480, 525.0, 525.0, 319.5, 239.5);
+}
 
 PinholeCameraIntrinsic::PinholeCameraIntrinsic()
 {

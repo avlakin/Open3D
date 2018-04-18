@@ -30,14 +30,14 @@
 #pragma once
 
 #include <Eigen/Core>
-#include <IO/ClassIO/IJsonConvertible.h>
+#include <Core/Utility/IJsonConvertible.h>
 
 namespace open3d {
 
 class PinholeCameraIntrinsic : public IJsonConvertible
 {
 public:
-    static const PinholeCameraIntrinsic PrimeSenseDefault;
+    static const PinholeCameraIntrinsic GetPrimeSenseDefault();
 
 public:
     PinholeCameraIntrinsic();

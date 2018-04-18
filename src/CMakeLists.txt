@@ -15,6 +15,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/CMake)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # config options
+option(BUILD_SHARED_LIBS "Build shared libraries (.dll/.so) instead of static ones (.lib/.a)" OFF)
 option(OPEN3D_BUILD_TESTS "Build the Open3D test programs" ON)
 option(OPEN3D_BUILD_LIBREALSENSE "Build support for Intel RealSense camera" ON)
 option(OPEN3D_USE_OPENMP "Use OpenMP multi-threading" ON)
@@ -37,9 +38,6 @@ include_directories(
 	${CMAKE_SOURCE_DIR}/External/librealsense/include
 	)
 
-# all static link, no dynamic links
-set(OPEN3D_LIB_TYPE STATIC)
-
 # if dynamic link is added, use if (WIN32) macro
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -47,10 +45,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Set OS-specific things here
 if(WIN32)
+	message(STATUS "Compiling on Windows")
 	add_definitions(-DWINDOWS)
 	add_definitions(-D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SCL_SECURE_NO_WARNINGS)		# suppress C4996 warning
 	add_definitions(-DGLEW_STATIC)		# enable GLEW for windows
-	message(STATUS "Compiling on Windows")
+	SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON) #Enable building DLLs
 	if(MSVC)
 		message(STATUS "Compiling with MSVC")
 		add_definitions(-DNOMINMAX)
@@ -62,10 +61,14 @@ elseif(CYGWIN)
 	# enable c++11
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 	add_definitions(-DCYGWIN)
+	SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON) #Enable building DLLs
 elseif(APPLE)
 	add_definitions(-DUNIX)
 	# enable c++11
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fvisibility=hidden")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	if (NOT ${BUILD_SHARED_LIBS})
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+	endif()
 	# compile speed optimization for clang
 	add_definitions(-O3)
 elseif(UNIX)

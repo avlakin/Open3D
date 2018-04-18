@@ -53,7 +53,7 @@ This tutorial reads and visualizes an ``RGBDImage`` from `the NYU dataset <https
 		plt.imshow(rgbd_image.depth)
 		plt.show()
 		pcd = create_point_cloud_from_rgbd_image(rgbd_image,
-				PinholeCameraIntrinsic.prime_sense_default)
+				PinholeCameraIntrinsic.get_prime_sense_default())
 		# Flip it, otherwise the pointcloud will be upside down
 		pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
 		draw_geometries([pcd])

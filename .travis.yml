@@ -1,17 +1,12 @@
 matrix:
-
-  notifications:
-    email: false # turn off email notifications for build failure
-
-  language:
-    - python
-    - cpp
-
   include:
     # Default environment of Ubuntu 14.04
     - os: linux
       dist: trusty
       sudo: true
+      language: python
+      python: "3.6"
+      env: SHARED=OFF
       addons:
         apt:
           sources:
@@ -28,6 +23,9 @@ matrix:
     - os: linux
       dist: trusty
       sudo: true
+      language: python
+      python: "3.6"
+      env: SHARED=ON
       addons:
         apt:
           sources:
@@ -42,11 +40,17 @@ matrix:
     # compiled using clang shipped with xcode8
     - os: osx
       osx_image: xcode8
+      language: cpp
+      compiler: clang
+      env: SHARED=OFF
 
     # Default environment of MacOS Sierra
     # compiled using clang shipped with xcode8.3
     - os: osx
       osx_image: xcode8.3
+      language: cpp
+      compiler: clang
+      env: SHARED=ON
 
 before_install:
   # ISSUE: we may want to use '/scripts/install-deps-ubuntu.sh' in the future.
@@ -71,7 +75,10 @@ script:
   # Build commands
   - mkdir build
   - cd build
-  - cmake ../src/
+  - cmake -DBUILD_SHARED_LIBS:BOOL=$SHARED ../src/
   # make -j brings 'virtual memory exhausted: Cannot allocate memory' message
   # this is presumably due to limited memory space of travis-ci
   - make
+
+notifications:
+  email: false # turn off email notifications for build failure

@@ -30,7 +30,7 @@
 #pragma once
 
 #include <Eigen/Core>
-#include <IO/ClassIO/IJsonConvertible.h>
+#include <Core/Utility/IJsonConvertible.h>
 
 namespace open3d {
 

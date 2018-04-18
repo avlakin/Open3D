@@ -31,7 +31,7 @@
 
 #include <Eigen/Core>
 
-#include <IO/ClassIO/IJsonConvertible.h>
+#include <Core/Utility/IJsonConvertible.h>
 
 namespace open3d {
 
@@ -54,10 +54,10 @@ public:
         Normal = 9,
     };
 
-    static const double POINT_SIZE_MAX;
-    static const double POINT_SIZE_MIN;
-    static const double POINT_SIZE_STEP;
-    static const double POINT_SIZE_DEFAULT;
+    const double POINT_SIZE_MAX = 25.0;
+    const double POINT_SIZE_MIN = 1.0;
+    const double POINT_SIZE_STEP = 1.0;
+    const double POINT_SIZE_DEFAULT = 5.0;
 
     // TriangleMesh options
     enum class MeshShadeOption {
