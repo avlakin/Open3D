@@ -29,4 +29,27 @@
 
 #pragma once
 
-#include <Python/py3d.h>
+#include <Open3D/Python/py3d.h>
+
+void pybind_console(py::module &m);
+void pybind_geometry(py::module &m);
+void pybind_pointcloud(py::module &m);
+void pybind_trianglemesh(py::module &m);
+void pybind_image(py::module &m);
+void pybind_kdtreeflann(py::module &m);
+void pybind_feature(py::module &m);
+void pybind_camera(py::module &m);
+void pybind_registration(py::module &m);
+void pybind_odometry(py::module &m);
+void pybind_globaloptimization(py::module &m);
+void pybind_integration(py::module &m);
+
+void pybind_pointcloud_methods(py::module &m);
+void pybind_trianglemesh_methods(py::module &m);
+void pybind_image_methods(py::module &m);
+void pybind_feature_methods(py::module &m);
+void pybind_camera_methods(py::module &m);
+void pybind_registration_methods(py::module &m);
+void pybind_odometry_methods(py::module &m);
+void pybind_globaloptimization_methods(py::module &m);
+void pybind_integration_methods(py::module &m);

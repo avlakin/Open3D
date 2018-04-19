@@ -29,27 +29,47 @@
 
 #pragma once
 
-#include <Python/py3d.h>
+#include <Open3D/Python/py3d.h>
+#include <Open3D/Core/Geometry/Geometry.h>
+#include <Open3D/Core/Geometry/Geometry2D.h>
+#include <Open3D/Core/Geometry/Geometry3D.h>
+using namespace open3d;
 
-void pybind_console(py::module &m);
-void pybind_geometry(py::module &m);
-void pybind_pointcloud(py::module &m);
-void pybind_trianglemesh(py::module &m);
-void pybind_image(py::module &m);
-void pybind_kdtreeflann(py::module &m);
-void pybind_feature(py::module &m);
-void pybind_camera(py::module &m);
-void pybind_registration(py::module &m);
-void pybind_odometry(py::module &m);
-void pybind_globaloptimization(py::module &m);
-void pybind_integration(py::module &m);
+template <class GeometryBase = Geometry> class PyGeometry : public GeometryBase
+{
+public:
+    using GeometryBase::GeometryBase;
+    void Clear() override { PYBIND11_OVERLOAD_PURE(void, GeometryBase, ); }
+    bool IsEmpty() const override {
+        PYBIND11_OVERLOAD_PURE(bool, GeometryBase, );
+    }
+};
 
-void pybind_pointcloud_methods(py::module &m);
-void pybind_trianglemesh_methods(py::module &m);
-void pybind_image_methods(py::module &m);
-void pybind_feature_methods(py::module &m);
-void pybind_camera_methods(py::module &m);
-void pybind_registration_methods(py::module &m);
-void pybind_odometry_methods(py::module &m);
-void pybind_globaloptimization_methods(py::module &m);
-void pybind_integration_methods(py::module &m);
+template <class Geometry3DBase = Geometry3D> class PyGeometry3D :
+        public PyGeometry<Geometry3DBase>
+{
+public:
+    using PyGeometry<Geometry3DBase>::PyGeometry;
+    Eigen::Vector3d GetMinBound() const override {
+        PYBIND11_OVERLOAD_PURE(Eigen::Vector3d, Geometry3DBase, );
+    }
+    Eigen::Vector3d GetMaxBound() const override {
+        PYBIND11_OVERLOAD_PURE(Eigen::Vector3d, Geometry3DBase, );
+    }
+    void Transform(const Eigen::Matrix4d &transformation) override {
+        PYBIND11_OVERLOAD_PURE(void, Geometry3DBase, transformation);
+    }
+};
+
+template <class Geometry2DBase = Geometry2D> class PyGeometry2D :
+        public PyGeometry<Geometry2DBase>
+{
+public:
+    using PyGeometry<Geometry2DBase>::PyGeometry;
+    Eigen::Vector2d GetMinBound() const override {
+        PYBIND11_OVERLOAD_PURE(Eigen::Vector2d, Geometry2DBase, );
+    }
+    Eigen::Vector2d GetMaxBound() const override {
+        PYBIND11_OVERLOAD_PURE(Eigen::Vector2d, Geometry2DBase, );
+    }
+};

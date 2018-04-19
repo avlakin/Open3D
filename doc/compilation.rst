@@ -16,9 +16,11 @@ We use `pybind11 <https://github.com/pybind/pybind11>`_ to build the Python bind
 
     cmake -DPYTHON_EXECUTABLE:FILEPATH=<path-to-python-executable> ..
 
+Additionally, you can specify where to install the Python binding via the CMake argument ``-DPYTHON_SITE_PACKAGES:PATH=<path-to-python-site-packages>``.
+
 .. Note:: Python binding issues can also refer to `pybind11 document page <http://pybind11.readthedocs.io/en/stable/faq.html>`_.
 
-If you do not want Python binding, turn off the compilation options ``OPEN3D_BUILD_PYTHON_BINDING`` and ``OPEN3D_BUILD_PYTHON_BINDING_TESTS``.
+If you do not want Python binding, turn off the compilation options ``OPEN3D_BUILD_PYTHON_BINDING``.
 
 Dependencies
 ================

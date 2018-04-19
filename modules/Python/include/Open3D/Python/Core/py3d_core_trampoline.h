@@ -29,7 +29,7 @@
 
 #pragma once
 
-#include <Python/py3d.h>
+#include <Open3D/Python/py3d.h>
 #include <Open3D/Core/Geometry/Geometry.h>
 #include <Open3D/Core/Geometry/Geometry2D.h>
 #include <Open3D/Core/Geometry/Geometry3D.h>

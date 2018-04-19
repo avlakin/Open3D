@@ -20,8 +20,6 @@ option(OPEN3D_BUILD_TESTS "Build the Open3D test programs" ON)
 option(OPEN3D_BUILD_LIBREALSENSE "Build support for Intel RealSense camera" ON)
 option(OPEN3D_USE_OPENMP "Use OpenMP multi-threading" ON)
 option(OPEN3D_BUILD_PYTHON_BINDING "Build Python binding for Open3D" ON)
-option(OPEN3D_BUILD_PYTHON_BINDING_TESTS "Copy test files for Open3D Python binding" ON)
-option(OPEN3D_BUILD_PYTHON_BINDING_TUTORIALS "Copy tutorial files for Open3D Python binding" ON)
 option(OPEN3D_HEADLESS_RENDERING "Use OSMesa for headless rendering" OFF)
 
 # default built type
@@ -33,7 +31,6 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 # set include directories
 include_directories(
-	${CMAKE_SOURCE_DIR}/src
 	${CMAKE_SOURCE_DIR}/3rdparty
 	${CMAKE_SOURCE_DIR}/3rdparty/librealsense/include
 	)
@@ -100,10 +97,9 @@ endif()
 
 message(STATUS "OPEN3D_BUILD_LIBREALSENSE=${OPEN3D_BUILD_LIBREALSENSE}")
 message(STATUS "OPEN3D_BUILD_PYTHON_BINDING=${OPEN3D_BUILD_PYTHON_BINDING}")
-message(STATUS "OPEN3D_BUILD_PYTHON_BINDING_TESTS=${OPEN3D_BUILD_PYTHON_BINDING_TESTS}")
 
 # Handling dependencies
-add_subdirectory(3rdparty)
+add_subdirectory("${CMAKE_SOURCE_DIR}/3rdparty")
 include_directories(${EIGEN3_INCLUDE_DIRS})
 include_directories(${GLEW_INCLUDE_DIRS})
 include_directories(${GLFW_INCLUDE_DIRS})
@@ -115,6 +111,11 @@ link_directories(${JSONCPP_LIBRARY_DIRS})
 add_subdirectory("${CMAKE_SOURCE_DIR}/modules/Core")
 add_subdirectory("${CMAKE_SOURCE_DIR}/modules/IO")
 add_subdirectory("${CMAKE_SOURCE_DIR}/modules/Visualization")
+# Python binding
+if (OPEN3D_BUILD_PYTHON_BINDING)
+	add_subdirectory("${CMAKE_SOURCE_DIR}/modules/Python")
+endif(OPEN3D_BUILD_PYTHON_BINDING)
+
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/Tools")
 if(OPEN3D_BUILD_TESTS)
 	add_subdirectory("${CMAKE_SOURCE_DIR}/src/Test")
@@ -122,10 +123,6 @@ endif(OPEN3D_BUILD_TESTS)
 
 if(EXISTS "${CMAKE_SOURCE_DIR}/src/Experimental/CMakeLists.txt")
 	message(STATUS "Build experimental projects")
-	add_subdirectory(src/Experimental)
+	add_subdirectory("${CMAKE_SOURCE_DIR}/src/Experimental")
 endif(EXISTS "${CMAKE_SOURCE_DIR}/src/Experimental/CMakeLists.txt")
 
-# Python binding
-if (OPEN3D_BUILD_PYTHON_BINDING)
-	add_subdirectory(src/Python)
-endif(OPEN3D_BUILD_PYTHON_BINDING)
