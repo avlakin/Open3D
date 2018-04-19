@@ -16,7 +16,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # config options
 option(BUILD_SHARED_LIBS "Build shared libraries (.dll/.so) instead of static ones (.lib/.a)" OFF)
-option(OPEN3D_BUILD_TESTS "Build the Open3D test programs" ON)
 option(OPEN3D_BUILD_LIBREALSENSE "Build support for Intel RealSense camera" ON)
 option(OPEN3D_USE_OPENMP "Use OpenMP multi-threading" ON)
 option(OPEN3D_BUILD_PYTHON_BINDING "Build Python binding for Open3D" ON)
@@ -116,13 +115,4 @@ if (OPEN3D_BUILD_PYTHON_BINDING)
 	add_subdirectory("${CMAKE_SOURCE_DIR}/modules/Python")
 endif(OPEN3D_BUILD_PYTHON_BINDING)
 
-add_subdirectory("${CMAKE_SOURCE_DIR}/src/Tools")
-if(OPEN3D_BUILD_TESTS)
-	add_subdirectory("${CMAKE_SOURCE_DIR}/src/Test")
-endif(OPEN3D_BUILD_TESTS)
-
-if(EXISTS "${CMAKE_SOURCE_DIR}/src/Experimental/CMakeLists.txt")
-	message(STATUS "Build experimental projects")
-	add_subdirectory("${CMAKE_SOURCE_DIR}/src/Experimental")
-endif(EXISTS "${CMAKE_SOURCE_DIR}/src/Experimental/CMakeLists.txt")
-
+add_subdirectory("${CMAKE_SOURCE_DIR}/samples/C++")

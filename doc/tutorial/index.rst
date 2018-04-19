@@ -5,7 +5,7 @@ Tutorial
 
 Open3D has two interfaces: C++, and Python. This tutorial focuses on the Python interface since it is easy to use and should be regarded as the primary interface of Open3D.
 
-.. note:: For C++ interfaces, refer to examples in [src/Test] and [src/Tools] folder and check `Doxygen document for C++ API <http://api.open-3d.org>`_.
+.. note:: For C++ interfaces, refer to examples in [samples/C++] folder and check `Doxygen document for C++ API <http://api.open-3d.org>`_.
 
 
 .. toctree::
