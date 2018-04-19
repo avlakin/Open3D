@@ -7,7 +7,7 @@ If Open3D is successfully compiled with Python binding, it will create a Python 
 
 .. code-block:: python
 
-    # src/Python/Tutorial/Basic/python_binding.py
+    # samples/Python/tutorial_code/Basic/python_binding.py
 
     import numpy as np
 

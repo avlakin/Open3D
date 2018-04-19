@@ -7,7 +7,7 @@ This tutorial shows how basic geometries are read and written by Open3D.
 
 .. code-block:: python
 
-    # src/Python/Tutorial/Basic/io.py
+    # samples/Python/tutorial_code/Basic/io.py
 
     from open3d import *
 

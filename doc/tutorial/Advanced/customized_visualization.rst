@@ -9,7 +9,7 @@ This tutorial focuses on more advanced functionalities to customize the behavior
 
 .. code-block:: python
 
-    # src/Python/Tutorial/Advanced/customized_visualization.py
+    # samples/Python/tutorial_code/Advanced/customized_visualization.py
 
     import os
     from open3d import *

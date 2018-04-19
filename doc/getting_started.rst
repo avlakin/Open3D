@@ -121,7 +121,7 @@ For example, tutorial ``Basic/rgbd_redwood.py`` can be run with:
 
 .. code-block:: bash
 
-    cd lib/Tutorial/Basic
+    cd <Open3D-dir>/samples/Python/tutorial_code/Basic
     python rgbd_redwood.py
 
 It reads a pair of RGB-D images and visualizes them.

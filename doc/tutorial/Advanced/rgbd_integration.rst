@@ -7,7 +7,7 @@ Open3D implements a scalable RGBD image integration algorithm. The algorithm is 
 
 .. code-block:: python
 
-    # src/Python/Tutorial/Advanced/rgbd_integration.py
+    # samples/Python/tutorial_code/Advanced/rgbd_integration.py
 
     from open3d import *
     from trajectory_io import *

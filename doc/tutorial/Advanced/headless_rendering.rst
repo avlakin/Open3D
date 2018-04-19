@@ -91,7 +91,7 @@ As a final step, test a python script that saves depth and surface normal sequen
 
 .. code-block:: shell
 
-    (py3env) $ cd ~/Open3D/build/lib/Tutorial/Advanced/
+    (py3env) $ cd <Open3D-dir>/samples/Python/tutorial_code/Advanced/
     (py3env) $ python headless_rendering.py
 
 This should print the following:

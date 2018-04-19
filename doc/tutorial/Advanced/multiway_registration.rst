@@ -9,7 +9,7 @@ Open3D implements multiway registration via pose graph optimization. The backend
 
 .. code-block:: python
 
-    # src/Python/Tutorial/Advanced/multiway_registration.py
+    # samples/Python/tutorial_code/Advanced/multiway_registration.py
 
     from open3d import *
 

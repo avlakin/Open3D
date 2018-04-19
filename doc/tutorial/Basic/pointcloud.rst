@@ -7,7 +7,7 @@ This tutorial demonstrates basic usage of a point cloud.
 
 .. code-block:: python
 
-    # src/Python/Tutorial/Basic/pointcloud.py
+    # samples/Python/tutorial_code/Basic/pointcloud.py
 
     import numpy as np
     from open3d import *
