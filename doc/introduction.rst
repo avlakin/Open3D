@@ -21,7 +21,7 @@ Supported compilers
 ======================
 
 * GCC 4.8 and later on Linux
-* XCode 8.0 and later on OS X
+* XCode 7.3 and later on OS X
 * Visual Studio 2015 and later on Windows
 
 Resources

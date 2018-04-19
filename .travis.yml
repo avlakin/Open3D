@@ -1,84 +1,103 @@
-matrix:
-  include:
-    # Default environment of Ubuntu 14.04
-    - os: linux
-      dist: trusty
-      sudo: true
-      language: python
-      python: "3.6"
-      env: SHARED=OFF
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - gcc-4.8
-            - g++-4.8
-            - cmake-data # to use cmake 3.0 or more recent
-            - cmake
+env:
+  global:
+    - SHARED=OFF
+    - COMMAND_EVAL=""
 
-    # Similar environment of Ubuntu 16.04 (gcc 5.4)
-    # travis ci only supports Ubuntu 14.04 (trusty) gcc-5 and 6
-    # another option is to use docker.
+matrix:
+  allow_failures:
+    - os: linux
+      dist: xenial
+
+  include:
+    - os: linux
+      dist: trusty
+      sudo: true
+      language: python
+      python: "2.7"
+      addons:
+        apt:
+          sources:
+            - kalakris-cmake # CMake 3
+
     - os: linux
       dist: trusty
       sudo: true
       language: python
       python: "3.6"
-      env: SHARED=ON
+      env:
+        - SHARED=ON
+        - COMMAND_EVAL="export CC=gcc-6 && export CXX=g++-6 && alias gcc='gcc-6' && alias g++='g++-6'"
       addons:
         apt:
           sources:
-            - ubuntu-toolchain-r-test
+            - ubuntu-toolchain-r-test #GCC 6
+            - kalakris-cmake # CMake 3
           packages:
             - gcc-6
             - g++-6
-            - cmake-data # to use cmake 3.0 or more recent
-            - cmake
 
-    # Default environment of MacOS El Capitan
-    # compiled using clang shipped with xcode8
+    - os: linux
+      dist: xenial
+      sudo: true
+      language: python
+      python: "3.6"
+      env:
+        - SHARED=ON
+        - COMMAND_EVAL="sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y && sudo apt-get update && sudo apt-get install -y gcc-6 g++-6 && export CC=gcc-6 && export CXX=g++-6 && alias gcc='gcc-6' && alias g++='g++-6'"
+
     - os: osx
-      osx_image: xcode8
+      osx_image: xcode7.3
       language: cpp
       compiler: clang
-      env: SHARED=OFF
 
-    # Default environment of MacOS Sierra
-    # compiled using clang shipped with xcode8.3
     - os: osx
-      osx_image: xcode8.3
+      osx_image: xcode9.3
       language: cpp
       compiler: clang
-      env: SHARED=ON
+      env:
+        - SHARED=ON
+
 
 before_install:
-  # ISSUE: we may want to use '/scripts/install-deps-ubuntu.sh' in the future.
-  # At this moment, travis-ci supports up to ubuntu 14.04 and this environment
-  # does not recognize sudo apt-get install libglfw3-dev
-  # Travis CI has pyenv with Python 3.6
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      sudo apt-get install -y xorg-dev libglu1-mesa-dev libgl1-mesa-glx libglew-dev libjsoncpp-dev libeigen3-dev;
-      pyenv global 3.6;
-      ./util/scripts/make-documentation.sh;
+      sudo rm -f /var/lib/dpkg/lock;
+      sudo apt-get -qq update;
+      echo $COMMAND_EVAL;
+      eval $COMMAND_EVAL;
+      sudo apt-get install -y cmake xorg-dev libglu1-mesa-dev libgl1-mesa-glx libglew-dev libjsoncpp-dev libeigen3-dev;
+      sudo apt-get install -y doxygen python-sphinx;
+      python -m pip install --upgrade pip sphinx sphinx-autobuild sphinx-rtd-theme;
+      uname -a && gcc --version && cmake --version && python -V;
+    else
+      brew update;
+      echo $COMMAND_EVAL;
+      eval $COMMAND_EVAL;
+      brew install cmake libusb pkg-config glfw glew libpng jpeg pkg-config jsoncpp eigen;
+      brew install doxygen sphinx-doc;
+      export PATH="/usr/local/opt/sphinx-doc/bin:$PATH";
+      sudo python -m ensurepip --upgrade;
+      python -m pip install --user --upgrade pip sphinx sphinx-autobuild sphinx-rtd-theme;
+      uname -a && clang --version && cmake --version && python -V;
     fi
-  # scripts/install-deps-osx.sh works well
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      brew install python;
-      ./util/scripts/install-deps-osx.sh;
-    fi
-  # for reference, display cmake and python version
-  - python -V
-  - cmake --version
 
-script:
-  # Build commands
-  - mkdir build
-  - cd build
-  - cmake -DBUILD_SHARED_LIBS:BOOL=$SHARED ..
-  # make -j brings 'virtual memory exhausted: Cannot allocate memory' message
-  # this is presumably due to limited memory space of travis-ci
+install:
+  - cd doc && doxygen Doxyfile && cd ..
+  - cd doc && sphinx-build -b html . _build/docs && cd ..
+  - mkdir build && cd build && mkdir install
+  - cmake -DPYBIND11_PYTHON_VERSION=$TRAVIS_PYTHON_VERSION -DBUILD_SHARED_LIBS:BOOL=$SHARED -DCMAKE_INSTALL_PREFIX=install ..
   - make
 
-notifications:
-  email: false # turn off email notifications for build failure
+script:
+  - echo "testing goes here ..."
+
+after_success:
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      uname -a && gcc --version && cmake --version && python -V;
+    else
+      uname -a && clang --version && cmake --version && python -V;
+    fi
+  - echo $TRAVIS_OS_NAME && echo $TRAVIS_PYTHON_VERSION && echo $SHARED
+  - find . -type f \( -name "*.a" -o -name "*.so" -o -name "*.dylib" \)
+
+# deploy:
+# after_script:

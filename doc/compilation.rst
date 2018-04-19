@@ -34,7 +34,7 @@ OpenMP
 
 We automatically detect if the C++ compiler supports OpenMP and compile Open3D with it if the compilation option ``OPEN3D_USE_OPENMP`` is ``ON``. OpenMP can greatly accelerate computation on a multi-core CPU.
 
-The default LLVM compiler on OS X does not support OpenMP. A workaround is to install a C++ compiler with OpenMP support, such as gcc, then use it to compile Open3D. For example, starting from a clean build directory, run
+The default LLVM compiler on OS X does not support OpenMP. A workaround is to install a C++ compiler with OpenMP support, such as GCC, then use it to compile Open3D. For example, starting from a clean build directory, run
 
 .. code-block:: bash
 
@@ -52,7 +52,7 @@ Documentation is written in `reStructuredText <http://www.sphinx-doc.org/en/stab
 .. code-block:: bash
 
     pip install sphinx sphinx-autobuild sphinx-rtd-theme
-    make html
+    sphinx-build -b html . <output folder>
 
 Documentation for C++ API is made with `Doxygen <http://www.stack.nl/~dimitri/doxygen/>`_. Follow the `Doxygen installation instruction <http://www.stack.nl/~dimitri/doxygen/manual/install.html>`_. From ``doc`` folder, run
 
