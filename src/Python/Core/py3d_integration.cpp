@@ -30,9 +30,9 @@
 #include "py3d_core.h"
 #include "py3d_core_trampoline.h"
 
-#include <Core/Integration/TSDFVolume.h>
-#include <Core/Integration/UniformTSDFVolume.h>
-#include <Core/Integration/ScalableTSDFVolume.h>
+#include <Open3D/Core/Integration/TSDFVolume.h>
+#include <Open3D/Core/Integration/UniformTSDFVolume.h>
+#include <Open3D/Core/Integration/ScalableTSDFVolume.h>
 
 using namespace open3d;
 

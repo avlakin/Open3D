@@ -30,11 +30,11 @@
 #include "py3d_core.h"
 #include "py3d_core_trampoline.h"
 
-#include <Core/Geometry/Image.h>
-#include <Core/Geometry/RGBDImage.h>
-#include <Core/Odometry/Odometry.h>
-#include <Core/Odometry/OdometryOption.h>
-#include <Core/Odometry/RGBDOdometryJacobian.h>
+#include <Open3D/Core/Geometry/Image.h>
+#include <Open3D/Core/Geometry/RGBDImage.h>
+#include <Open3D/Core/Odometry/Odometry.h>
+#include <Open3D/Core/Odometry/OdometryOption.h>
+#include <Open3D/Core/Odometry/RGBDOdometryJacobian.h>
 using namespace open3d;
 
 template <class RGBDOdometryJacobianBase = RGBDOdometryJacobian>

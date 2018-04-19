@@ -112,10 +112,10 @@ link_directories(${GLFW_LIBRARY_DIRS})
 link_directories(${JSONCPP_LIBRARY_DIRS})
 
 # Open3D libraries
-add_subdirectory(src/Core)
-add_subdirectory(src/Tools)
-add_subdirectory(src/IO)
-add_subdirectory(src/Visualization)
+add_subdirectory("${CMAKE_SOURCE_DIR}/modules/Core")
+add_subdirectory("${CMAKE_SOURCE_DIR}/src/Tools")
+add_subdirectory("${CMAKE_SOURCE_DIR}/src/IO")
+add_subdirectory("${CMAKE_SOURCE_DIR}/src/Visualization")
 
 message(STATUS "OPEN3D_BUILD_TESTS=${OPEN3D_BUILD_TESTS}")
 if(OPEN3D_BUILD_TESTS)

@@ -34,7 +34,7 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <Core/Geometry/Geometry.h>
+#include <Open3D/Core/Geometry/Geometry.h>
 
 #include <Visualization/Utility/ColorMap.h>
 #include <Visualization/Utility/BoundingBox.h>

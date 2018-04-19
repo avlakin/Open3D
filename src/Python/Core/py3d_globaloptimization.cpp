@@ -30,10 +30,10 @@
 #include "py3d_core.h"
 #include "py3d_core_trampoline.h"
 
-#include <Core/Registration/PoseGraph.h>
-#include <Core/Registration/GlobalOptimization.h>
-#include <Core/Registration/GlobalOptimizationMethod.h>
-#include <Core/Registration/GlobalOptimizationConvergenceCriteria.h>
+#include <Open3D/Core/Registration/PoseGraph.h>
+#include <Open3D/Core/Registration/GlobalOptimization.h>
+#include <Open3D/Core/Registration/GlobalOptimizationMethod.h>
+#include <Open3D/Core/Registration/GlobalOptimizationConvergenceCriteria.h>
 #include <IO/ClassIO/PoseGraphIO.h>
 
 using namespace open3d;

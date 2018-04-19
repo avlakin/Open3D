@@ -29,9 +29,9 @@
 
 #include <iostream>
 #include <memory>
-#include <Core/Core.h>
-#include <Core/Odometry/Odometry.h>
-#include <Core/Utility/Console.h>
+#include <Open3D/Core/Core.h>
+#include <Open3D/Core/Odometry/Odometry.h>
+#include <Open3D/Core/Utility/Console.h>
 #include <IO/IO.h>
 
 void PrintHelp(char* argv[])

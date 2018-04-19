@@ -30,7 +30,7 @@
 #include <iostream>
 #include <thread>
 #include <librealsense/rs.hpp>
-#include <Core/Core.h>
+#include <Open3D/Core/Core.h>
 #include <Visualization/Visualization.h>
 
 using namespace open3d;

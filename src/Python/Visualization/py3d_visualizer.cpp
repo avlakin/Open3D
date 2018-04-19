@@ -30,7 +30,7 @@
 #include "py3d_visualization.h"
 #include "py3d_visualization_trampoline.h"
 
-#include <Core/Geometry/Image.h>
+#include <Open3D/Core/Geometry/Image.h>
 #include <Visualization/Visualizer/Visualizer.h>
 #include <Visualization/Visualizer/VisualizerWithKeyCallback.h>
 #include <Visualization/Visualizer/VisualizerWithEditing.h>

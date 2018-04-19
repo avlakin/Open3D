@@ -30,7 +30,7 @@
 #include "py3d_core.h"
 #include "py3d_core_trampoline.h"
 
-#include <Core/Geometry/TriangleMesh.h>
+#include <Open3D/Core/Geometry/TriangleMesh.h>
 #include <IO/ClassIO/TriangleMeshIO.h>
 using namespace open3d;
 

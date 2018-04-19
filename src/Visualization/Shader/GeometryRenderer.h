@@ -29,7 +29,7 @@
 
 #pragma once
 
-#include <Core/Geometry/Geometry.h>
+#include <Open3D/Core/Geometry/Geometry.h>
 
 #include <Visualization/Shader/SimpleShader.h>
 #include <Visualization/Shader/SimpleBlackShader.h>

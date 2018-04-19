@@ -31,7 +31,7 @@
 
 #include <algorithm>
 
-#include <Core/Geometry/Image.h>
+#include <Open3D/Core/Geometry/Image.h>
 #include <Visualization/Shader/Shader.h>
 #include <Visualization/Utility/ColorMap.h>
 

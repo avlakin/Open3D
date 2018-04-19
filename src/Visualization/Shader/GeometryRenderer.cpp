@@ -29,10 +29,10 @@
 
 #include "GeometryRenderer.h"
 
-#include <Core/Geometry/PointCloud.h>
-#include <Core/Geometry/LineSet.h>
-#include <Core/Geometry/TriangleMesh.h>
-#include <Core/Geometry/Image.h>
+#include <Open3D/Core/Geometry/PointCloud.h>
+#include <Open3D/Core/Geometry/LineSet.h>
+#include <Open3D/Core/Geometry/TriangleMesh.h>
+#include <Open3D/Core/Geometry/Image.h>
 #include <Visualization/Utility/SelectionPolygon.h>
 #include <Visualization/Utility/PointCloudPicker.h>
 #include <Visualization/Visualizer/RenderOptionWithEditing.h>

@@ -30,8 +30,8 @@
 #include "py3d_core.h"
 #include "py3d_core_trampoline.h"
 
-#include <Core/Camera/PinholeCameraIntrinsic.h>
-#include <Core/Camera/PinholeCameraTrajectory.h>
+#include <Open3D/Core/Camera/PinholeCameraIntrinsic.h>
+#include <Open3D/Core/Camera/PinholeCameraTrajectory.h>
 #include <IO/ClassIO/IJsonConvertibleIO.h>
 #include <IO/ClassIO/PinholeCameraTrajectoryIO.h>
 using namespace open3d;

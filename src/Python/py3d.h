@@ -37,7 +37,7 @@
 #include <pybind11/eigen.h>
 #include <pybind11/functional.h>
 
-#include <Core/Registration/PoseGraph.h>
+#include <Open3D/Core/Registration/PoseGraph.h>
 
 namespace py = pybind11;
 using namespace py::literals;

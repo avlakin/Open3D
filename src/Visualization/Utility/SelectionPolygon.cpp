@@ -29,8 +29,8 @@
 
 #include "SelectionPolygon.h"
 
-#include <Core/Geometry/PointCloud.h>
-#include <Core/Utility/Console.h>
+#include <Open3D/Core/Geometry/PointCloud.h>
+#include <Open3D/Core/Utility/Console.h>
 #include <Visualization/Visualizer/ViewControl.h>
 #include <Visualization/Visualizer/ViewControlWithEditing.h>
 #include <Visualization/Utility/SelectionPolygonVolume.h>

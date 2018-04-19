@@ -30,7 +30,7 @@
 #include "py3d_core.h"
 #include "py3d_core_trampoline.h"
 
-#include <Core/Core.h>
+#include <Open3D/Core/Core.h>
 using namespace open3d;
 
 void pybind_geometry(py::module &m)

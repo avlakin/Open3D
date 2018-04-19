@@ -29,8 +29,8 @@
 
 #include "py3d_visualization.h"
 
-#include <Core/Utility/FileSystem.h>
-#include <Core/Geometry/PointCloud.h>
+#include <Open3D/Core/Utility/FileSystem.h>
+#include <Open3D/Core/Geometry/PointCloud.h>
 #include <Visualization/Utility/SelectionPolygonVolume.h>
 #include <Visualization/Utility/DrawGeometry.h>
 #include <Visualization/Visualizer/Visualizer.h>

@@ -29,7 +29,7 @@
 
 #pragma once
 
-#include <Core/Camera/PinholeCameraTrajectory.h>
+#include <Open3D/Core/Camera/PinholeCameraTrajectory.h>
 #include <Visualization/Visualizer/ViewControl.h>
 #include <Visualization/Visualizer/ViewTrajectory.h>
 

@@ -31,8 +31,8 @@
 
 #include <Visualization/Visualizer/ViewParameters.h>
 #include <Visualization/Visualizer/ViewTrajectory.h>
-#include <Core/Camera/PinholeCameraTrajectory.h>
-#include <Core/Geometry/TriangleMesh.h>
+#include <Open3D/Core/Camera/PinholeCameraTrajectory.h>
+#include <Open3D/Core/Geometry/TriangleMesh.h>
 #include <IO/ClassIO/ImageIO.h>
 #include <IO/ClassIO/PointCloudIO.h>
 #include <IO/ClassIO/IJsonConvertibleIO.h>

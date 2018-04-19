@@ -32,7 +32,7 @@
 
 #include <flann/flann.hpp>
 
-#include <Core/Core.h>
+#include <Open3D/Core/Core.h>
 #include <IO/IO.h>
 #include <Visualization/Visualization.h>
 

@@ -27,8 +27,8 @@
 // IN THE SOFTWARE.
 // ----------------------------------------------------------------------------
 
-#include <Core/Core.h>
-#include <Core/Utility/Helper.h>
+#include <Open3D/Core/Core.h>
+#include <Open3D/Core/Utility/Helper.h>
 
 void PrintHelp()
 {

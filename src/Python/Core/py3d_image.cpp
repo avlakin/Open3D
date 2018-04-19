@@ -30,8 +30,8 @@
 #include "py3d_core.h"
 #include "py3d_core_trampoline.h"
 
-#include <Core/Geometry/Image.h>
-#include <Core/Geometry/RGBDImage.h>
+#include <Open3D/Core/Geometry/Image.h>
+#include <Open3D/Core/Geometry/RGBDImage.h>
 #include <IO/ClassIO/ImageIO.h>
 using namespace open3d;
 

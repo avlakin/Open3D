@@ -27,7 +27,7 @@
 // IN THE SOFTWARE.
 // ----------------------------------------------------------------------------
 
-#include <Core/Core.h>
+#include <Open3D/Core/Core.h>
 #include <IO/IO.h>
 
 #include <limits>

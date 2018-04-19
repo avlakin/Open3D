@@ -31,7 +31,7 @@
 #include <IO/ClassIO/TriangleMeshIO.h>
 
 #include <rply/rply.h>
-#include <Core/Utility/Console.h>
+#include <Open3D/Core/Utility/Console.h>
 
 namespace open3d {
 

@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <Core/Geometry/Geometry.h>
-#include <Core/Camera/PinholeCameraIntrinsic.h>
+#include <Open3D/Core/Geometry/Geometry.h>
+#include <Open3D/Core/Camera/PinholeCameraIntrinsic.h>
 #include <Visualization/Visualizer/ViewParameters.h>
 #include <Visualization/Utility/BoundingBox.h>
 #include <Visualization/Utility/GLHelper.h>

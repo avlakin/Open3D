@@ -32,7 +32,7 @@
 #include <vector>
 #include <tuple>
 #include <Eigen/Core>
-#include <Core/Utility/IJsonConvertible.h>
+#include <Open3D/Core/Utility/IJsonConvertible.h>
 #include <Visualization/Visualizer/ViewParameters.h>
 
 namespace open3d {

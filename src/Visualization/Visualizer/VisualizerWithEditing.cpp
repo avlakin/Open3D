@@ -30,11 +30,11 @@
 #include "VisualizerWithEditing.h"
 
 #include <tinyfiledialogs/tinyfiledialogs.h>
-#include <Core/Geometry/PointCloud.h>
-#include <Core/Geometry/LineSet.h>
-#include <Core/Geometry/TriangleMesh.h>
-#include <Core/Geometry/Image.h>
-#include <Core/Utility/FileSystem.h>
+#include <Open3D/Core/Geometry/PointCloud.h>
+#include <Open3D/Core/Geometry/LineSet.h>
+#include <Open3D/Core/Geometry/TriangleMesh.h>
+#include <Open3D/Core/Geometry/Image.h>
+#include <Open3D/Core/Utility/FileSystem.h>
 #include <IO/ClassIO/IJsonConvertibleIO.h>
 #include <IO/ClassIO/PointCloudIO.h>
 #include <Visualization/Visualizer/ViewControlWithEditing.h>

@@ -30,7 +30,7 @@
 #include <IO/ClassIO/ImageIO.h>
 
 #include <png.h>
-#include <Core/Utility/Console.h>
+#include <Open3D/Core/Utility/Console.h>
 
 namespace open3d {
 

@@ -30,7 +30,7 @@
 #include <IO/ClassIO/PointCloudIO.h>
 
 #include <cstdio>
-#include <Core/Utility/Console.h>
+#include <Open3D/Core/Utility/Console.h>
 
 namespace open3d {
 

@@ -29,9 +29,9 @@
 
 #include "SimpleShader.h"
 
-#include <Core/Geometry/PointCloud.h>
-#include <Core/Geometry/LineSet.h>
-#include <Core/Geometry/TriangleMesh.h>
+#include <Open3D/Core/Geometry/PointCloud.h>
+#include <Open3D/Core/Geometry/LineSet.h>
+#include <Open3D/Core/Geometry/TriangleMesh.h>
 #include <Visualization/Shader/Shader.h>
 #include <Visualization/Utility/ColorMap.h>
 
