@@ -35,7 +35,7 @@
 #include <Open3D/Core/Utility/Console.h>
 #include <Open3D/Core/Camera/PinholeCameraTrajectory.h>
 #include <Visualization/Visualizer/ViewControlWithCustomAnimation.h>
-#include <IO/ClassIO/IJsonConvertibleIO.h>
+#include <Open3D/IO/ClassIO/IJsonConvertibleIO.h>
 
 namespace open3d {
 

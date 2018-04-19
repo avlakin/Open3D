@@ -29,7 +29,7 @@
 
 #include <thread>
 #include <Open3D/Core/Core.h>
-#include <IO/IO.h>
+#include <Open3D/IO/IO.h>
 #include <Visualization/Visualization.h>
 
 namespace open3d {

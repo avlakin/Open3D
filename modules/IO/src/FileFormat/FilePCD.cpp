@@ -27,7 +27,7 @@
 // IN THE SOFTWARE.
 // ----------------------------------------------------------------------------
 
-#include <IO/ClassIO/PointCloudIO.h>
+#include <Open3D/IO/ClassIO/PointCloudIO.h>
 
 #include <cstdio>
 #include <sstream>

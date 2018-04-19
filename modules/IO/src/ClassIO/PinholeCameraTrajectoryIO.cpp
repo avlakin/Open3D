@@ -27,12 +27,12 @@
 // IN THE SOFTWARE.
 // ----------------------------------------------------------------------------
 
-#include "PinholeCameraTrajectoryIO.h"
+#include <Open3D/IO/ClassIO/PinholeCameraTrajectoryIO.h>
 
 #include <unordered_map>
 #include <Open3D/Core/Utility/Console.h>
 #include <Open3D/Core/Utility/FileSystem.h>
-#include <IO/ClassIO/IJsonConvertibleIO.h>
+#include <Open3D/IO/ClassIO/IJsonConvertibleIO.h>
 
 namespace open3d {
 

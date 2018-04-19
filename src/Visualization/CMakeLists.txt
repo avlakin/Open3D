@@ -45,6 +45,7 @@ add_library(${PROJECT_NAME}
 	${VISUALIZATION_VISUALIZER_HEADER_FILES} ${VISUALIZATION_VISUALIZER_SOURCE_FILES}
 )
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/modules/Core/include")
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/modules/IO/include")
 add_dependencies(${PROJECT_NAME} ShaderFileTarget)
 target_link_libraries(${PROJECT_NAME} Core IO ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
 

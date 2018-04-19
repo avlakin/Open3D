@@ -33,9 +33,9 @@
 #include <Visualization/Visualizer/ViewTrajectory.h>
 #include <Open3D/Core/Camera/PinholeCameraTrajectory.h>
 #include <Open3D/Core/Geometry/TriangleMesh.h>
-#include <IO/ClassIO/ImageIO.h>
-#include <IO/ClassIO/PointCloudIO.h>
-#include <IO/ClassIO/IJsonConvertibleIO.h>
+#include <Open3D/IO/ClassIO/ImageIO.h>
+#include <Open3D/IO/ClassIO/PointCloudIO.h>
+#include <Open3D/IO/ClassIO/IJsonConvertibleIO.h>
 
 #include <Visualization/Utility/GLHelper.h>
 

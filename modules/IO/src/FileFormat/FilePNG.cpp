@@ -27,7 +27,7 @@
 // IN THE SOFTWARE.
 // ----------------------------------------------------------------------------
 
-#include <IO/ClassIO/ImageIO.h>
+#include <Open3D/IO/ClassIO/ImageIO.h>
 
 #include <png.h>
 #include <Open3D/Core/Utility/Console.h>

@@ -34,7 +34,7 @@
 #include <Visualization/Utility/SelectionPolygonVolume.h>
 #include <Visualization/Utility/DrawGeometry.h>
 #include <Visualization/Visualizer/Visualizer.h>
-#include <IO/ClassIO/IJsonConvertibleIO.h>
+#include <Open3D/IO/ClassIO/IJsonConvertibleIO.h>
 using namespace open3d;
 
 void pybind_utility(py::module &m)

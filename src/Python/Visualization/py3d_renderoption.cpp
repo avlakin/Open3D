@@ -31,7 +31,7 @@
 #include "py3d_visualization_trampoline.h"
 
 #include <Visualization/Visualizer/RenderOption.h>
-#include <IO/ClassIO/IJsonConvertibleIO.h>
+#include <Open3D/IO/ClassIO/IJsonConvertibleIO.h>
 using namespace open3d;
 
 void pybind_renderoption(py::module &m)

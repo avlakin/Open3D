@@ -113,13 +113,11 @@ link_directories(${JSONCPP_LIBRARY_DIRS})
 
 # Open3D libraries
 add_subdirectory("${CMAKE_SOURCE_DIR}/modules/Core")
-add_subdirectory("${CMAKE_SOURCE_DIR}/src/Tools")
-add_subdirectory("${CMAKE_SOURCE_DIR}/src/IO")
+add_subdirectory("${CMAKE_SOURCE_DIR}/modules/IO")
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/Visualization")
-
-message(STATUS "OPEN3D_BUILD_TESTS=${OPEN3D_BUILD_TESTS}")
+add_subdirectory("${CMAKE_SOURCE_DIR}/src/Tools")
 if(OPEN3D_BUILD_TESTS)
-	add_subdirectory(src/Test)
+	add_subdirectory("${CMAKE_SOURCE_DIR}/src/Test")
 endif(OPEN3D_BUILD_TESTS)
 
 if(EXISTS "${CMAKE_SOURCE_DIR}/src/Experimental/CMakeLists.txt")

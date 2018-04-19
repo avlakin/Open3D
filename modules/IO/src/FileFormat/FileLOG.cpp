@@ -27,7 +27,7 @@
 // IN THE SOFTWARE.
 // ----------------------------------------------------------------------------
 
-#include <IO/ClassIO/PinholeCameraTrajectoryIO.h>
+#include <Open3D/IO/ClassIO/PinholeCameraTrajectoryIO.h>
 
 #include <Eigen/Dense>
 #include <Open3D/Core/Utility/Console.h>

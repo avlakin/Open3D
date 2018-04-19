@@ -32,7 +32,7 @@
 
 #include <Open3D/Core/Geometry/PointCloud.h>
 #include <Open3D/Core/Registration/Feature.h>
-#include <IO/ClassIO/FeatureIO.h>
+#include <Open3D/IO/ClassIO/FeatureIO.h>
 using namespace open3d;
 
 void pybind_feature(py::module &m)

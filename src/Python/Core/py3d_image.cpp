@@ -32,7 +32,7 @@
 
 #include <Open3D/Core/Geometry/Image.h>
 #include <Open3D/Core/Geometry/RGBDImage.h>
-#include <IO/ClassIO/ImageIO.h>
+#include <Open3D/IO/ClassIO/ImageIO.h>
 using namespace open3d;
 
 void pybind_image(py::module &m)

@@ -30,7 +30,7 @@
 #include <cstdio>
 
 #include <Open3D/Core/Core.h>
-#include <IO/IO.h>
+#include <Open3D/IO/IO.h>
 #include <Open3D/Core/Registration/PoseGraph.h>
 #include <Open3D/Core/Registration/GlobalOptimization.h>
 

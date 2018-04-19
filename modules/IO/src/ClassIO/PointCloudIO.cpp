@@ -27,7 +27,7 @@
 // IN THE SOFTWARE.
 // ----------------------------------------------------------------------------
 
-#include "ImageIO.h"
+#include <Open3D/IO/ClassIO/PointCloudIO.h>
 
 #include <unordered_map>
 #include <Open3D/Core/Utility/Console.h>
@@ -38,61 +38,77 @@ namespace open3d {
 namespace {
 
 static const std::unordered_map<std::string,
-        std::function<bool(const std::string &, Image &)>>
-        file_extension_to_image_read_function
-        {{"png", ReadImageFromPNG},
-        {"jpg", ReadImageFromJPG},
-        {"jpeg", ReadImageFromJPG},
+        std::function<bool(const std::string &, PointCloud &)>>
+        file_extension_to_pointcloud_read_function
+        {{"xyz", ReadPointCloudFromXYZ},
+        {"xyzn", ReadPointCloudFromXYZN},
+        {"xyzrgb", ReadPointCloudFromXYZRGB},
+        {"ply", ReadPointCloudFromPLY},
+        {"pcd", ReadPointCloudFromPCD},
+        {"pts", ReadPointCloudFromPTS},
         };
 
 static const std::unordered_map<std::string,
-        std::function<bool(const std::string &, const Image &, int)>>
-        file_extension_to_image_write_function
-        {{"png", WriteImageToPNG},
-        {"jpg", WriteImageToJPG},
-        {"jpeg", WriteImageToJPG},
+        std::function<bool(const std::string &, const PointCloud &,
+        const bool, const bool)>>
+        file_extension_to_pointcloud_write_function
+        {{"xyz", WritePointCloudToXYZ},
+        {"xyzn", WritePointCloudToXYZN},
+        {"xyzrgb", WritePointCloudToXYZRGB},
+        {"ply", WritePointCloudToPLY},
+        {"pcd", WritePointCloudToPCD},
+        {"pts", WritePointCloudToPTS},
         };
-
 }   // unnamed namespace
 
-std::shared_ptr<Image> CreateImageFromFile(const std::string &filename)
+std::shared_ptr<PointCloud> CreatePointCloudFromFile(
+        const std::string &filename)
 {
-    auto image = std::make_shared<Image>();
-    ReadImage(filename, *image);
-    return image;
+    auto pointcloud = std::make_shared<PointCloud>();
+    ReadPointCloud(filename, *pointcloud);
+    return pointcloud;
 }
 
-bool ReadImage(const std::string &filename, Image &image)
+bool ReadPointCloud(const std::string &filename, PointCloud &pointcloud)
 {
     std::string filename_ext =
             filesystem::GetFileExtensionInLowerCase(filename);
     if (filename_ext.empty()) {
-        PrintWarning("Read Image failed: unknown file extension.\n");
+        PrintWarning("Read PointCloud failed: unknown file extension.\n");
         return false;
     }
-    auto map_itr = file_extension_to_image_read_function.find(filename_ext);
-    if (map_itr == file_extension_to_image_read_function.end()) {
-        PrintWarning("Read Image failed: unknown file extension.\n");
+    auto map_itr =
+            file_extension_to_pointcloud_read_function.find(filename_ext);
+    if (map_itr == file_extension_to_pointcloud_read_function.end()) {
+        PrintWarning("Read PointCloud failed: unknown file extension.\n");
         return false;
     }
-    return map_itr->second(filename, image);
+    bool success = map_itr->second(filename, pointcloud);
+    PrintDebug("Read PointCloud: %d vertices.\n",
+            (int)pointcloud.points_.size());
+    return success;
 }
 
-bool WriteImage(const std::string &filename, const Image &image,
-        int quality/* = 90*/)
+bool WritePointCloud(const std::string &filename, const PointCloud &pointcloud,
+        bool write_ascii/* = false*/, bool compressed/* = false*/)
 {
     std::string filename_ext =
             filesystem::GetFileExtensionInLowerCase(filename);
     if (filename_ext.empty()) {
-        PrintWarning("Write Image failed: unknown file extension.\n");
+        PrintWarning("Write PointCloud failed: unknown file extension.\n");
         return false;
     }
-    auto map_itr = file_extension_to_image_write_function.find(filename_ext);
-    if (map_itr == file_extension_to_image_write_function.end()) {
-        PrintWarning("Write Image failed: unknown file extension.\n");
+    auto map_itr =
+            file_extension_to_pointcloud_write_function.find(filename_ext);
+    if (map_itr == file_extension_to_pointcloud_write_function.end()) {
+        PrintWarning("Write PointCloud failed: unknown file extension.\n");
         return false;
     }
-    return map_itr->second(filename, image, quality);
+    bool success = map_itr->second(filename, pointcloud, write_ascii,
+            compressed);
+    PrintDebug("Write PointCloud: %d vertices.\n",
+            (int)pointcloud.points_.size());
+    return success;
 }
 
 }   // namespace open3d

@@ -35,8 +35,8 @@
 #include <Open3D/Core/Geometry/TriangleMesh.h>
 #include <Open3D/Core/Geometry/Image.h>
 #include <Open3D/Core/Utility/FileSystem.h>
-#include <IO/ClassIO/IJsonConvertibleIO.h>
-#include <IO/ClassIO/PointCloudIO.h>
+#include <Open3D/IO/ClassIO/IJsonConvertibleIO.h>
+#include <Open3D/IO/ClassIO/PointCloudIO.h>
 #include <Visualization/Visualizer/ViewControlWithEditing.h>
 #include <Visualization/Visualizer/RenderOptionWithEditing.h>
 #include <Visualization/Utility/SelectionPolygon.h>

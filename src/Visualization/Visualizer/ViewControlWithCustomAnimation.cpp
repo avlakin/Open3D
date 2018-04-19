@@ -29,7 +29,7 @@
 
 #include "ViewControlWithCustomAnimation.h"
 
-#include <IO/ClassIO/IJsonConvertibleIO.h>
+#include <Open3D/IO/ClassIO/IJsonConvertibleIO.h>
 
 namespace open3d {
 
