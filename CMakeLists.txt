@@ -39,13 +39,22 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+macro(set_runtime_output_directory target path)
+	set_target_properties(${target} PROPERTIES
+		RUNTIME_OUTPUT_DIRECTORY ${path}
+		RUNTIME_OUTPUT_DIRECTORY_DEBUG ${path}
+		RUNTIME_OUTPUT_DIRECTORY_RELEASE ${path})
+endmacro()
+
 # Set OS-specific things here
 if(WIN32)
 	message(STATUS "Compiling on Windows")
 	add_definitions(-DWINDOWS)
 	add_definitions(-D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SCL_SECURE_NO_WARNINGS)		# suppress C4996 warning
 	add_definitions(-DGLEW_STATIC)		# enable GLEW for windows
-	SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON) #Enable building DLLs
+	if (${BUILD_SHARED_LIBS})
+		SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON) #Enable building DLLs
+	endif(${BUILD_SHARED_LIBS})
 	if(MSVC)
 		message(STATUS "Compiling with MSVC")
 		add_definitions(-DNOMINMAX)
@@ -57,7 +66,9 @@ elseif(CYGWIN)
 	# enable c++11
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 	add_definitions(-DCYGWIN)
-	SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON) #Enable building DLLs
+	if (${BUILD_SHARED_LIBS})
+		SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON) #Enable building DLLs
+	endif(${BUILD_SHARED_LIBS})
 elseif(APPLE)
 	add_definitions(-DUNIX)
 	# enable c++11

@@ -31,7 +31,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/modules/
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/modules/Visualization/include")
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/modules/Python/include")
 target_link_libraries(${PROJECT_NAME} PRIVATE Core IO Visualization)
-set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "bindings" OUTPUT_NAME "open3d")
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	FOLDER "bindings"
+	OUTPUT_NAME "open3d")
 
 # configure installer to copy the python module to the python site-packages
 install(TARGETS ${PROJECT_NAME} DESTINATION ${PYTHON_SITE_PACKAGES})

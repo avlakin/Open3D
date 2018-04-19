@@ -5,4 +5,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/modules/
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/modules/Visualization/include")
 target_link_libraries(${PROJECT_NAME} Visualization Core IO)
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "samples/tools")
+set_runtime_output_directory(${PROJECT_NAME} "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Tools")
  

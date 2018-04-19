@@ -20,7 +20,8 @@ endforeach(file)
 project(VisualizationHelper)
 add_custom_target(${PROJECT_NAME} ALL
 DEPENDS Shader.h)
-set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "housekeepers")
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	FOLDER "housekeepers")
 
 source_group("Source Files\\Shader\\GLSL" FILES ${SHADER_FILES})
 file(GLOB VISUALIZATION_ALL_SOURCE_FILES "src/*.cpp")
@@ -53,4 +54,6 @@ else ()
 	find_package(OpenGL REQUIRED)
 	target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES})
 endif ()
-set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "modules" OUTPUT_NAME "${CMAKE_PROJECT_NAME}${PROJECT_NAME}-${OPEN3D_VERSION}")
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	FOLDER "modules"
+	OUTPUT_NAME "${CMAKE_PROJECT_NAME}${PROJECT_NAME}-${OPEN3D_VERSION}")
