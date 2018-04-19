@@ -68,6 +68,7 @@ pybind11_add_module(${PROJECT_NAME}
 )
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/modules/Core/include")
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/modules/IO/include")
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/modules/Visualization/include")
 target_link_libraries(${PROJECT_NAME} PRIVATE Core IO Visualization)
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "bindings" OUTPUT_NAME "open3d")
 add_dependencies(${PROJECT_NAME} PythonHelper)

@@ -114,7 +114,7 @@ link_directories(${JSONCPP_LIBRARY_DIRS})
 # Open3D libraries
 add_subdirectory("${CMAKE_SOURCE_DIR}/modules/Core")
 add_subdirectory("${CMAKE_SOURCE_DIR}/modules/IO")
-add_subdirectory("${CMAKE_SOURCE_DIR}/src/Visualization")
+add_subdirectory("${CMAKE_SOURCE_DIR}/modules/Visualization")
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/Tools")
 if(OPEN3D_BUILD_TESTS)
 	add_subdirectory("${CMAKE_SOURCE_DIR}/src/Test")

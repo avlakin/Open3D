@@ -31,7 +31,7 @@
 #include <thread>
 #include <librealsense/rs.hpp>
 #include <Open3D/Core/Core.h>
-#include <Visualization/Visualization.h>
+#include <Open3D/Visualization/Visualization.h>
 
 using namespace open3d;
 

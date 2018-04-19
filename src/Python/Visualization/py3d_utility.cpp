@@ -31,9 +31,9 @@
 
 #include <Open3D/Core/Utility/FileSystem.h>
 #include <Open3D/Core/Geometry/PointCloud.h>
-#include <Visualization/Utility/SelectionPolygonVolume.h>
-#include <Visualization/Utility/DrawGeometry.h>
-#include <Visualization/Visualizer/Visualizer.h>
+#include <Open3D/Visualization/Utility/SelectionPolygonVolume.h>
+#include <Open3D/Visualization/Utility/DrawGeometry.h>
+#include <Open3D/Visualization/Visualizer/Visualizer.h>
 #include <Open3D/IO/ClassIO/IJsonConvertibleIO.h>
 using namespace open3d;
 

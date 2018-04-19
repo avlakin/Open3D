@@ -30,8 +30,8 @@
 #pragma once
 
 #include <Python/py3d.h>
-#include <Visualization/Visualizer/Visualizer.h>
-#include <Visualization/Visualizer/ViewControl.h>
+#include <Open3D/Visualization/Visualizer/Visualizer.h>
+#include <Open3D/Visualization/Visualizer/ViewControl.h>
 
 using namespace open3d;
 

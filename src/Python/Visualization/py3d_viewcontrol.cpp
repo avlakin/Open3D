@@ -30,7 +30,7 @@
 #include "py3d_visualization.h"
 #include "py3d_visualization_trampoline.h"
 
-#include <Visualization/Visualizer/ViewControl.h>
+#include <Open3D/Visualization/Visualizer/ViewControl.h>
 #include <Open3D/IO/ClassIO/IJsonConvertibleIO.h>
 using namespace open3d;
 
