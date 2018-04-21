@@ -88,7 +88,9 @@ install:
   - make
 
 script:
-  - echo "testing goes here ..."
+  - cd bin/Test && ./TestImage ../../../data/RGBD/color/00000.jpg ../../../data/RGBD/depth/00000.png && cd ../..
+  - cd bin/Test && ./TestPoseGraph ../../../data/GraphOptimization/pose_graph_example_fragment.json && cd ../..
+  - cd bin/Test && ./TestProgramOptions --switch --int 123 --double 456.789 --string "Hello World" --vector "(0,0,1)" && cd ../..
 
 after_success:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then

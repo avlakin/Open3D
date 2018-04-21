@@ -34,17 +34,25 @@ install:
   - python -m ensurepip --upgrade && python -m pip install --upgrade pip wheel pytest numpy
 
 build_script:
-  #Working directory: %APPVEYOR_BUILD_FOLDER%
   - mkdir build
   - cd build && mkdir install
   - cmake -G "%CMAKE_GENERATOR%" -DBUILD_SHARED_LIBS:BOOL=%SHARED% -DCMAKE_INSTALL_PREFIX=install ..
   - cmake --build . --config %CONFIGURATION% --target ALL_BUILD
 
 test_script:
-  - dir bin\%CONFIGURATION%
+  - ps: |
+      if ($env:SHARED -eq "ON") {
+        $env:PATH += ";$env:APPVEYOR_BUILD_FOLDER/build/bin/$env:CONFIGURATION"
+      }
+  - cd "bin/Test" && TestImage "../../../data/RGBD/color/00000.jpg" "../../../data/RGBD/depth/00000.png" && cd ../..
+  - cd "bin/Test" && TestPoseGraph "../../../data/GraphOptimization/pose_graph_example_fragment.json" && cd ../..
+  - cd "bin/Test" && TestProgramOptions --switch --int 123 --double 456.789 --string "Hello World" --vector "(0,0,1)" && cd ../..
 
 after_test:
-  - 7z a -tzip libraries.zip bin\%CONFIGURATION%\*.dll
+  - ps: |
+      if ($env:SHARED -eq "ON") {
+        7z a -tzip libraries.zip "bin/$env:CONFIGURATION/*.dll"
+      }
   - 7z a -tzip libraries.zip lib\%CONFIGURATION%\*.lib
   - 7z a -tzip libraries.zip lib\%CONFIGURATION%\*.pyd
   #- python setup.py bdist_wheel
