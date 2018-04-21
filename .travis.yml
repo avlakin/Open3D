@@ -65,18 +65,18 @@ before_install:
       echo $COMMAND_EVAL;
       eval $COMMAND_EVAL;
       sudo apt-get install -y cmake xorg-dev libglu1-mesa-dev libgl1-mesa-glx libglew-dev libjsoncpp-dev libeigen3-dev;
-      sudo apt-get install -y doxygen python-sphinx;
-      python -m pip install --upgrade pip sphinx sphinx-autobuild sphinx-rtd-theme;
+      sudo apt-get install -y doxygen python-sphinx pandoc;
+      python -m pip install --upgrade pip sphinx sphinx-autobuild sphinx-rtd-theme wheel pytest numpy pypandoc;
       uname -a && gcc --version && cmake --version && python -V;
     else
       brew update;
       echo $COMMAND_EVAL;
       eval $COMMAND_EVAL;
       brew install cmake libusb pkg-config glfw glew libpng jpeg pkg-config jsoncpp eigen;
-      brew install doxygen sphinx-doc;
+      brew install doxygen sphinx-doc pandoc;
       export PATH="/usr/local/opt/sphinx-doc/bin:$PATH";
       sudo python -m ensurepip --upgrade;
-      python -m pip install --user --upgrade pip sphinx sphinx-autobuild sphinx-rtd-theme;
+      python -m pip install --user --upgrade pip sphinx sphinx-autobuild sphinx-rtd-theme wheel pytest numpy pypandoc;
       uname -a && clang --version && cmake --version && python -V;
     fi
 
@@ -91,6 +91,7 @@ script:
   - cd bin/Test && ./TestImage ../../../data/RGBD/color/00000.jpg ../../../data/RGBD/depth/00000.png && cd ../..
   - cd bin/Test && ./TestPoseGraph ../../../data/GraphOptimization/pose_graph_example_fragment.json && cd ../..
   - cd bin/Test && ./TestProgramOptions --switch --int 123 --double 456.789 --string "Hello World" --vector "(0,0,1)" && cd ../..
+  - cd ../util/package_generator/ && python setup.py --base-dir ../../build bdist_wheel && cd ../../build
 
 after_success:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then

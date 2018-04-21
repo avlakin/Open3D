@@ -1,5 +1,9 @@
 .vs/
 build*/
 doc/_build/
-src/Sandbox/
 modules/Visualization/include/Open3D/Visualization/Shader/Shader.h
+src/Sandbox/
+util/package_generator/*.egg-info
+util/package_generator/build
+util/package_generator/dist
+util/package_generator/open3d/open3d*

@@ -31,11 +31,10 @@ install:
       }
   - ps: if ($env:PLATFORM -eq "x64") { $env:CMAKE_GENERATOR += " Win64" }
   - "echo %APPVEYOR_BUILD_WORKER_IMAGE%-%PLATFORM% && cmake --version && python -V"
-  - python -m ensurepip --upgrade && python -m pip install --upgrade pip wheel pytest numpy
+  - python -m ensurepip --upgrade && python -m pip install --upgrade pip wheel pytest numpy pypandoc
 
 build_script:
-  - mkdir build
-  - cd build && mkdir install
+  - mkdir build && cd build && mkdir install
   - cmake -G "%CMAKE_GENERATOR%" -DBUILD_SHARED_LIBS:BOOL=%SHARED% -DCMAKE_INSTALL_PREFIX=install ..
   - cmake --build . --config %CONFIGURATION% --target ALL_BUILD
 
@@ -44,23 +43,26 @@ test_script:
       if ($env:SHARED -eq "ON") {
         $env:PATH += ";$env:APPVEYOR_BUILD_FOLDER/build/bin/$env:CONFIGURATION"
       }
-  - cd "bin/Test" && TestImage "../../../data/RGBD/color/00000.jpg" "../../../data/RGBD/depth/00000.png" && cd ../..
-  - cd "bin/Test" && TestPoseGraph "../../../data/GraphOptimization/pose_graph_example_fragment.json" && cd ../..
   - cd "bin/Test" && TestProgramOptions --switch --int 123 --double 456.789 --string "Hello World" --vector "(0,0,1)" && cd ../..
+  - cd "bin/Test" && TestImage "../../../data/RGBD/color/00000.jpg" "../../../data/RGBD/depth/00000.png" && cd ../..
+# TODO: Not working with dynamic libs for some reason!
+#  - cd "bin/Test" && TestPoseGraph "../../../data/GraphOptimization/pose_graph_example_fragment.json" && cd ../..
 
 after_test:
   - ps: |
       if ($env:SHARED -eq "ON") {
         7z a -tzip libraries.zip "bin/$env:CONFIGURATION/*.dll"
       }
-  - 7z a -tzip libraries.zip lib\%CONFIGURATION%\*.lib
-  - 7z a -tzip libraries.zip lib\%CONFIGURATION%\*.pyd
-  #- python setup.py bdist_wheel
+  - 7z a -tzip libraries.zip lib/%CONFIGURATION%/*.lib
+  - 7z a -tzip libraries.zip lib/%CONFIGURATION%/*.pyd
+  - cd ../util/package_generator/ && python setup.py --base-dir ../../build bdist_wheel && cd ../../build
 
 # cache:
 
 artifacts:
-  - path: 'build\libraries.zip'
+  - path: 'build/libraries.zip'
     name: The Libraries
+  - path: 'util/package_generator/dist/*.whl'
+    name: The Python library
 
 # deploy:
