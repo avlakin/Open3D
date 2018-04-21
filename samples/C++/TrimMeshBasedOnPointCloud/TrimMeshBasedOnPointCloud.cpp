@@ -140,5 +140,5 @@ int main(int argc, char *argv[])
     PrintDebug("[TrimMeshBasedOnPointCloud] %d vertices and %d triangles have been removed.\n",
             old_vertex_num - k, old_triangle_num - kt);
     WriteTriangleMesh(out_mesh_file, *mesh);
-    return 1;
+    return 0;
 }

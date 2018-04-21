@@ -73,5 +73,5 @@ int main(int argc, char **argv)
     }
     WriteTriangleMesh(argv[2], *merged_mesh_ptr);
 
-    return 1;
+    return 0;
 }

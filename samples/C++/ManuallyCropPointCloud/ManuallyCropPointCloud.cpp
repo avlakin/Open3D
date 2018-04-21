@@ -74,5 +74,5 @@ int main(int argc, char **argv)
     }
     vis.Run();
     vis.DestroyWindow();
-    return 1;
+    return 0;
 }

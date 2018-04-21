@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     using namespace open3d;
     if (argc == 1) {
         PrintHelp();
-        return 1;
+        return 0;
     }
     std::string option(argv[1]);
     char const *pattern = "*.*";
@@ -55,5 +55,5 @@ int main(int argc, char *argv[])
                 &pattern, NULL);
         PrintInfo("%s\n", str);
     }
-    return 1;
+    return 0;
 }

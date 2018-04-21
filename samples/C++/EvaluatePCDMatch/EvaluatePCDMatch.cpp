@@ -185,5 +185,5 @@ int main(int argc, char *argv[])
             (double)positive, positive_rmse, positive);
     PrintInfo("Accuracy %.2f%% (%d / %d)\n", (double)positive * 100.0 /
             (double)pair_ids.size(), positive, (int)pair_ids.size());
-    return 1;
+    return 0;
 }

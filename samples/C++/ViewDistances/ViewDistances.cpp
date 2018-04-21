@@ -105,5 +105,5 @@ int main(int argc, char *argv[])
     if (!ProgramOptionExists(argc, argv, "--without_gui")) {
         DrawGeometries({pcd}, "Point Cloud", 1920, 1080);
     }
-    return 1;
+    return 0;
 }

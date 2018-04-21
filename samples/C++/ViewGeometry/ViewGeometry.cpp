@@ -200,5 +200,5 @@ int main(int argc, char **argv)
     }
     visualizer.DestroyWindow();
 
-    return 1;
+    return 0;
 }

@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     if (argc <= 4 || ProgramOptionExists(argc, argv, "--help") ||
             ProgramOptionExists(argc, argv, "-h")) {
         PrintHelp(argv);
-        return 1;
+        return 0;
     }
 
     std::string intrinsic_path;

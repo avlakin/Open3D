@@ -76,5 +76,5 @@ int main(int argc, char *argv[])
     }
     DrawGeometriesWithCustomAnimation(pcds);
 
-    return 1;
+    return 0;
 }
