@@ -1,0 +1,11 @@
+# Copyright (c) 2018 Hamdi Sahloul <hamdisahloul@hotmail.com>
+# Redistribution and use in full or partial is allowed according to the terms of the MIT license.
+
+include open3d/*.txt
+include open3d/*.rst
+
+include open3d/*open3d*.dylib
+include open3d/*open3d*.so
+include open3d/open3d*.dll
+include open3d/open3d*.pyd
+

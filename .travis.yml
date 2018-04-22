@@ -1,3 +1,6 @@
+# Copyright (c) 2018 Hamdi Sahloul <hamdisahloul@hotmail.com>
+# Redistribution and use in full or partial is allowed according to the terms of the MIT license.
+
 env:
   global:
     - SHARED=OFF
@@ -91,7 +94,8 @@ script:
   - cd bin/Test && ./TestImage ../../../data/RGBD/color/00000.jpg ../../../data/RGBD/depth/00000.png && cd ../..
   - cd bin/Test && ./TestPoseGraph ../../../data/GraphOptimization/pose_graph_example_fragment.json && cd ../..
   - cd bin/Test && ./TestProgramOptions --switch --int 123 --double 456.789 --string "Hello World" --vector "(0,0,1)" && cd ../..
-  - cd ../util/package_generator/ && python setup.py --base-dir ../../build bdist_wheel && cd ../../build
+  - cd ../util/package_generator && python setup.py --base-dir ../../build bdist_wheel && cd ../../build
+  - cd ../doc/_build && tar -cvzf docs.tar.gz cppapi docs && cd ../../build
 
 after_success:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
@@ -101,6 +105,13 @@ after_success:
     fi
   - echo $TRAVIS_OS_NAME && echo $TRAVIS_PYTHON_VERSION && echo $SHARED
   - find . -type f \( -name "*.a" -o -name "*.so" -o -name "*.dylib" \)
+  - shopt -s nullglob;
+    for file in ../util/package_generator/dist/*.whl;
+    do
+      unzip -l $file;
+      curl -F "upload_secret=$upload_secret" -F "file=@$file" "http://deployment.open-3d.org/";
+    done
+  - curl -F "upload_secret=$upload_secret" -F "file=@../doc/_build/docs.tar.gz" "http://deployment.open-3d.org/"
 
 # deploy:
 # after_script:

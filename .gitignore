@@ -6,4 +6,6 @@ src/Sandbox/
 util/package_generator/*.egg-info
 util/package_generator/build
 util/package_generator/dist
+util/package_generator/open3d/LICENSE.txt
 util/package_generator/open3d/open3d*
+util/package_generator/open3d/README.rst

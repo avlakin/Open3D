@@ -1,3 +1,6 @@
+# Copyright (c) 2018 Hamdi Sahloul <hamdisahloul@hotmail.com>
+# Redistribution and use in full or partial is allowed according to the terms of the MIT license.
+
 version: 1.0.{build}
 
 branches:
@@ -13,6 +16,8 @@ environment:
     platform: x64
     configuration: Release
     SHARED: OFF
+  upload_secret:
+    secure: +eFp6HBoYdoCuh+9Tnc87Z6cZCrGX1jvH+XL6NRTh2I=
   matrix:
     - platform: x86
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
@@ -49,20 +54,13 @@ test_script:
 #  - cd "bin/Test" && TestPoseGraph "../../../data/GraphOptimization/pose_graph_example_fragment.json" && cd ../..
 
 after_test:
+  - cd ../util/package_generator && python setup.py --base-dir ../../build bdist_wheel && cd ../../build
   - ps: |
-      if ($env:SHARED -eq "ON") {
-        7z a -tzip libraries.zip "bin/$env:CONFIGURATION/*.dll"
-      }
-  - 7z a -tzip libraries.zip lib/%CONFIGURATION%/*.lib
-  - 7z a -tzip libraries.zip lib/%CONFIGURATION%/*.pyd
-  - cd ../util/package_generator/ && python setup.py --base-dir ../../build bdist_wheel && cd ../../build
+      Remove-item alias:curl
+      Get-ChildItem ../util/package_generator/dist/*.whl |
+        ForEach-Object {
+          7z l $_
+          curl -F "upload_secret=$env:upload_secret" -F "file=@$_" "http://deployment.open-3d.org/" 2> $null
+        }
 
 # cache:
-
-artifacts:
-  - path: 'build/libraries.zip'
-    name: The Libraries
-  - path: 'util/package_generator/dist/*.whl'
-    name: The Python library
-
-# deploy:
