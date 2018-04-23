@@ -1,10 +1,19 @@
 // ----------------------------------------------------------------------------
 // -                        Open3D: www.open-3d.org                            -
 // ----------------------------------------------------------------------------
-// The MIT License (MIT)
+// Imported on Apr 11th, 2018 from the Open3D project
+// Copyright (c) 2018 www.open3d.org
+// released under MIT licence
 //
-// Initial project was copyrighted (c) 2016-2018, www.open3d.org
 // A fork of their project is avilable at legacy-code.open-3d.org
+// Refer to http://legacy-code.open-3d.org/blob/master/LICENSE
+// for their full licence
+// Check http://legacy-code.open-3d.org/graphs/contributors
+// to get the list of their contributors and their contributions
+//
+// The rights of any later updates or modifications are reserved
+// ----------------------------------------------------------------------------
+// The MIT License (MIT)
 //
 // Copyright (c) 2018, Hamdi Sahloul - www.open-3d.org
 //
