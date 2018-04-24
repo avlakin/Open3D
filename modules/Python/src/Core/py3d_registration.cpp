@@ -44,6 +44,7 @@
 #include <Open3D/Core/Registration/CorrespondenceChecker.h>
 #include <Open3D/Core/Registration/TransformationEstimation.h>
 #include <Open3D/Core/Registration/Registration.h>
+#include <Open3D/Core/Registration/FastGlobalRegistration.h>
 #include <Open3D/Core/Registration/ColoredICP.h>
 
 using namespace open3d;
@@ -223,6 +224,56 @@ void pybind_registration(py::module &m)
         .def_readwrite("normal_angle_threshold",
                 &CorrespondenceCheckerBasedOnNormal::normal_angle_threshold_);
 
+    py::class_<FastGlobalRegistrationOption> fgr_option(m,
+            "FastGlobalRegistrationOption");
+    py::detail::bind_copy_functions<FastGlobalRegistrationOption>(
+            fgr_option);
+    fgr_option
+        .def(py::init([](double division_factor, bool use_absolute_scale,
+                bool decrease_mu, double maximum_correspondence_distance,
+                int iteration_number, double tuple_scale,
+                int maximum_tuple_count) {
+            return new FastGlobalRegistrationOption(division_factor,
+                    use_absolute_scale, decrease_mu,
+                    maximum_correspondence_distance, iteration_number,
+                    tuple_scale, maximum_tuple_count);
+        }), "division_factor"_a = 1.4, "use_absolute_scale"_a = false,
+                "decrease_mu"_a = false,
+                "maximum_correspondence_distance"_a = 0.025,
+                "iteration_number"_a = 64, "tuple_scale"_a = 0.95,
+                "maximum_tuple_count"_a = 1000)
+        .def_readwrite("division_factor",
+                &FastGlobalRegistrationOption::division_factor_)
+        .def_readwrite("use_absolute_scale",
+                &FastGlobalRegistrationOption::use_absolute_scale_)
+        .def_readwrite("decrease_mu",
+                &FastGlobalRegistrationOption::decrease_mu_)
+        .def_readwrite("maximum_correspondence_distance",
+                &FastGlobalRegistrationOption::maximum_correspondence_distance_)
+        .def_readwrite("iteration_number",
+                &FastGlobalRegistrationOption::iteration_number_)
+        .def_readwrite("tuple_scale",
+                &FastGlobalRegistrationOption::tuple_scale_)
+        .def_readwrite("maximum_tuple_count",
+                &FastGlobalRegistrationOption::maximum_tuple_count_)
+        .def("__repr__", [](const FastGlobalRegistrationOption &c) {
+            return std::string("FastGlobalRegistrationOption class with ") +
+                    std::string("\ndivision_factor = ") +
+                    std::to_string(c.division_factor_) +
+                    std::string("\nuse_absolute_scale = ") +
+                    std::to_string(c.use_absolute_scale_) +
+                    std::string("\ndecrease_mu = ") +
+                    std::to_string(c.decrease_mu_) +
+                    std::string("\nmaximum_correspondence_distance = ") +
+                    std::to_string(c.maximum_correspondence_distance_) +
+                    std::string("\niteration_number = ") +
+                    std::to_string(c.iteration_number_) +
+                    std::string("\ntuple_scale = ") +
+                    std::to_string(c.tuple_scale_) +
+                    std::string("\nmaximum_tuple_count = ") +
+                    std::to_string(c.maximum_tuple_count_);
+        });
+
     py::class_<RegistrationResult> registration_result(m, "RegistrationResult");
     py::detail::bind_default_constructor<RegistrationResult>(
             registration_result);
@@ -277,6 +328,11 @@ void pybind_registration_methods(py::module &m)
             "checkers"_a = std::vector<std::reference_wrapper<const
             CorrespondenceChecker>>(), "criteria"_a =
             RANSACConvergenceCriteria(100000, 100));
+    m.def("registration_fast_based_on_feature_matching",
+            &FastGlobalRegistration,
+            "Function for fast global registration based on feature matching",
+            "source"_a, "target"_a, "source_feature"_a, "target_feature"_a,
+            "option"_a = FastGlobalRegistrationOption());
     m.def("get_information_matrix_from_point_clouds",
             &GetInformationMatrixFromPointClouds,
             "Function for computing information matrix from RegistrationResult",
