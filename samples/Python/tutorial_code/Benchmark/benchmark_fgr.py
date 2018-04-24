@@ -6,10 +6,10 @@ import os
 import sys
 sys.path.append("../Advanced")
 sys.path.append("../Utility")
-import numpy as np # todo: this is just for testing
+import numpy as np
 from common import *
 from downloader import *
-from global_registration import *
+from fast_global_registration import *
 from trajectory_io import *
 
 do_visualization = False
@@ -19,7 +19,7 @@ def get_ply_path(dataset_name, id):
 
 
 def get_log_path(dataset_name):
-    return "%s/ransac_%s.log" % (dataset_path, dataset_name)
+    return "%s/fgr_%s.log" % (dataset_path, dataset_name)
 
 dataset_path = '../../../../data/Benchmark'
 dataset_names = ['livingroom1','livingroom2','office1','office2']
@@ -47,7 +47,7 @@ if __name__ == "__main__":
                 target_down, target_fpfh = preprocess_point_cloud(
                         target, voxel_size)
 
-                result = execute_global_registration(
+                result = execute_fast_global_registration(
                         source_down, target_down,
                         source_fpfh, target_fpfh, voxel_size)
                 if (result.transformation.trace() == 4.0):

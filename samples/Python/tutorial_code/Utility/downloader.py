@@ -15,10 +15,10 @@ else:
 
 # dataset from redwood-data.org
 dataset_names = ["livingroom1", "livingroom2", "office1", "office2"]
-dataset_path = "testdata/"
+dataset_path = "../../../../data/Benchmark"
 
 
-def get_redwood_dataset():
+def get_redwood_dataset(dataset_path, dataset_names):
     # data preparation
     if not os.path.exists(dataset_path):
         # download and unzip dataset
@@ -26,9 +26,9 @@ def get_redwood_dataset():
             print("==================================")
             file_downloader("http://redwood-data.org/indoor/data/%s-fragments-ply.zip" % \
                     name)
-            unzip_data("%s-fragments-ply.zip" % name,
+            unzip_data("%s/%s-fragments-ply.zip" % (dataset_path, name),
                     "%s/%s" % (dataset_path, name))
-            os.remove("%s-fragments-ply.zip" % name)
+            os.remove("%s/%s-fragments-ply.zip" % (dataset_path, name))
             print("")
 
 
