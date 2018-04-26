@@ -7,17 +7,25 @@ branches:
   only:
     - master
 
+notifications:
+  - provider: Slack
+    incoming_webhook:
+      secure: HqR9gVr+989labqZvzVIzcVV1ZidvNs0X33nvzLUFRUDXw/BTdnpjCRaMZBQjZ669bE/QDeLEkV1A+O6jhCgnqQevyDAJipVC2zvgyO92dY=
+    on_build_success: false
+    on_build_failure: true
+    on_build_status_changed: true
+
 # Disable autmatic build and test
 build: off
 test: off
 
 environment:
-  global:
-    platform: x64
-    configuration: Release
-    SHARED: OFF
   upload_secret:
     secure: +eFp6HBoYdoCuh+9Tnc87Z6cZCrGX1jvH+XL6NRTh2I=
+  platform: x64
+  configuration: Release
+  SHARED: OFF
+
   matrix:
     - platform: x86
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
