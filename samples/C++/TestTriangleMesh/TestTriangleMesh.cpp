@@ -199,7 +199,7 @@ int32_t main(int32_t argc, char *argv[])
 
         for (uint32_t i = 0; i < trajectory.extrinsic_.size(); i += 10) {
             char buffer[1024];
-            sprintf(buffer, "image/image_%06d.png", (int32_t)i + 1);
+            sprintf(buffer, "image/image_%06d.png", static_cast<int32_t>(i) + 1);
             auto image = CreateImageFromFile(buffer);
             auto fimage = CreateFloatImageFromImage(*image);
             Eigen::Vector4d pt_in_camera = trajectory.extrinsic_[i] *

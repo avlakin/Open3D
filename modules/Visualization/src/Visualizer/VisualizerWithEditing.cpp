@@ -249,7 +249,7 @@ int32_t VisualizerWithEditing::PickPoint(double x, double y)
     renderer_ptr->Render(GetRenderOption(), GetViewControl());
     glFinish();
     uint8_t rgba[4];
-    glReadPixels((int32_t)(x + 0.5), (int32_t)(view.GetWindowHeight() - y + 0.5), 1, 1,
+    glReadPixels(static_cast<int32_t>(x + 0.5), static_cast<int32_t>(view.GetWindowHeight() - y + 0.5), 1, 1,
             GL_RGBA, GL_UNSIGNED_BYTE, rgba);
     int32_t index = GLHelper::ColorCodeToPickIndex(Eigen::Vector4i(rgba[0],
             rgba[1], rgba[2], rgba[3]));
@@ -568,7 +568,7 @@ void VisualizerWithEditing::MouseButtonCallback(GLFWwindow* window,
                 PrintInfo("Picked point #%d (%.2f, %.2f, %.2f) to add in queue.\n",
                         index, point(0), point(1), point(2));
                 pointcloud_picker_ptr_->picked_indices_.push_back(
-                        (uint32_t)index);
+                        static_cast<uint32_t>(index));
                 is_redraw_required_ = true;
             }
         } else if (button == GLFW_MOUSE_BUTTON_RIGHT &&

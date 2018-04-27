@@ -67,8 +67,8 @@ bool ReadMatrixXdFromBINFile(FILE *file, Eigen::MatrixXd &mat)
 
 bool WriteMatrixXdToBINFile(FILE *file, const Eigen::MatrixXd &mat)
 {
-    uint32_t rows = (uint32_t)mat.rows();
-    uint32_t cols = (uint32_t)mat.cols();
+    uint32_t rows = static_cast<uint32_t>(mat.rows());
+    uint32_t cols = static_cast<uint32_t>(mat.cols());
     if (fwrite(&rows, sizeof(uint32_t), 1, file) < 1) {
         PrintWarning("Write BIN failed: unexpected error.\n");
         return false;

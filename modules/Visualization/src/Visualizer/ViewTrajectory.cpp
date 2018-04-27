@@ -56,7 +56,7 @@ void ViewTrajectory::ComputeInterpolationCoefficients()
     }
 
     // num_of_status is used frequently, give it an alias
-    int32_t n = int32_t(view_status_.size());
+    int32_t n = static_cast<int32_t>(view_status_.size());
     coeff_.resize(n);
 
     // Consider ViewStatus as a point in an 17-dimensional space.
@@ -194,7 +194,7 @@ bool ViewTrajectory::ConvertFromJsonValue(const Json::Value &value)
         return false;
     }
     view_status_.resize(trajectory_array.size());
-    for (int32_t i = 0; i < (int32_t)trajectory_array.size(); i++) {
+    for (int32_t i = 0; i < static_cast<int32_t>(trajectory_array.size()); i++) {
         const Json::Value &status_object = trajectory_array[i];
         ViewParameters status;
         if (status.ConvertFromJsonValue(status_object) == false) {

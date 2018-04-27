@@ -186,8 +186,8 @@ std::string ViewControlWithCustomAnimation::GetStatusString() const
             sprintf(buffer, "empty trajectory");
         } else {
             sprintf(buffer, "#%u keyframe (%u in total%s)",
-                    (uint32_t)CurrentKeyframe() + 1,
-                    (uint32_t)view_trajectory_.view_status_.size(),
+                    static_cast<uint32_t>(CurrentKeyframe()) + 1,
+                    static_cast<uint32_t>(view_trajectory_.view_status_.size()),
                     view_trajectory_.is_loop_ ? ", looped" : "");
         }
     } else {
@@ -195,8 +195,8 @@ std::string ViewControlWithCustomAnimation::GetStatusString() const
             sprintf(buffer, "empty trajectory");
         } else {
             sprintf(buffer, "#%u frame (%u in total%s)",
-                    (uint32_t)CurrentFrame() + 1,
-                    (uint32_t)view_trajectory_.NumOfFrames(),
+                    static_cast<uint32_t>(CurrentFrame()) + 1,
+                    static_cast<uint32_t>(view_trajectory_.NumOfFrames()),
                     view_trajectory_.is_loop_ ? ", looped" : "");
         }
     }
@@ -329,10 +329,10 @@ double ViewControlWithCustomAnimation::RegularizeFrameIndex(
     }
     double frame_index = current_frame;
     if (is_loop) {
-        while (int32_t(round(frame_index)) < 0) {
+        while (static_cast<int32_t>(round(frame_index)) < 0) {
             frame_index += double(num_of_frames);
         }
-        while (int32_t(round(frame_index)) >= int32_t(num_of_frames)) {
+        while (static_cast<int32_t>(round(frame_index)) >= static_cast<int32_t>(num_of_frames)) {
             frame_index -= double(num_of_frames);
         }
     } else {

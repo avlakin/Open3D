@@ -95,7 +95,7 @@ int32_t main(int32_t argc, char **argv)
     correspondences.clear();
     for (uint32_t i = 0; i < new_cloud_ptr->points_.size(); i++) {
         kdtree.SearchKNN(new_cloud_ptr->points_[i], 1, indices_vec, dists_vec);
-        correspondences.push_back(std::make_pair(indices_vec[0], (int32_t)i));
+        correspondences.push_back(std::make_pair(indices_vec[0], static_cast<int32_t>(i)));
     }
     auto new_lineset_ptr = CreateLineSetFromPointCloudCorrespondences(
             *cloud_ptr, *new_cloud_ptr, correspondences);

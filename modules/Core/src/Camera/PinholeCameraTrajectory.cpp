@@ -92,7 +92,7 @@ bool PinholeCameraTrajectory::ConvertFromJsonValue(const Json::Value &value)
         return false;
     }
     extrinsic_.resize(trajectory_array.size());
-    for (int32_t i = 0; i < (int32_t)trajectory_array.size(); i++) {
+    for (int32_t i = 0; i < static_cast<int32_t>(trajectory_array.size()); i++) {
         const Json::Value &status_object = trajectory_array[i];
         if (EigenMatrix4dFromJsonArray(extrinsic_[i], status_object) == false) {
             return false;

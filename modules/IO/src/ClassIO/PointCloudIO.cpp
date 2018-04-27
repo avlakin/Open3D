@@ -94,7 +94,7 @@ bool ReadPointCloud(const std::string &filename, PointCloud &pointcloud)
     }
     bool success = map_itr->second(filename, pointcloud);
     PrintDebug("Read PointCloud: %d vertices.\n",
-            (int32_t)pointcloud.points_.size());
+            static_cast<int32_t>(pointcloud.points_.size()));
     return success;
 }
 
@@ -116,7 +116,7 @@ bool WritePointCloud(const std::string &filename, const PointCloud &pointcloud,
     bool success = map_itr->second(filename, pointcloud, write_ascii,
             compressed);
     PrintDebug("Write PointCloud: %d vertices.\n",
-            (int32_t)pointcloud.points_.size());
+            static_cast<int32_t>(pointcloud.points_.size()));
     return success;
 }
 

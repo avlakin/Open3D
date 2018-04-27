@@ -112,7 +112,7 @@ template <typename T>
 struct hash : std::unary_function<T, uint32_t> {
     uint32_t operator()(T const& matrix) const {
         uint32_t seed = 0;
-        for (int32_t i = 0; i < (int32_t)matrix.size(); i++) {
+        for (int32_t i = 0; i < static_cast<int32_t>(matrix.size()); i++) {
             auto elem = *(matrix.data() + i);
             seed ^= std::hash<typename T::Scalar>()(elem) + 0x9e3779b9 +
                     (seed << 6) + (seed >> 2);

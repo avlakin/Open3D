@@ -49,12 +49,12 @@ bool AlignmentSession::ConvertToJsonValue(Json::Value &value) const
     value["version_minor"] = 0;
     Json::Value source_array;
     for (const auto &si : source_indices_) {
-        source_array.append((int32_t)si);
+        source_array.append(static_cast<int32_t>(si));
     }
     value["source_indices"] = source_array;
     Json::Value target_array;
     for (const auto &ti : target_indices_) {
-        target_array.append((int32_t)ti);
+        target_array.append(static_cast<int32_t>(ti));
     }
     value["target_indices"] = target_array;
     if (EigenMatrix4dToJsonArray(transformation_, value["transformation"]) ==
@@ -81,13 +81,13 @@ bool AlignmentSession::ConvertFromJsonValue(const Json::Value &value)
     }
     const auto &source_array = value["source_indices"];
     source_indices_.resize(source_array.size());
-    for (int32_t i = 0; i < (int32_t)source_array.size(); i++) {
-        source_indices_[i] = (uint32_t)source_array[i].asInt();
+    for (int32_t i = 0; i < static_cast<int32_t>(source_array.size()); i++) {
+        source_indices_[i] = static_cast<uint32_t>(source_array[i].asInt());
     }
     const auto &target_array = value["target_indices"];
     target_indices_.resize(target_array.size());
-    for (int32_t i = 0; i < (int32_t)target_array.size(); i++) {
-        target_indices_[i] = (uint32_t)target_array[i].asInt();
+    for (int32_t i = 0; i < static_cast<int32_t>(target_array.size()); i++) {
+        target_indices_[i] = static_cast<uint32_t>(target_array[i].asInt());
     }
     if (EigenMatrix4dFromJsonArray(transformation_, value["transformation"]) ==
             false) {

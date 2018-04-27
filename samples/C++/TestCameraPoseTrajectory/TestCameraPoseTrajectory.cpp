@@ -67,12 +67,12 @@ int32_t main(int32_t argc, char *argv[])
     std::vector<std::shared_ptr<const Geometry>> pcds;
     for (uint32_t i = 0; i < trajectory.extrinsic_.size(); i++) {
         char buff[DEFAULT_IO_BUFFER_SIZE];
-        sprintf(buff, "%scloud_bin_%d.pcd", argv[2], (int32_t)i);
+        sprintf(buff, "%scloud_bin_%d.pcd", argv[2], static_cast<int32_t>(i));
         if (filesystem::FileExists(buff)) {
             auto pcd = CreatePointCloudFromFile(buff);
             pcd->Transform(trajectory.extrinsic_[i]);
             pcd->colors_.clear();
-            if ((int32_t)i < NUM_OF_COLOR_PALETTE) {
+            if (static_cast<int32_t>(i) < NUM_OF_COLOR_PALETTE) {
                 pcd->colors_.resize(pcd->points_.size(),
                         color_palette[i]);
             } else {

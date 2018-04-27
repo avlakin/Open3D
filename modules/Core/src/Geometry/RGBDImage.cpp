@@ -45,7 +45,7 @@ RGBDImagePyramid FilterRGBDImagePyramid(
 {
     RGBDImagePyramid rgbd_image_pyramid_filtered;
     rgbd_image_pyramid_filtered.clear();
-    int32_t num_of_levels = (int32_t)rgbd_image_pyramid.size();
+    int32_t num_of_levels = static_cast<int32_t>(rgbd_image_pyramid.size());
     for (int32_t level = 0; level < num_of_levels; level++) {
         auto color_level = rgbd_image_pyramid[level]->color_;
         auto depth_level = rgbd_image_pyramid[level]->depth_;

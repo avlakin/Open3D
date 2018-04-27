@@ -194,7 +194,7 @@ bool PoseGraph::ConvertFromJsonValue(const Json::Value &value)
         return false;
     }
     nodes_.clear();
-    for (int32_t i = 0; i < (int32_t)node_array.size(); i++) {
+    for (int32_t i = 0; i < static_cast<int32_t>(node_array.size()); i++) {
         const Json::Value &node_object = node_array[i];
         PoseGraphNode new_node;
         if (new_node.ConvertFromJsonValue(node_object) == false) {
@@ -209,7 +209,7 @@ bool PoseGraph::ConvertFromJsonValue(const Json::Value &value)
         return false;
     }
     edges_.clear();
-    for (int32_t i = 0; i < (int32_t)edge_array.size(); i++) {
+    for (int32_t i = 0; i < static_cast<int32_t>(edge_array.size()); i++) {
         const Json::Value &edge_object = edge_array[i];
         PoseGraphEdge new_edge;
         if (new_edge.ConvertFromJsonValue(edge_object) == false) {

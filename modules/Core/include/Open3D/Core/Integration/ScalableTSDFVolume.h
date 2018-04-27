@@ -101,9 +101,9 @@ public:
 
 private:
     Eigen::Vector3i LocateVolumeUnit(const Eigen::Vector3d &point) {
-        return Eigen::Vector3i((int32_t)std::floor(point(0) / volume_unit_length_),
-                (int32_t)std::floor(point(1) / volume_unit_length_),
-                (int32_t)std::floor(point(2) / volume_unit_length_));
+        return Eigen::Vector3i(static_cast<int32_t>(std::floor(point(0) / volume_unit_length_)),
+                static_cast<int32_t>(std::floor(point(1) / volume_unit_length_)),
+                static_cast<int32_t>(std::floor(point(2) / volume_unit_length_)));
     }
 
     std::shared_ptr<UniformTSDFVolume> OpenVolumeUnit(

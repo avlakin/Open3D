@@ -128,7 +128,7 @@ std::tuple<bool, std::vector<Eigen::Matrix4d>>
     std::tie(solution_exist, x) = SolveLinearSystem(JTJ, JTr);
 
     if (solution_exist) {
-        int32_t nposes = (int32_t)x.rows() / 6;
+        int32_t nposes = static_cast<int32_t>(x.rows()) / 6;
         for (int32_t i = 0; i < nposes; i++) {
             Eigen::Matrix4d extrinsic = TransformVector6dToMatrix4d(
                     x.block<6, 1>(i * 6, 0));
@@ -214,7 +214,7 @@ std::tuple<MatType, VecType> ComputeJTJandJTr(
 #endif
         for (int32_t i = 0; i < iteration_num; i++) {
             f(i, J_r, r);
-            for (int32_t j = 0; j < (int32_t)r.size(); j++) {
+            for (int32_t j = 0; j < static_cast<int32_t>(r.size()); j++) {
                 JTJ_private.noalias() += J_r[j] * J_r[j].transpose();
                 JTr_private.noalias() += J_r[j] * r[j];
                 r2_sum_private += r[j] * r[j];

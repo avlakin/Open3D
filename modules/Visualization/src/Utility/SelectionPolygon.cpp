@@ -101,7 +101,7 @@ void SelectionPolygon::FillPolygon(int32_t width, int32_t height)
             uint32_t j = (i + 1) % polygon_.size();
             if ((polygon_[i](1) < y && polygon_[j](1) >= y) ||
                     (polygon_[j](1) < y && polygon_[i](1) >= y)) {
-                nodes.push_back((int32_t)(polygon_[i](0) + (y - polygon_[i](1)) /
+                nodes.push_back(static_cast<int32_t>(polygon_[i](0) + (y - polygon_[i](1)) /
                         (polygon_[j](1) - polygon_[i](1)) * (polygon_[j](0) -
                         polygon_[i](0)) + 0.5));
             }

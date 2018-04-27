@@ -50,7 +50,7 @@ void PrintPointCloud(const open3d::PointCloud &pointcloud)
 
     bool pointcloud_has_normal = pointcloud.HasNormals();
     PrintInfo("Pointcloud has %d points.\n",
-            (int32_t)pointcloud.points_.size());
+            static_cast<int32_t>(pointcloud.points_.size()));
 
     Eigen::Vector3d min_bound = pointcloud.GetMinBound();
     Eigen::Vector3d max_bound = pointcloud.GetMaxBound();

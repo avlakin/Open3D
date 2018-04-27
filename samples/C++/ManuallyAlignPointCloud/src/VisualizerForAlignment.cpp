@@ -273,7 +273,7 @@ bool VisualizerForAlignment::AlignWithManualAnnotation()
     if (source_idx.empty() || target_idx.empty() ||
             source_idx.size() != target_idx.size()) {
         PrintWarning("# of picked points mismatch: %d in source, %d in target.\n",
-                (int32_t)source_idx.size(), (int32_t)target_idx.size());
+                static_cast<int32_t>(source_idx.size()), static_cast<int32_t>(target_idx.size()));
         return false;
     }
     TransformationEstimationPointToPoint p2p(with_scaling_);

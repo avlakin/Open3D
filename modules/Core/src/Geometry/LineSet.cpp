@@ -144,8 +144,8 @@ LineSet &LineSet::operator+=(const LineSet &lineset)
     lines_.resize(new_line_num);
     for (uint32_t i = 0; i < add_line_num; i++) {
         lines_[old_line_num + i] = std::make_pair(
-                lineset.lines_[i].first + (int32_t)old_point_num[0],
-                lineset.lines_[i].second + (int32_t)old_point_num[1]);
+                lineset.lines_[i].first + static_cast<int32_t>(old_point_num[0]),
+                lineset.lines_[i].second + static_cast<int32_t>(old_point_num[1]));
     }
     return (*this);
 }

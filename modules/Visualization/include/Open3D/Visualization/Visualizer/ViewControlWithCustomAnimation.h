@@ -104,8 +104,8 @@ public:
     bool IsValidPinholeCameraTrajectory() const;
 
 protected:
-    uint32_t CurrentFrame() const { return (uint32_t)round(current_frame_); }
-    uint32_t CurrentKeyframe() const { return (uint32_t)round(current_keyframe_); }
+    uint32_t CurrentFrame() const { return static_cast<uint32_t>(round(current_frame_)); }
+    uint32_t CurrentKeyframe() const { return static_cast<uint32_t>(round(current_keyframe_)); }
     double RegularizeFrameIndex(double current_frame, size_t num_of_frames,
             bool is_loop);
     void SetViewControlFromTrajectory();

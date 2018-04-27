@@ -119,7 +119,7 @@ bool WritePinholeCameraTrajectoryToLOG(const std::string &filename,
     }
     for (uint32_t i = 0; i < trajectory.extrinsic_.size(); i++ ) {
         const auto &trans = trajectory.extrinsic_[i];
-        fprintf(f, "%d %d %d\n", (int32_t)i, (int32_t)i, (int32_t)i + 1);
+        fprintf(f, "%d %d %d\n", static_cast<int32_t>(i), static_cast<int32_t>(i), static_cast<int32_t>(i) + 1);
         fprintf(f, "%.8f %.8f %.8f %.8f\n", trans(0,0), trans(0,1), trans(0,2),
                 trans(0,3) );
         fprintf(f, "%.8f %.8f %.8f %.8f\n", trans(1,0), trans(1,1), trans(1,2),

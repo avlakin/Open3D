@@ -134,7 +134,7 @@ void AdvancedMatching(const FastGlobalRegistrationOption& option)
     for (int32_t j = 0; j < ncorres_ji; ++j)
         corres.push_back(std::pair<int32_t, int32_t>(corres_ji[j].first, corres_ji[j].second));
 
-    PrintDebug("points are remained : %d\n", (int32_t)corres.size());
+    PrintDebug("points are remained : %d\n", static_cast<int32_t>(corres.size()));
 
     ///////////////////////////
     /// CROSS CHECK
@@ -181,7 +181,7 @@ void AdvancedMatching(const FastGlobalRegistrationOption& option)
                 }
             }
         }
-        PrintDebug("points are remained : %d\n", (int32_t)corres.size());
+        PrintDebug("points are remained : %d\n", static_cast<int32_t>(corres.size()));
     }
 
     ///////////////////////////
@@ -191,7 +191,7 @@ void AdvancedMatching(const FastGlobalRegistrationOption& option)
     ///////////////////////////
     if (tuple)
     {
-        std::srand((uint32_t)std::time(0));
+        std::srand(static_cast<uint32_t>(std::time(0)));
 
         PrintDebug("\t[tuple constraint] ");
         int32_t rand0, rand1, rand2;
@@ -265,7 +265,7 @@ void AdvancedMatching(const FastGlobalRegistrationOption& option)
         corres = temp;
     }
 
-    PrintDebug("\t[final] matches %d.\n", (int32_t)corres.size());
+    PrintDebug("\t[final] matches %d.\n", static_cast<int32_t>(corres.size()));
     corres_ = corres;
 }
 

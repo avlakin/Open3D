@@ -181,9 +181,9 @@ std::shared_ptr<TriangleMesh> UniformTSDFVolume::ExtractTriangleMesh()
                                 Eigen::Vector4i(x, y, z, 0) + edge_shift[i];
                         if (edgeindex_to_vertexindex.find(edge_index) ==
                                 edgeindex_to_vertexindex.end()) {
-                            edge_to_index[i] = (int32_t)mesh->vertices_.size();
+                            edge_to_index[i] = static_cast<int32_t>(mesh->vertices_.size());
                             edgeindex_to_vertexindex[edge_index] =
-                                    (int32_t)mesh->vertices_.size();
+                                    static_cast<int32_t>(mesh->vertices_.size());
                             Eigen::Vector3d pt(
                                     half_voxel_length +
                                     voxel_length_ * edge_index(0),
@@ -276,10 +276,10 @@ void UniformTSDFVolume::IntegrateWithDepthToCameraDistanceMultiplier(
             float *p_color = (float *)color_.data() + idx_shift * 3;
             Eigen::Vector4f voxel_pt_camera = extrinsic_f * Eigen::Vector4f(
                     half_voxel_length_f + voxel_length_f * x +
-                    (float)origin_(0),
+                    static_cast<float>(origin_(0)),
                     half_voxel_length_f + voxel_length_f * y +
-                    (float)origin_(1),
-                    half_voxel_length_f + (float)origin_(2),
+                    static_cast<float>(origin_(1)),
+                    half_voxel_length_f + static_cast<float>(origin_(2)),
                     1.0f);
             for (int32_t z = 0; z < resolution_; z++,
                     voxel_pt_camera(0) += extrinsic_scaled_f(0, 2),
@@ -293,8 +293,8 @@ void UniformTSDFVolume::IntegrateWithDepthToCameraDistanceMultiplier(
                             voxel_pt_camera(2) + cy + 0.5f;
                     if (u_f >= 0.0001f && u_f < safe_width_f &&
                             v_f >= 0.0001f && v_f < safe_height_f) {
-                        int32_t u = (int32_t)u_f;
-                        int32_t v = (int32_t)v_f;
+                        int32_t u = static_cast<int32_t>(u_f);
+                        int32_t v = static_cast<int32_t>(v_f);
                         float d = *PointerAt<float>(image.depth_, u, v);
                         if (d > 0.0f) {
                             float sdf = (d - voxel_pt_camera(2)) * (
@@ -349,7 +349,7 @@ double UniformTSDFVolume::GetTSDFAt(const Eigen::Vector3d &p)
     Eigen::Vector3i idx;
     Eigen::Vector3d p_grid = p / voxel_length_ - Eigen::Vector3d(0.5, 0.5, 0.5);
     for (int32_t i = 0; i < 3; i++) {
-        idx(i) = (int32_t)std::floor(p_grid(i));
+        idx(i) = static_cast<int32_t>(std::floor(p_grid(i)));
     }
     Eigen::Vector3d r = p_grid - idx.cast<double>();
     return (1 - r(0)) * (

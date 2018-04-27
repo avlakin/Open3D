@@ -135,7 +135,7 @@ int32_t UpdateConfidence(
         const double line_process_weight,
         const GlobalOptimizationOption &option)
 {
-    int32_t n_edges = (int32_t)pose_graph.edges_.size();
+    int32_t n_edges = static_cast<int32_t>(pose_graph.edges_.size());
     int32_t valid_edges_num = 0;
     for (int32_t iter_edge = 0; iter_edge < n_edges; iter_edge++) {
         PoseGraphEdge &t = pose_graph.edges_[iter_edge];
@@ -156,7 +156,7 @@ double ComputeResidual(const PoseGraph &pose_graph, const Eigen::VectorXd &zeta,
         const double line_process_weight,
         const GlobalOptimizationOption &option)
 {
-    int32_t n_edges = (int32_t)pose_graph.edges_.size();
+    int32_t n_edges = static_cast<int32_t>(pose_graph.edges_.size());
     double residual = 0.0;
     for (int32_t iter_edge = 0; iter_edge < n_edges; iter_edge++) {
         const PoseGraphEdge &te = pose_graph.edges_[iter_edge];
@@ -173,7 +173,7 @@ double ComputeResidual(const PoseGraph &pose_graph, const Eigen::VectorXd &zeta,
 /// Function to compute residual defined in [Choi et al 2015] See Eq (6).
 Eigen::VectorXd ComputeZeta(const PoseGraph &pose_graph)
 {
-    int32_t n_edges = (int32_t)pose_graph.edges_.size();
+    int32_t n_edges = static_cast<int32_t>(pose_graph.edges_.size());
     Eigen::VectorXd output(n_edges * 6);
     for (int32_t iter_edge = 0; iter_edge < n_edges; iter_edge++) {
         Eigen::Matrix4d X_inv, Ts, Tt_inv;
@@ -200,8 +200,8 @@ Eigen::VectorXd ComputeZeta(const PoseGraph &pose_graph)
 std::tuple<Eigen::MatrixXd, Eigen::VectorXd> ComputeLinearSystem(
         const PoseGraph &pose_graph, const Eigen::VectorXd &zeta)
 {
-    int32_t n_nodes = (int32_t)pose_graph.nodes_.size();
-    int32_t n_edges = (int32_t)pose_graph.edges_.size();
+    int32_t n_nodes = static_cast<int32_t>(pose_graph.nodes_.size());
+    int32_t n_edges = static_cast<int32_t>(pose_graph.edges_.size());
     Eigen::MatrixXd H(n_nodes * 6, n_nodes * 6);
     Eigen::VectorXd b(n_nodes * 6);
     H.setZero();
@@ -246,7 +246,7 @@ std::tuple<Eigen::MatrixXd, Eigen::VectorXd> ComputeLinearSystem(
 
 Eigen::VectorXd UpdatePoseVector(const PoseGraph &pose_graph)
 {
-    int32_t n_nodes = (int32_t)pose_graph.nodes_.size();
+    int32_t n_nodes = static_cast<int32_t>(pose_graph.nodes_.size());
     Eigen::VectorXd output(n_nodes * 6);
     for (int32_t iter_node = 0; iter_node < n_nodes; iter_node++) {
         Eigen::Vector6d output_iter = TransformMatrix4dToVector6d(
@@ -262,7 +262,7 @@ std::shared_ptr<PoseGraph> UpdatePoseGraph(const PoseGraph &pose_graph,
     std::shared_ptr<PoseGraph> pose_graph_updated =
         std::make_shared<PoseGraph>();
     *pose_graph_updated = pose_graph;
-    int32_t n_nodes = (int32_t)pose_graph.nodes_.size();
+    int32_t n_nodes = static_cast<int32_t>(pose_graph.nodes_.size());
     for (int32_t iter_node = 0; iter_node < n_nodes; iter_node++) {
         Eigen::Vector6d delta_iter = delta.block<6, 1>(iter_node * 6, 0);
         pose_graph_updated->nodes_[iter_node].pose_ =
@@ -345,7 +345,7 @@ bool CheckMaxIterationLM(int32_t iteration,
 double ComputeLineProcessWeight(const PoseGraph &pose_graph,
         const GlobalOptimizationOption &option)
 {
-    int32_t n_edges = (int32_t)pose_graph.edges_.size();
+    int32_t n_edges = static_cast<int32_t>(pose_graph.edges_.size());
     double average_number_of_correspondences = 0.0;
     for (int32_t iter_edge = 0; iter_edge < n_edges; iter_edge++) {
         double number_of_correspondences =
@@ -370,7 +370,7 @@ void CompensateReferencePoseGraphNode(PoseGraph &pose_graph_new,
 {
     PrintDebug("CompensateReferencePoseGraphNode : reference : %d\n",
             reference_node);
-    int32_t n_nodes = (int32_t)pose_graph_new.nodes_.size();
+    int32_t n_nodes = static_cast<int32_t>(pose_graph_new.nodes_.size());
     if (reference_node < 0 || reference_node >= n_nodes) {
         return;
     } else {
@@ -394,12 +394,12 @@ std::shared_ptr<PoseGraph> CreatePoseGraphWithoutInvalidEdges(
     std::shared_ptr<PoseGraph> pose_graph_pruned =
             std::make_shared<PoseGraph>();
 
-    int32_t n_nodes = (int32_t)pose_graph.nodes_.size();
+    int32_t n_nodes = static_cast<int32_t>(pose_graph.nodes_.size());
     for (int32_t iter_node = 0; iter_node < n_nodes; iter_node++) {
         const PoseGraphNode &t = pose_graph.nodes_[iter_node];
         pose_graph_pruned->nodes_.push_back(t);
     }
-    int32_t n_edges = (int32_t)pose_graph.edges_.size();
+    int32_t n_edges = static_cast<int32_t>(pose_graph.edges_.size());
     for (int32_t iter_edge = 0; iter_edge < n_edges; iter_edge++) {
         const PoseGraphEdge &t = pose_graph.edges_[iter_edge];
         if (t.uncertain_) {
@@ -418,8 +418,8 @@ void GlobalOptimizationGaussNewton::
         const GlobalOptimizationConvergenceCriteria &criteria,
         const GlobalOptimizationOption &option) const
 {
-    int32_t n_nodes = (int32_t)pose_graph.nodes_.size();
-    int32_t n_edges = (int32_t)pose_graph.edges_.size();
+    int32_t n_nodes = static_cast<int32_t>(pose_graph.nodes_.size());
+    int32_t n_edges = static_cast<int32_t>(pose_graph.edges_.size());
     double line_process_weight = ComputeLineProcessWeight(pose_graph, option);
 
     PrintDebug("[GlobalOptimizationGaussNewton] Optimizing PoseGraph having %d nodes and %d edges. \n",
@@ -502,8 +502,8 @@ void GlobalOptimizationLevenbergMarquardt::
         const GlobalOptimizationConvergenceCriteria &criteria,
         const GlobalOptimizationOption &option) const
 {
-    int32_t n_nodes = (int32_t)pose_graph.nodes_.size();
-    int32_t n_edges = (int32_t)pose_graph.edges_.size();
+    int32_t n_nodes = static_cast<int32_t>(pose_graph.nodes_.size());
+    int32_t n_edges = static_cast<int32_t>(pose_graph.edges_.size());
     double line_process_weight = ComputeLineProcessWeight(pose_graph, option);
 
     PrintDebug("[GlobalOptimizationLM] Optimizing PoseGraph having %d nodes and %d edges. \n",

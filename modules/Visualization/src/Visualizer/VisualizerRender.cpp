@@ -290,7 +290,7 @@ std::shared_ptr<Image> Visualizer::CaptureDepthFloatBuffer(
             double z_depth = 2.0 * z_near * z_far /
                     (z_far + z_near - (2.0 * (double)p_depth[j] - 1.0) *
                     (z_far - z_near));
-            p_image[j] = (float)z_depth;
+            p_image[j] = static_cast<float>(z_depth);
         }
     }
     return image_ptr;

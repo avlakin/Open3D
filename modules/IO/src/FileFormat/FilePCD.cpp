@@ -366,7 +366,7 @@ bool ReadPCDData(FILE *file, const PCDHeader &header, PointCloud &pointcloud)
             std::string line(line_buffer);
             std::vector<std::string> strs;
             SplitString(strs, line, "\t\r\n ");
-            if ((int32_t)strs.size() < header.elementnum) {
+            if (static_cast<int32_t>(strs.size()) < header.elementnum) {
                 continue;
             }
             for (uint32_t i = 0; i < header.fields.size(); i++) {
@@ -467,8 +467,8 @@ bool ReadPCDData(FILE *file, const PCDHeader &header, PointCloud &pointcloud)
         }
         std::unique_ptr<char []> buffer(new char[uncompressed_size]);
         if (lzf_decompress(buffer_compressed.get(),
-                (uint32_t)compressed_size, buffer.get(),
-                (uint32_t)uncompressed_size) != uncompressed_size) {
+                static_cast<uint32_t>(compressed_size), buffer.get(),
+                static_cast<uint32_t>(uncompressed_size)) != uncompressed_size) {
             PrintDebug("[ReadPCDData] Uncompression failed.\n");
             pointcloud.Clear();
             return false;
@@ -542,7 +542,7 @@ void RemoveNanData(PointCloud &pointcloud)
     pointcloud.points_.resize(k);
     if (has_normal) pointcloud.normals_.resize(k);
     if (has_color) pointcloud.colors_.resize(k);
-    PrintDebug("[Purge] %d nan points have been removed.\n", (int32_t)(old_point_num - k));
+    PrintDebug("[Purge] %d nan points have been removed.\n", static_cast<int32_t>(old_point_num - k));
 }
 
 bool GenerateHeader(const PointCloud &pointcloud, const bool write_ascii,
@@ -552,7 +552,7 @@ bool GenerateHeader(const PointCloud &pointcloud, const bool write_ascii,
         return false;
     }
     header.version = "0.7";
-    header.width = (int32_t)pointcloud.points_.size();
+    header.width = static_cast<int32_t>(pointcloud.points_.size());
     header.height = 1;
     header.points = header.width;
     header.fields.clear();
@@ -644,9 +644,9 @@ bool WritePCDHeader(FILE *file, const PCDHeader &header)
 float ConvertRGBToFloat(const Eigen::Vector3d &color)
 {
     std::uint8_t rgba[4] = {0, 0, 0, 0};
-    rgba[2] = (std::uint8_t)std::max(std::min((int32_t)(color(0) * 255.0), 255), 0);
-    rgba[1] = (std::uint8_t)std::max(std::min((int32_t)(color(1) * 255.0), 255), 0);
-    rgba[0] = (std::uint8_t)std::max(std::min((int32_t)(color(2) * 255.0), 255), 0);
+    rgba[2] = static_cast<uint8_t>(std::max(std::min(static_cast<int32_t>(color(0) * 255.0), 255), 0));
+    rgba[1] = static_cast<uint8_t>(std::max(std::min(static_cast<int32_t>(color(1) * 255.0), 255), 0));
+    rgba[0] = static_cast<uint8_t>(std::max(std::min(static_cast<int32_t>(color(2) * 255.0), 255), 0));
     float value;
     memcpy(&value, rgba, 4);
     return value;
@@ -676,15 +676,15 @@ bool WritePCDData(FILE *file, const PCDHeader &header,
         std::unique_ptr<float []> data(new float[header.elementnum]);
         for (uint32_t i = 0; i < pointcloud.points_.size(); i++) {
             const auto &point = pointcloud.points_[i];
-            data[0] = (float)point(0);
-            data[1] = (float)point(1);
-            data[2] = (float)point(2);
+            data[0] = static_cast<float>(point(0));
+            data[1] = static_cast<float>(point(1));
+            data[2] = static_cast<float>(point(2));
             int32_t idx = 3;
             if (has_normal) {
                 const auto &normal = pointcloud.normals_[i];
-                data[idx + 0] = (float)normal(0);
-                data[idx + 1] = (float)normal(1);
-                data[idx + 2] = (float)normal(2);
+                data[idx + 0] = static_cast<float>(normal(0));
+                data[idx + 1] = static_cast<float>(normal(1));
+                data[idx + 2] = static_cast<float>(normal(2));
                 idx += 3;
             }
             if (has_color) {
@@ -701,15 +701,15 @@ bool WritePCDData(FILE *file, const PCDHeader &header,
         std::unique_ptr<float []> buffer_compressed(new float[buffer_size * 2]);
         for (uint32_t i = 0; i < pointcloud.points_.size(); i++) {
             const auto &point = pointcloud.points_[i];
-            buffer[0 * strip_size + i] = (float)point(0);
-            buffer[1 * strip_size + i] = (float)point(1);
-            buffer[2 * strip_size + i] = (float)point(2);
+            buffer[0 * strip_size + i] = static_cast<float>(point(0));
+            buffer[1 * strip_size + i] = static_cast<float>(point(1));
+            buffer[2 * strip_size + i] = static_cast<float>(point(2));
             int32_t idx = 3;
             if (has_normal) {
                 const auto &normal = pointcloud.normals_[i];
-                buffer[(idx + 0) * strip_size + i] = (float)normal(0);
-                buffer[(idx + 1) * strip_size + i] = (float)normal(1);
-                buffer[(idx + 2) * strip_size + i] = (float)normal(2);
+                buffer[(idx + 0) * strip_size + i] = static_cast<float>(normal(0));
+                buffer[(idx + 1) * strip_size + i] = static_cast<float>(normal(1));
+                buffer[(idx + 2) * strip_size + i] = static_cast<float>(normal(2));
                 idx += 3;
             }
             if (has_color) {
@@ -750,12 +750,12 @@ bool ReadPointCloudFromPCD(const std::string &filename, PointCloud &pointcloud)
         return false;
     }
     PrintDebug("PCD header indicates %d fields, %d bytes per point, and %d points in total.\n",
-            (int32_t)header.fields.size(), header.pointsize, header.points);
+            static_cast<int32_t>(header.fields.size()), header.pointsize, header.points);
     for (const auto &field : header.fields) {
         PrintDebug("%s, %c, %d, %d, %d\n", field.name.c_str(),
                 field.type, field.size, field.count, field.offset);
     }
-    PrintDebug("Compression method is %d.\n", (int32_t)header.datatype);
+    PrintDebug("Compression method is %d.\n", static_cast<int32_t>(header.datatype));
     PrintDebug("Points: %s;  normals: %s;  colors: %s\n",
             header.has_points ? "yes" : "no",
             header.has_normals ? "yes" : "no",

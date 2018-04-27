@@ -63,7 +63,7 @@ int32_t main(int32_t argc, char **argv)
         return 0;
     }
 
-    if ((int32_t)cloud_ptr->points_.size() < 100) {
+    if (static_cast<int32_t>(cloud_ptr->points_.size()) < 100) {
         PrintError("Boring point cloud.\n");
         return 0;
     }
@@ -75,7 +75,7 @@ int32_t main(int32_t argc, char **argv)
         }
     }
 
-    int32_t nn = std::min(20, (int32_t)cloud_ptr->points_.size() - 1);
+    int32_t nn = std::min(20, static_cast<int32_t>(cloud_ptr->points_.size()) - 1);
     Matrix<double> dataset((double *)cloud_ptr->points_.data(),
             cloud_ptr->points_.size(), 3 );
     Matrix<double> query((double *)cloud_ptr->points_.data(), 1, 3);
@@ -88,20 +88,20 @@ int32_t main(int32_t argc, char **argv)
     index.knnSearch(query, indices, dists, nn, SearchParams(-1, 0.0));
 
     for (uint32_t i = 0; i < indices_vec.size(); i++) {
-        PrintInfo("%d, %f\n", (int32_t)indices_vec[i], sqrt(dists_vec[i]));
+        PrintInfo("%d, %f\n", static_cast<int32_t>(indices_vec[i]), sqrt(dists_vec[i]));
         cloud_ptr->colors_[indices_vec[i]] = Eigen::Vector3d(1.0, 0.0, 0.0);
     }
 
     cloud_ptr->colors_[0] = Eigen::Vector3d(0.0, 1.0, 0.0);
 
-    float r = float(sqrt(dists_vec[nn - 1]) * 2.0);
+    float r = static_cast<float>(sqrt(dists_vec[nn - 1]) * 2.0);
     Matrix<double> query1((double *)cloud_ptr->points_.data() + 3 * 99, 1, 3);
     int32_t k = index.radiusSearch(query1, indices, dists, r * r,
             SearchParams(-1, 0.0));
 
     PrintInfo("======== %d, %f ========\n", k, r);
     for (int32_t i = 0; i < k; i++) {
-        PrintInfo("%d, %f\n", (int32_t)indices_vec[i], sqrt(dists_vec[i]));
+        PrintInfo("%d, %f\n", static_cast<int32_t>(indices_vec[i]), sqrt(dists_vec[i]));
         cloud_ptr->colors_[indices_vec[i]] = Eigen::Vector3d(0.0, 0.0, 1.0);
     }
     cloud_ptr->colors_[99] = Eigen::Vector3d(0.0, 1.0, 1.0);
@@ -116,7 +116,7 @@ int32_t main(int32_t argc, char **argv)
         return 0;
     }
 
-    if ((int32_t)new_cloud_ptr->points_.size() < 100) {
+    if (static_cast<int32_t>(new_cloud_ptr->points_.size()) < 100) {
         PrintError("Boring point cloud.\n");
         return 0;
     }
@@ -136,7 +136,7 @@ int32_t main(int32_t argc, char **argv)
             new_indices_vec, new_dists_vec);
 
     for (uint32_t i = 0; i < new_indices_vec.size(); i++) {
-        PrintInfo("%d, %f\n", (int32_t)new_indices_vec[i], sqrt(new_dists_vec[i]));
+        PrintInfo("%d, %f\n", static_cast<int32_t>(new_indices_vec[i]), sqrt(new_dists_vec[i]));
         new_cloud_ptr->colors_[new_indices_vec[i]] =
                 Eigen::Vector3d(1.0, 0.0, 0.0);
     }
@@ -148,7 +148,7 @@ int32_t main(int32_t argc, char **argv)
 
     PrintInfo("======== %d, %f ========\n", k, r);
     for (int32_t i = 0; i < k; i++) {
-        PrintInfo("%d, %f\n", (int32_t)new_indices_vec[i], sqrt(new_dists_vec[i]));
+        PrintInfo("%d, %f\n", static_cast<int32_t>(new_indices_vec[i]), sqrt(new_dists_vec[i]));
         new_cloud_ptr->colors_[new_indices_vec[i]] =
                 Eigen::Vector3d(0.0, 0.0, 1.0);
     }
@@ -159,7 +159,7 @@ int32_t main(int32_t argc, char **argv)
 
     PrintInfo("======== %d, %f ========\n", k, r);
     for (int32_t i = 0; i < k; i++) {
-        PrintInfo("%d, %f\n", (int32_t)new_indices_vec[i], sqrt(new_dists_vec[i]));
+        PrintInfo("%d, %f\n", static_cast<int32_t>(new_indices_vec[i]), sqrt(new_dists_vec[i]));
         new_cloud_ptr->colors_[new_indices_vec[i]] =
                 Eigen::Vector3d(0.0, 0.0, 1.0);
     }

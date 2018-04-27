@@ -163,7 +163,7 @@ bool PickingShaderForPointCloud::PrepareBinding(const Geometry &geometry,
     for (uint32_t i = 0; i < pointcloud.points_.size(); i++) {
         const auto &point = pointcloud.points_[i];
         points[i] = point.cast<float>();
-        indices[i] = (float)i;
+        indices[i] = static_cast<float>(i);
     }
     draw_arrays_mode_ = GL_POINTS;
     draw_arrays_size_ = GLsizei(points.size());

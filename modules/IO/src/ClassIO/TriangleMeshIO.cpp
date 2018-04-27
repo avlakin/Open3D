@@ -84,7 +84,7 @@ bool ReadTriangleMesh(const std::string &filename, TriangleMesh &mesh)
     }
     bool success = map_itr->second(filename, mesh);
     PrintDebug("Read TriangleMesh: %d triangles and %d vertices.\n",
-            (int32_t)mesh.triangles_.size(), (int32_t)mesh.vertices_.size());
+            static_cast<int32_t>(mesh.triangles_.size()), static_cast<int32_t>(mesh.vertices_.size()));
     return success;
 }
 
@@ -105,7 +105,7 @@ bool WriteTriangleMesh(const std::string &filename, const TriangleMesh &mesh,
     }
     bool success = map_itr->second(filename, mesh, write_ascii, compressed);
     PrintDebug("Write TriangleMesh: %d triangles and %d vertices.\n",
-            (int32_t)mesh.triangles_.size(), (int32_t)mesh.vertices_.size());
+            static_cast<int32_t>(mesh.triangles_.size()), static_cast<int32_t>(mesh.vertices_.size()));
     return success;
 }
 

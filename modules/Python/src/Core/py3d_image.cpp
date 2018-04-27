@@ -72,9 +72,9 @@ void pybind_image(py::module &m)
             if (info.ndim == 2) {
                 num_of_channels = 1;
             } else if (info.ndim == 3) {
-                num_of_channels = (int32_t)info.shape[2];
+                num_of_channels = static_cast<int32_t>(info.shape[2]);
             }
-            height = (int32_t)info.shape[0]; width = (int32_t)info.shape[1];
+            height = static_cast<int32_t>(info.shape[0]); width = static_cast<int32_t>(info.shape[1]);
             auto img = new Image();
             img->PrepareImage(width, height,
                     num_of_channels, bytes_per_channel);

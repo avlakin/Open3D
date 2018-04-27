@@ -157,8 +157,8 @@ std::shared_ptr<CorrespondenceSetPixelWise> ComputeCorrespondence(
                 Eigen::Vector3d uv_in_t =
                         d_t * KRK_inv * Eigen::Vector3d(u_t, v_t, 1.0) + Kt;
                 double transformed_d_t = uv_in_t(2);
-                int32_t u_s = (int32_t)(uv_in_t(0) / transformed_d_t + 0.5);
-                int32_t v_s = (int32_t)(uv_in_t(1) / transformed_d_t + 0.5);
+                int32_t u_s = static_cast<int32_t>(uv_in_t(0) / transformed_d_t + 0.5);
+                int32_t v_s = static_cast<int32_t>(uv_in_t(1) / transformed_d_t + 0.5);
                 if (u_s >= 0 && u_s < depth_t.width_ &&
                     v_s >= 0 && v_s < depth_t.height_) {
                     double d_s = *PointerAt<float>(depth_s, u_s, v_s);
@@ -167,7 +167,7 @@ std::shared_ptr<CorrespondenceSetPixelWise> ComputeCorrespondence(
                         AddElementToCorrespondenceMap(
                                 *correspondence_map_private,
                                 *depth_buffer_private,
-                                u_s, v_s, u_t, v_t, (float)transformed_d_t);
+                                u_s, v_s, u_t, v_t, static_cast<float>(transformed_d_t));
                     }
                 }
             }
@@ -223,8 +223,8 @@ std::shared_ptr<Image> ConvertDepthImageToXYZImage(
             float *py = PointerAt<float>(*image_xyz, x, y, 1);
             float *pz = PointerAt<float>(*image_xyz, x, y, 2);
             float z = *PointerAt<float>(depth, x, y);
-            *px = (float)((x - ox) * z * inv_fx);
-            *py = (float)((y - oy) * z * inv_fy);
+            *px = static_cast<float>((x - ox) * z * inv_fx);
+            *py = static_cast<float>((y - oy) * z * inv_fy);
             *pz = z;
         }
     }
@@ -396,7 +396,7 @@ std::tuple<std::shared_ptr<RGBDImage>, std::shared_ptr<RGBDImage>>
     auto correspondence = ComputeCorrespondence(
             pinhole_camera_intrinsic.intrinsic_matrix_, odo_init,
             *source_depth, *target_depth, option);
-    uint32_t corresps_count_required = (uint32_t)(source_gray->height_ *
+    uint32_t corresps_count_required = static_cast<uint32_t>(source_gray->height_ *
             source_gray->width_ * option.minimum_correspondence_ratio_ + 0.5);
     if (correspondence->size() < corresps_count_required) {
         PrintWarning("[InitializeRGBDPair] Bad initial pose\n");
@@ -420,9 +420,9 @@ std::tuple<bool, Eigen::Matrix4d> DoSingleIteration(
 {
     auto correspondence = ComputeCorrespondence(
             intrinsic, extrinsic_initial, source.depth_, target.depth_, option);
-    int32_t corresps_count_required = (int32_t)(source.color_.height_ *
+    int32_t corresps_count_required = static_cast<int32_t>(source.color_.height_ *
             source.color_.width_ * option.minimum_correspondence_ratio_ + 0.5);
-    int32_t corresps_count = (int32_t)correspondence->size();
+    int32_t corresps_count = static_cast<int32_t>(correspondence->size());
     if (corresps_count < corresps_count_required) {
         PrintWarning("[ComputeOdometry] Too fewer correspondences (%d found / %d required)\n",
                 corresps_count, corresps_count_required);
@@ -461,7 +461,7 @@ std::tuple<bool, Eigen::Matrix4d> ComputeMultiscale(
         const OdometryOption &option)
 {
     std::vector<int32_t> iter_counts = option.iteration_number_per_pyramid_level_;
-    int32_t num_levels = (int32_t)iter_counts.size();
+    int32_t num_levels = static_cast<int32_t>(iter_counts.size());
 
     auto source_pyramid = CreateRGBDImagePyramid(source, num_levels);
     auto target_pyramid = CreateRGBDImagePyramid(target, num_levels);
@@ -475,7 +475,7 @@ std::tuple<bool, Eigen::Matrix4d> ComputeMultiscale(
 
     std::vector<Eigen::Matrix3d> pyramid_camera_matrix =
             CreateCameraMatrixPyramid(pinhole_camera_intrinsic,
-            (int32_t)iter_counts.size());
+            static_cast<int32_t>(iter_counts.size()));
 
     for (int32_t level = num_levels - 1; level >= 0; level--) {
         const Eigen::Matrix3d level_camera_matrix = pyramid_camera_matrix[level];

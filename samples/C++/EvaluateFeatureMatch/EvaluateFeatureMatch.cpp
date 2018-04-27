@@ -228,10 +228,10 @@ int32_t main(int32_t argc, char *argv[])
             }
         }
         total_correspondence_num += correspondence_num;
-        total_point_num += (int32_t)source.points_.size();
+        total_point_num += static_cast<int32_t>(source.points_.size());
         PrintInfo("#%d <-- #%d : %d out of %d (%.2f%%).\n",
                 pair_ids[k].first, pair_ids[k].second, correspondence_num,
-                (int32_t)source.points_.size(),
+                static_cast<int32_t>(source.points_.size()),
                 correspondence_num * 100.0 / source.points_.size());
     }
     PrintWarning("Total %d out of %d (%.2f%% coverage).\n\n",
@@ -255,7 +255,7 @@ int32_t main(int32_t argc, char *argv[])
 
         for (uint32_t k = 0; k < pair_ids.size(); k++) {
             PointCloud source = pcds[pair_ids[k].second];
-            total_point_num += (int32_t)source.points_.size();
+            total_point_num += static_cast<int32_t>(source.points_.size());
         }
         std::vector<double> true_dis(total_point_num, -1.0);
         total_point_num = 0;
@@ -303,10 +303,10 @@ int32_t main(int32_t argc, char *argv[])
             }
             total_correspondence_num += correspondence_num;
             total_positive += positive;
-            total_point_num += (int32_t)source.points_.size();
+            total_point_num += static_cast<int32_t>(source.points_.size());
             PrintInfo("#%d <-- #%d : %d out of %d out of %d (%.2f%% w.r.t. correspondences).\n",
                     pair_ids[k].first, pair_ids[k].second, positive,
-                    correspondence_num, (int32_t)source.points_.size(),
+                    correspondence_num, static_cast<int32_t>(source.points_.size()),
                     positive * 100.0 / correspondence_num);
         }
         PrintWarning("Total %d out of %d out of %d (%.2f%% w.r.t. correspondences).\n\n",

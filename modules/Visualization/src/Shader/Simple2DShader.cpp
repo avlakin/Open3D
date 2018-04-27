@@ -178,10 +178,10 @@ bool Simple2DShaderForSelectionPolygon::PrepareBinding(const Geometry &geometry,
         uint32_t j = (i + 1) % polygon.polygon_.size();
         const auto &vi = polygon.polygon_[i];
         const auto &vj = polygon.polygon_[j];
-        points[i * 2] = Eigen::Vector3f((float)(vi(0) / width * 2.0 - 1.0),
-                (float)(vi(1) / height * 2.0 - 1.0), 0.0f);
-        points[i * 2 + 1] = Eigen::Vector3f((float)(vj(0) / width * 2.0 - 1.0),
-                (float)(vj(1) / height * 2.0 - 1.0), 0.0f);
+        points[i * 2] = Eigen::Vector3f(static_cast<float>(vi(0) / width * 2.0 - 1.0),
+                static_cast<float>(vi(1) / height * 2.0 - 1.0), 0.0f);
+        points[i * 2 + 1] = Eigen::Vector3f(static_cast<float>(vj(0) / width * 2.0 - 1.0),
+                static_cast<float>(vj(1) / height * 2.0 - 1.0), 0.0f);
         colors[i * 2] = colors[i * 2 + 1] =
                 _option.selection_polygon_boundary_color_.cast<float>();
     }

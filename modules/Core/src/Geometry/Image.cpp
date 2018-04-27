@@ -80,8 +80,8 @@ std::pair<bool, double> Image::FloatValueAt(double u, double v) const
         v < 0.0 || v >(double)(height_ - 1))) {
         return std::make_pair(false, 0.0);
     }
-    int32_t ui = std::max(std::min((int32_t)u, width_ - 2), 0);
-    int32_t vi = std::max(std::min((int32_t)v, height_ - 2), 0);
+    int32_t ui = std::max(std::min(static_cast<int32_t>(u), width_ - 2), 0);
+    int32_t vi = std::max(std::min(static_cast<int32_t>(v), height_ - 2), 0);
     double pu = u - ui;
     double pv = v - vi;
     float value[4] = {
@@ -127,7 +127,7 @@ std::shared_ptr<Image> ConvertDepthToFloatImage(const Image &depth,
     for (int32_t y = 0; y < output->height_; y++) {
         for (int32_t x = 0; x < output->width_; x++) {
             float *p = PointerAt<float>(*output, x, y);
-            *p /= (float)depth_scale;
+            *p /= static_cast<float>(depth_scale);
             if (*p >= depth_trunc)
                 *p = 0.0f;
         }
@@ -146,9 +146,9 @@ void ClipIntensityImage(Image &input, double min/* = 0.0*/,
         for (int32_t x = 0; x < input.width_; x++) {
             float *p = PointerAt<float>(input, x, y);
             if (*p > max)
-                *p = (float)max;
+                *p = static_cast<float>(max);
             if (*p < min)
-                *p = (float)min;
+                *p = static_cast<float>(min);
         }
     }
 }
@@ -162,7 +162,7 @@ void LinearTransformImage(Image &input, double scale, double offset/* = 0.0*/)
     for (int32_t y = 0; y < input.height_; y++) {
         for (int32_t x = 0; x < input.width_; x++) {
             float *p = PointerAt<float>(input, x, y);
-            (*p) = (float)(scale * (*p) + offset);
+            (*p) = static_cast<float>(scale * (*p) + offset);
         }
     }
 }
@@ -174,8 +174,8 @@ std::shared_ptr<Image> DownsampleImage(const Image &input)
         PrintWarning("[DownsampleImage] Unsupported image format.\n");
         return output;
     }
-    int32_t half_width = (int32_t)floor((double)input.width_ / 2.0);
-    int32_t half_height = (int32_t)floor((double)input.height_ / 2.0);
+    int32_t half_width = static_cast<int32_t>(floor((double)input.width_ / 2.0));
+    int32_t half_height = static_cast<int32_t>(floor((double)input.height_ / 2.0));
     output->PrepareImage(half_width, half_height, 1, 4);
 
 #ifdef _OPENMP
@@ -205,7 +205,7 @@ std::shared_ptr<Image> FilterHorizontalImage(
     }
     output->PrepareImage(input.width_, input.height_, 1, 4);
 
-    const int32_t half_kernel_size = (int32_t)(floor((double)kernel.size() / 2.0));
+    const int32_t half_kernel_size = static_cast<int32_t>(floor((double)kernel.size() / 2.0));
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
@@ -220,9 +220,9 @@ std::shared_ptr<Image> FilterHorizontalImage(
                 if (x_shift > input.width_ - 1)
                     x_shift = input.width_ - 1;
                 float* pi = PointerAt<float>(input, x_shift, y, 0);
-                temp += (*pi * (float)kernel[i + half_kernel_size]);
+                temp += (*pi * static_cast<float>(kernel[i + half_kernel_size]));
             }
-            *po = (float)temp;
+            *po = static_cast<float>(temp);
         }
     }
     return output;

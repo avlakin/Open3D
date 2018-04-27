@@ -94,7 +94,7 @@ void ChangeConsoleColor(TextColor text_color, int32_t highlight_text)
     SetConsoleTextAttribute(h,
             EMPHASIS_MASK[highlight_text] | COLOR_MASK[(int32_t)text_color]);
 #else
-    printf("%c[%d;%dm", 0x1B, highlight_text, (int32_t)text_color + 30);
+    printf("%c[%d;%dm", 0x1B, highlight_text, static_cast<int32_t>(text_color) + 30);
 #endif
 }
 
@@ -125,11 +125,11 @@ void PrintConsoleProgress()
         PrintInfo("%s[%s] 100%%\n", console_progress_info.c_str(),
                 std::string(CONSOLE_PROGRESS_RESOLUTION, '=').c_str());
     } else {
-        int32_t new_console_progress_pixel = int32_t(current_console_progress *
+        int32_t new_console_progress_pixel = static_cast<int32_t>(current_console_progress *
                 CONSOLE_PROGRESS_RESOLUTION / expected_console_count);
         if (new_console_progress_pixel > current_console_progress_pixel) {
             current_console_progress_pixel = new_console_progress_pixel;
-            int32_t percent = int32_t(current_console_progress *
+            int32_t percent = static_cast<int32_t>(current_console_progress *
                     100 / expected_console_count);
             PrintInfo("%s[%s>%s] %d%%\r", console_progress_info.c_str(),
                     std::string(current_console_progress_pixel, '=').c_str(),
@@ -270,7 +270,7 @@ int32_t GetProgramOptionAsInt(int32_t argc, char **argv,
     } else if (*end != '\0') {
         return default_value;
     }
-    return (int32_t)l;
+    return static_cast<int32_t>(l);
 }
 
 double GetProgramOptionAsDouble(int32_t argc, char **argv,

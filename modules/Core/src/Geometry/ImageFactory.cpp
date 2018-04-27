@@ -48,12 +48,12 @@ std::shared_ptr<Image> CreateDepthToCameraDistanceMultiplierFloatImage(
     auto fimage = std::make_shared<Image>();
     fimage->PrepareImage(intrinsic.width_, intrinsic.height_, 1, 4);
     float ffl_inv[2] = {
-            1.0f / (float)intrinsic.GetFocalLength().first,
-            1.0f / (float)intrinsic.GetFocalLength().second,
+            1.0f / static_cast<float>(intrinsic.GetFocalLength().first),
+            1.0f / static_cast<float>(intrinsic.GetFocalLength().second),
     };
     float fpp[2] = {
-            (float)intrinsic.GetPrincipalPoint().first,
-            (float)intrinsic.GetPrincipalPoint().second,
+            static_cast<float>(intrinsic.GetPrincipalPoint().first),
+            static_cast<float>(intrinsic.GetPrincipalPoint().second),
     };
     std::vector<float> xx(intrinsic.width_);
     std::vector<float> yy(intrinsic.height_);
@@ -88,10 +88,10 @@ std::shared_ptr<Image> CreateFloatImageFromImage(const Image &image,
         if (image.num_of_channels_ == 1) {
             // grayscale image
             if (image.bytes_per_channel_ == 1) {
-                *p = (float)(*pi) / 255.0f;
+                *p = static_cast<float>(*pi) / 255.0f;
             } else if (image.bytes_per_channel_ == 2) {
                 const uint16_t *pi16 = (const uint16_t *)pi;
-                *p = (float)(*pi16);
+                *p = static_cast<float>(*pi16);
             } else if (image.bytes_per_channel_ == 4) {
                 const float *pf = (const float *)pi;
                 *p = *pf;
@@ -99,23 +99,23 @@ std::shared_ptr<Image> CreateFloatImageFromImage(const Image &image,
         } else if (image.num_of_channels_ == 3) {
             if (image.bytes_per_channel_ == 1) {
                 if (type == Image::ColorToIntensityConversionType::Equal) {
-                    *p = ((float)(pi[0]) + (float)(pi[1]) + (float)(pi[2])) /
+                    *p = (static_cast<float>(pi[0]) + static_cast<float>(pi[1]) + static_cast<float>(pi[2])) /
                         3.0f / 255.0f;
                 } else if (type ==
                         Image::ColorToIntensityConversionType::Weighted) {
-                    *p = (0.2990f * (float)(pi[0]) + 0.5870f * (float)(pi[1]) +
-                            0.1140f * (float)(pi[2])) / 255.0f;
+                    *p = (0.2990f * static_cast<float>(pi[0]) + 0.5870f * static_cast<float>(pi[1]) +
+                            0.1140f * static_cast<float>(pi[2])) / 255.0f;
                 }
             } else if (image.bytes_per_channel_ == 2) {
                 const uint16_t *pi16 = (const uint16_t *)pi;
                 if (type == Image::ColorToIntensityConversionType::Equal) {
-                    *p = ((float)(pi16[0]) + (float)(pi16[1]) +
-                            (float)(pi16[2])) / 3.0f;
+                    *p = (static_cast<float>(pi16[0]) + static_cast<float>(pi16[1]) +
+                            static_cast<float>(pi16[2])) / 3.0f;
                 } else if (type ==
                         Image::ColorToIntensityConversionType::Weighted) {
-                    *p = (0.2990f * (float)(pi16[0]) +
-                            0.5870f * (float)(pi16[1]) +
-                            0.1140f * (float)(pi16[2]));
+                    *p = (0.2990f * static_cast<float>(pi16[0]) +
+                            0.5870f * static_cast<float>(pi16[1]) +
+                            0.1140f * static_cast<float>(pi16[2]));
                 }
             } else if (image.bytes_per_channel_ == 4) {
                 const float *pf = (const float *)pi;

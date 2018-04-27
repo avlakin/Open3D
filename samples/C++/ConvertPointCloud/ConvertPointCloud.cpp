@@ -118,7 +118,7 @@ void convert(int32_t argc, char **argv, const std::string &file_in,
         }
         auto pcd = SelectDownSample(*pointcloud_ptr, indices);
         PrintDebug("Based on Mahalanobis distance, %d points were filtered.\n",
-                (int32_t)(pointcloud_ptr->points_.size() - pcd->points_.size()));
+                static_cast<int32_t>(pointcloud_ptr->points_.size() - pcd->points_.size()));
         pointcloud_ptr = pcd;
     }
 
@@ -181,7 +181,7 @@ void convert(int32_t argc, char **argv, const std::string &file_in,
     size_t point_num_out = pointcloud_ptr->points_.size();
     if (processed) {
         PrintInfo("Processed point cloud from %d points to %d points.\n",
-                (int32_t)point_num_in, (int32_t)point_num_out);
+                static_cast<int32_t>(point_num_in), static_cast<int32_t>(point_num_out));
     }
     WritePointCloud(file_out.c_str(), *pointcloud_ptr, false, true);
 }

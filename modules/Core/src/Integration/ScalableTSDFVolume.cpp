@@ -267,9 +267,9 @@ std::shared_ptr<TriangleMesh> ScalableTSDFVolume::ExtractTriangleMesh()
                                 if (edgeindex_to_vertexindex.find(edge_index) ==
                                         edgeindex_to_vertexindex.end()) {
                                     edge_to_index[i] =
-                                            (int32_t)mesh->vertices_.size();
+                                            static_cast<int32_t>(mesh->vertices_.size());
                                     edgeindex_to_vertexindex[edge_index] =
-                                            (int32_t)mesh->vertices_.size();
+                                            static_cast<int32_t>(mesh->vertices_.size());
                                     Eigen::Vector3d pt(
                                             half_voxel_length +
                                             voxel_length_ * edge_index(0),
@@ -365,7 +365,7 @@ double ScalableTSDFVolume::GetTSDFAt(const Eigen::Vector3d &p)
     Eigen::Vector3d p_grid = (p_locate - index0.cast<double>() *
             volume_unit_length_) / voxel_length_;
     for (int32_t i = 0; i < 3; i++) {
-        idx0(i) = (int32_t)std::floor(p_grid(i));
+        idx0(i) = static_cast<int32_t>(std::floor(p_grid(i)));
         if (idx0(i) < 0) idx0(i) = 0;
         if (idx0(i) >= volume_unit_resolution_)
             idx0(i) = volume_unit_resolution_ - 1;

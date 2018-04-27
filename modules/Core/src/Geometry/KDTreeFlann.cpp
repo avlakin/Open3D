@@ -167,7 +167,7 @@ int32_t KDTreeFlann::SearchRadius(const T &query, double radius,
     std::vector<std::vector<int32_t>> indices_vec(1);
     std::vector<std::vector<double>> dists_vec(1);
     int32_t k = flann_index_->radiusSearch(query_flann, indices_vec, dists_vec,
-            float(radius * radius), param);
+            static_cast<float>(radius * radius), param);
     indices = indices_vec[0];
     distance2 = dists_vec[0];
     return k;
@@ -194,7 +194,7 @@ int32_t KDTreeFlann::SearchHybrid(const T &query, double radius, int32_t max_nn,
     flann::Matrix<double> dists_flann(distance2.data(), query_flann.rows,
             max_nn);
     int32_t k = flann_index_->radiusSearch(query_flann, indices_flann, dists_flann,
-            float(radius * radius), param);
+            static_cast<float>(radius * radius), param);
     indices.resize(k);
     distance2.resize(k);
     return k;

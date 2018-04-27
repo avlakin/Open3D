@@ -91,7 +91,7 @@ int32_t main(int32_t argc, char *argv[])
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int32_t i = 0; i < (int32_t)mesh->vertices_.size(); i++) {
+    for (int32_t i = 0; i < static_cast<int32_t>(mesh->vertices_.size()); i++) {
         std::vector<int32_t> indices(1);
         std::vector<double> dists(1);
         int32_t k = kdtree.SearchKNN(mesh->vertices_[i], 1, indices, dists);

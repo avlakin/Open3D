@@ -71,7 +71,7 @@ RegistrationResult GetRegistrationResultAndCorrespondences(
 #ifdef _OPENMP
 #pragma omp for nowait
 #endif
-        for (int32_t i = 0; i < (int32_t)source.points_.size(); i++) {
+        for (int32_t i = 0; i < static_cast<int32_t>(source.points_.size()); i++) {
             std::vector<int32_t> indices(1);
             std::vector<double> dists(1);
             const auto &point = source.points_[i];
@@ -86,7 +86,7 @@ RegistrationResult GetRegistrationResultAndCorrespondences(
 #pragma omp critical
 #endif
         {
-            for (int32_t i = 0; i < (int32_t)correspondence_set_private.size(); i++) {
+            for (int32_t i = 0; i < static_cast<int32_t>(correspondence_set_private.size()); i++) {
                 result.correspondence_set_.push_back(
                         correspondence_set_private[i]);
             }
@@ -197,18 +197,18 @@ RegistrationResult RegistrationRANSACBasedOnCorrespondence(
         int32_t ransac_n/* = 6*/, const RANSACConvergenceCriteria &criteria
         /* = RANSACConvergenceCriteria()*/)
 {
-    if (ransac_n < 3 || (int32_t)corres.size() < ransac_n ||
+    if (ransac_n < 3 || static_cast<int32_t>(corres.size()) < ransac_n ||
             max_correspondence_distance <= 0.0) {
         return RegistrationResult();
     }
-    std::srand((uint32_t)std::time(0));
+    std::srand(static_cast<uint32_t>(std::time(0)));
     Eigen::Matrix4d transformation;
     CorrespondenceSet ransac_corres(ransac_n);
     RegistrationResult result;
     for (int32_t itr = 0; itr < criteria.max_iteration_ &&
             itr < criteria.max_validation_; itr++) {
         for (int32_t j = 0; j < ransac_n; j++) {
-            ransac_corres[j] = corres[std::rand() % (int32_t)corres.size()];
+            ransac_corres[j] = corres[std::rand() % static_cast<int32_t>(corres.size())];
         }
         transformation = estimation.ComputeTransformation(source,
                 target, ransac_corres);
@@ -259,10 +259,10 @@ RegistrationResult RegistrationRANSACBasedOnFeatureMatching(
     uint32_t seed_number;
 #ifdef _OPENMP
         // each thread has different seed_number
-    seed_number = (uint32_t)std::time(0) *
+    seed_number = static_cast<uint32_t>(std::time(0)) *
             (omp_get_thread_num() + 1);
 #else
-    seed_number = (uint32_t)std::time(0);
+    seed_number = static_cast<uint32_t>(std::time(0));
 #endif
     std::srand(seed_number);
 
@@ -275,7 +275,7 @@ RegistrationResult RegistrationRANSACBasedOnFeatureMatching(
             std::vector<double> dists(num_similar_features);
             Eigen::Matrix4d transformation;
             for (int32_t j = 0; j < ransac_n; j++) {
-                int32_t source_sample_id = std::rand() % (int32_t)source.points_.size();
+                int32_t source_sample_id = std::rand() % static_cast<int32_t>(source.points_.size());
                 if (similar_features[source_sample_id].empty()) {
                     std::vector<int32_t> indices(num_similar_features);
                     kdtree_feature.SearchKNN(Eigen::VectorXd(

@@ -222,7 +222,7 @@ void Visualizer::KeyPressCallback(GLFWwindow *window,
     case GLFW_KEY_T:
         render_option_ptr_->ToggleImageStretchOption();
         PrintDebug("[Visualizer] Image stretch mode is #%d.\n",
-                int32_t(render_option_ptr_->image_stretch_option_));
+                static_cast<int32_t>(render_option_ptr_->image_stretch_option_));
         break;
     case GLFW_KEY_0:
         if (mods & GLFW_MOD_CONTROL) {

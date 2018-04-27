@@ -111,7 +111,7 @@ std::shared_ptr<PointCloud> SelectDownSample(const PointCloud &input,
         if (has_colors) output->colors_.push_back(input.colors_[i]);
     }
     PrintDebug("Pointcloud down sampled from %d points to %d points.\n",
-            (int32_t)input.points_.size(), (int32_t)output->points_.size());
+            static_cast<int32_t>(input.points_.size()), static_cast<int32_t>(output->points_.size()));
     return output;
 }
 
@@ -136,10 +136,10 @@ std::shared_ptr<PointCloud> VoxelDownSample(const PointCloud &input,
             hash_eigen::hash<Eigen::Vector3i>> voxelindex_to_accpoint;
     Eigen::Vector3d ref_coord;
     Eigen::Vector3i voxel_index;
-    for (int32_t i = 0; i < (int32_t)input.points_.size(); i++) {
+    for (int32_t i = 0; i < static_cast<int32_t>(input.points_.size()); i++) {
         ref_coord = (input.points_[i] - voxel_min_bound) / voxel_size;
-        voxel_index << int32_t(floor(ref_coord(0))),
-                int32_t(floor(ref_coord(1))), int32_t(floor(ref_coord(2)));
+        voxel_index << static_cast<int32_t>(floor(ref_coord(0))),
+                static_cast<int32_t>(floor(ref_coord(1))), static_cast<int32_t>(floor(ref_coord(2)));
         voxelindex_to_accpoint[voxel_index].AddPoint(input, i);
     }
     bool has_normals = input.HasNormals();
@@ -154,7 +154,7 @@ std::shared_ptr<PointCloud> VoxelDownSample(const PointCloud &input,
         }
     }
     PrintDebug("Pointcloud down sampled from %d points to %d points.\n",
-            (int32_t)input.points_.size(), (int32_t)output->points_.size());
+            static_cast<int32_t>(input.points_.size()), static_cast<int32_t>(output->points_.size()));
     return output;
 }
 

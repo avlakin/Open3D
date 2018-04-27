@@ -189,10 +189,10 @@ int32_t main(int32_t argc, char *argv[])
         }
     }
     PrintInfo("Average rmse %.8f (%.8f / %d)\n", total_rmse /
-            (double)pair_ids.size(), total_rmse, (int32_t)pair_ids.size());
+            (double)pair_ids.size(), total_rmse, static_cast<int32_t>(pair_ids.size()));
     PrintInfo("Average rmse of positives %.8f (%.8f / %d)\n", positive_rmse /
             (double)positive, positive_rmse, positive);
     PrintInfo("Accuracy %.2f%% (%d / %d)\n", (double)positive * 100.0 /
-            (double)pair_ids.size(), positive, (int32_t)pair_ids.size());
+            (double)pair_ids.size(), positive, static_cast<int32_t>(pair_ids.size()));
     return 0;
 }

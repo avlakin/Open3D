@@ -141,7 +141,7 @@ bool EstimateNormals(PointCloud &cloud,
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int32_t i = 0; i < (int32_t)cloud.points_.size(); i++) {
+    for (int32_t i = 0; i < static_cast<int32_t>(cloud.points_.size()); i++) {
         std::vector<int32_t> indices;
         std::vector<double> distance2;
         Eigen::Vector3d normal;
@@ -177,7 +177,7 @@ bool OrientNormalsToAlignWithDirection(PointCloud &cloud,
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int32_t i = 0; i < (int32_t)cloud.points_.size(); i++) {
+    for (int32_t i = 0; i < static_cast<int32_t>(cloud.points_.size()); i++) {
         auto &normal = cloud.normals_[i];
         if (normal.norm() == 0.0) {
             normal = orientation_reference;
@@ -197,7 +197,7 @@ bool OrientNormalsTowardsCameraLocation(PointCloud &cloud,
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int32_t i = 0; i < (int32_t)cloud.points_.size(); i++) {
+    for (int32_t i = 0; i < static_cast<int32_t>(cloud.points_.size()); i++) {
         Eigen::Vector3d orientation_reference = camera_location -
                 cloud.points_[i];
         auto &normal = cloud.normals_[i];

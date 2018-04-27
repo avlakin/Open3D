@@ -186,7 +186,7 @@ bool ImageMaskShaderForImage::PrepareRendering(const Geometry &geometry,
     }
     const auto &_option = (RenderOptionWithEditing &)option;
     mask_color_data_ = _option.selection_polygon_mask_color_.cast<float>();
-    mask_alpha_data_ = (float)_option.selection_polygon_mask_alpha_;
+    mask_alpha_data_ = static_cast<float>(_option.selection_polygon_mask_alpha_);
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

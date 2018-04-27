@@ -91,7 +91,7 @@ void pybind_odometry(py::module &m)
         .def_readwrite("max_depth", &OdometryOption::max_depth_)
         .def("__repr__", [](const OdometryOption &c) {
         int32_t num_pyramid_level =
-                (int32_t)c.iteration_number_per_pyramid_level_.size();
+                static_cast<int32_t>(c.iteration_number_per_pyramid_level_.size());
         std::string str_iteration_number_per_pyramid_level_ = "[ ";
         for (int32_t i = 0; i < num_pyramid_level; i++)
             str_iteration_number_per_pyramid_level_ +=
