@@ -84,7 +84,7 @@ before_install:
       brew update;
       echo $COMMAND_EVAL;
       eval $COMMAND_EVAL;
-      brew install cmake libusb pkg-config glfw glew libpng jpeg pkg-config jsoncpp eigen;
+      brew install cmake libusb pkg-config liblzf glfw glew libpng jpeg pkg-config jsoncpp eigen;
       brew install doxygen sphinx-doc pandoc;
       export PATH="/usr/local/opt/sphinx-doc/bin:$PATH";
       sudo python -m ensurepip --upgrade;
