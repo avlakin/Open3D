@@ -52,7 +52,7 @@ void PrintHelp()
     PrintInfo("    > TestFileSystem fileexists [file]\n");
 }
 
-int main(int argc, char **args)
+int32_t main(int32_t argc, char **args)
 {
     using namespace open3d::filesystem;
 

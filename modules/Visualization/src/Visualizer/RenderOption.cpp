@@ -53,7 +53,7 @@ bool RenderOption::ConvertToJsonValue(Json::Value &value) const
             value["background_color"]) == false ) {
         return false;
     }
-    value["interpolation_option"] = (int)interpolation_option_;
+    value["interpolation_option"] = (int32_t)interpolation_option_;
 
     value["light_on"] = light_on_;
     if (EigenVector3dToJsonArray(light_ambient_color_,
@@ -106,11 +106,11 @@ bool RenderOption::ConvertToJsonValue(Json::Value &value) const
     value["light3_specular_shininess"] = light_specular_shininess_[3];
 
     value["point_size"] = point_size_;
-    value["point_color_option"] = (int)point_color_option_;
+    value["point_color_option"] = (int32_t)point_color_option_;
     value["point_show_normal"] = point_show_normal_;
 
-    value["mesh_shade_option"] = (int)mesh_shade_option_;
-    value["mesh_color_option"] = (int)mesh_color_option_;
+    value["mesh_shade_option"] = (int32_t)mesh_shade_option_;
+    value["mesh_color_option"] = (int32_t)mesh_color_option_;
     value["mesh_show_back_face"] = mesh_show_back_face_;
     value["mesh_show_wireframe"] = mesh_show_wireframe_;
     if (EigenVector3dToJsonArray(default_mesh_color_,
@@ -118,7 +118,7 @@ bool RenderOption::ConvertToJsonValue(Json::Value &value) const
         return false;
     }
 
-    value["image_stretch_option"] = (int)image_stretch_option_;
+    value["image_stretch_option"] = (int32_t)image_stretch_option_;
     value["image_max_depth"] = image_max_depth_;
 
     value["show_coordinate_frame"] = show_coordinate_frame_;
@@ -143,7 +143,7 @@ bool RenderOption::ConvertFromJsonValue(const Json::Value &value)
         return false;
     }
     interpolation_option_ = (TextureInterpolationOption)value.get(
-            "interpolation_option", (int)interpolation_option_).asInt();
+            "interpolation_option", (int32_t)interpolation_option_).asInt();
 
     light_on_ = value.get("light_on", light_on_).asBool();
     if (EigenVector3dFromJsonArray(light_ambient_color_,
@@ -209,14 +209,14 @@ bool RenderOption::ConvertFromJsonValue(const Json::Value &value)
 
     point_size_ = value.get("point_size", point_size_).asDouble();
     point_color_option_ = (PointColorOption)value.get("point_color_option",
-            (int)point_color_option_).asInt();
+            (int32_t)point_color_option_).asInt();
     point_show_normal_ = value.get("point_show_normal",
             point_show_normal_).asBool();
 
     mesh_shade_option_ = (MeshShadeOption)value.get("mesh_shade_option",
-            (int)mesh_shade_option_).asInt();
+            (int32_t)mesh_shade_option_).asInt();
     mesh_color_option_ = (MeshColorOption)value.get("mesh_color_option",
-            (int)mesh_color_option_).asInt();
+            (int32_t)mesh_color_option_).asInt();
     mesh_show_back_face_ = value.get("mesh_show_back_face",
             mesh_show_back_face_).asBool();
     mesh_show_wireframe_ = value.get("mesh_show_wireframe",
@@ -227,7 +227,7 @@ bool RenderOption::ConvertFromJsonValue(const Json::Value &value)
     }
 
     image_stretch_option_ = (ImageStretchOption)value.get(
-            "image_stretch_option", (int)image_stretch_option_).asInt();
+            "image_stretch_option", (int32_t)image_stretch_option_).asInt();
     image_max_depth_ = value.get("image_max_depth", image_max_depth_).asInt();
 
     show_coordinate_frame_ = value.get("show_coordinate_frame",

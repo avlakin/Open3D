@@ -61,14 +61,14 @@ void VisualizerWithKeyCallback::PrintVisualizerHelp()
     PrintInfo("\n");
 }
 
-void VisualizerWithKeyCallback::RegisterKeyCallback(int key,
+void VisualizerWithKeyCallback::RegisterKeyCallback(int32_t key,
         std::function<bool(Visualizer *)> callback)
 {
     key_to_callback_[key] = callback;
 }
 
 void VisualizerWithKeyCallback::KeyPressCallback(GLFWwindow *window,
-        int key, int scancode, int action, int mods)
+        int32_t key, int32_t scancode, int32_t action, int32_t mods)
 {
     if (action == GLFW_RELEASE) {
         return;
@@ -84,7 +84,7 @@ void VisualizerWithKeyCallback::KeyPressCallback(GLFWwindow *window,
     }
 }
 
-std::string VisualizerWithKeyCallback::PrintKeyToString(int key)
+std::string VisualizerWithKeyCallback::PrintKeyToString(int32_t key)
 {
     if (key == GLFW_KEY_SPACE) {                // 32
         return std::string("Space");

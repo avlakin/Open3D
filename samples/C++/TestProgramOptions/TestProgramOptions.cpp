@@ -43,10 +43,10 @@ void PrintHelp()
 {
     using namespace open3d;
     PrintInfo("Usage :\n");
-    PrintInfo("    > TestProgramOptions [--help] [--switch] [--int i] [--double d] [--string str] [--vector (x,y,z,...)]\n");
+    PrintInfo("    > TestProgramOptions [--help] [--switch] [--int32_t i] [--double d] [--string str] [--vector (x,y,z,...)]\n");
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     using namespace open3d;
     if (argc == 1 || ProgramOptionExists(argc, argv, "--help")) {
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 
     PrintInfo("Switch is %s.\n",
             ProgramOptionExists(argc, argv, "--switch") ? "ON" : "OFF");
-    PrintInfo("Int is %d\n", GetProgramOptionAsInt(argc, argv, "--int"));
+    PrintInfo("Int is %d\n", GetProgramOptionAsInt(argc, argv, "--int32_t"));
     PrintInfo("Double is %.10f\n",
             GetProgramOptionAsDouble(argc, argv, "--double"));
     PrintInfo("String is %s\n",
@@ -67,10 +67,11 @@ int main(int argc, char *argv[])
     for (auto &str : strs) {
         PrintInfo("\tSubstring : %s\n", str.c_str());
     }
+    typedef Eigen::VectorXd::Index VectorXdIndexType;
     Eigen::VectorXd vec = GetProgramOptionAsEigenVectorXd(argc, argv,
             "--vector");
     PrintInfo("Vector is (");
-    for (auto i = 0; i < vec.size(); i++) {
+    for (VectorXdIndexType i = 0; i < vec.size(); i++) {
         if (i == 0) {
             PrintInfo("%.2f", vec(i));
         } else {

@@ -55,7 +55,7 @@ static const std::unordered_map<std::string,
         };
 
 static const std::unordered_map<std::string,
-        std::function<bool(const std::string &, const Image &, int)>>
+        std::function<bool(const std::string &, const Image &, int32_t)>>
         file_extension_to_image_write_function
         {{"png", WriteImageToPNG},
         {"jpg", WriteImageToJPG},
@@ -88,7 +88,7 @@ bool ReadImage(const std::string &filename, Image &image)
 }
 
 bool WriteImage(const std::string &filename, const Image &image,
-        int quality/* = 90*/)
+        int32_t quality/* = 90*/)
 {
     std::string filename_ext =
             filesystem::GetFileExtensionInLowerCase(filename);

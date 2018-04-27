@@ -73,12 +73,12 @@ void PrintHelp()
     printf("    --left n                  : Set window left edge.\n");
 }
 
-int main(int argc, char **argv)
+int32_t main(int32_t argc, char **argv)
 {
     using namespace open3d;
     using namespace open3d::filesystem;
 
-    int verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
+    int32_t verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
     SetVerbosityLevel((VerbosityLevel)verbose);
     if (argc <= 1 || ProgramOptionExists(argc, argv, "--help") ||
             ProgramOptionExists(argc, argv, "-h")) {
@@ -87,10 +87,10 @@ int main(int argc, char **argv)
     }
 
     std::vector<std::shared_ptr<Geometry>> geometry_ptrs;
-    int width = GetProgramOptionAsInt(argc, argv, "--width", 1920);
-    int height = GetProgramOptionAsInt(argc, argv, "--height", 1080);
-    int top = GetProgramOptionAsInt(argc, argv, "--top", 200);
-    int left = GetProgramOptionAsInt(argc, argv, "--left", 200);
+    int32_t width = GetProgramOptionAsInt(argc, argv, "--width", 1920);
+    int32_t height = GetProgramOptionAsInt(argc, argv, "--height", 1080);
+    int32_t top = GetProgramOptionAsInt(argc, argv, "--top", 200);
+    int32_t left = GetProgramOptionAsInt(argc, argv, "--left", 200);
     std::string window_name = GetProgramOptionAsString(argc, argv,
             "--window_name", "ViewGeometry");
     std::string mesh_filename = GetProgramOptionAsString(argc, argv, "--mesh");

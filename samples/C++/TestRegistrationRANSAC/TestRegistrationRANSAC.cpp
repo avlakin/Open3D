@@ -70,7 +70,7 @@ void VisualizeRegistration(const open3d::PointCloud &source,
     DrawGeometries({ source_transformed_ptr, target_ptr }, "Registration result");
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     using namespace open3d;
 
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
     PrintDebug("OpenMP is supported. Using %d threads.", omp_get_num_threads());
 #endif
 
-    for (int i = 0; i < 50000; i++) {
+    for (int32_t i = 0; i < 50000; i++) {
         ScopeTimer t("one iteration");
 
         std::shared_ptr<PointCloud> source, target;

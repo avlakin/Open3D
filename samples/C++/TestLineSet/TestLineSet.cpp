@@ -44,7 +44,7 @@
 #include <Open3D/IO/IO.h>
 #include <Open3D/Visualization/Visualization.h>
 
-int main(int argc, char **argv)
+int32_t main(int32_t argc, char **argv)
 {
     using namespace open3d;
     using namespace flann;
@@ -66,15 +66,15 @@ int main(int argc, char **argv)
     }
 
     auto cloud_ptr = CreatePointCloudFromFile(argv[1]);
-    std::vector<std::pair<int, int>> correspondences;
+    std::vector<std::pair<int32_t, int32_t>> correspondences;
 
-    const int nn = 50;
+    const int32_t nn = 50;
     KDTreeFlann kdtree;
     kdtree.SetGeometry(*cloud_ptr);
-    std::vector<int> indices_vec(nn);
+    std::vector<int32_t> indices_vec(nn);
     std::vector<double> dists_vec(nn);
     kdtree.SearchKNN(cloud_ptr->points_[0], nn, indices_vec, dists_vec);
-    for (int i = 0; i < nn; i++) {
+    for (int32_t i = 0; i < nn; i++) {
         correspondences.push_back(std::make_pair(0, indices_vec[i]));
     }
     auto lineset_ptr = CreateLineSetFromPointCloudCorrespondences(
@@ -93,14 +93,14 @@ int main(int argc, char **argv)
     new_cloud_ptr->Transform(
             trans_to_origin.inverse() * transformation * trans_to_origin);
     correspondences.clear();
-    for (size_t i = 0; i < new_cloud_ptr->points_.size(); i++) {
+    for (uint32_t i = 0; i < new_cloud_ptr->points_.size(); i++) {
         kdtree.SearchKNN(new_cloud_ptr->points_[i], 1, indices_vec, dists_vec);
-        correspondences.push_back(std::make_pair(indices_vec[0], (int)i));
+        correspondences.push_back(std::make_pair(indices_vec[0], (int32_t)i));
     }
     auto new_lineset_ptr = CreateLineSetFromPointCloudCorrespondences(
             *cloud_ptr, *new_cloud_ptr, correspondences);
     new_lineset_ptr->colors_.resize(new_lineset_ptr->lines_.size());
-    for (size_t i = 0; i < new_lineset_ptr->lines_.size(); i++) {
+    for (uint32_t i = 0; i < new_lineset_ptr->lines_.size(); i++) {
         auto point_pair = new_lineset_ptr->GetLineCoordinate(i);
         if ((point_pair.first - point_pair.second).norm() < 0.05 *
                 bounding_box.GetSize()) {

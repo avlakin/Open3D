@@ -115,13 +115,13 @@ PointCloud &PointCloud::operator+=(const PointCloud &cloud)
     }
     if ((!HasPoints() || HasColors()) && cloud.HasColors()) {
         colors_.resize(new_vert_num);
-        for (size_t i = 0; i < add_vert_num; i++)
+        for (uint32_t i = 0; i < add_vert_num; i++)
             colors_[old_vert_num + i] = cloud.colors_[i];
     } else {
         colors_.clear();
     }
     points_.resize(new_vert_num);
-    for (size_t i = 0; i < add_vert_num; i++)
+    for (uint32_t i = 0; i < add_vert_num; i++)
         points_[old_vert_num + i] = cloud.points_[i];
     return (*this);
 }
@@ -140,8 +140,8 @@ std::vector<double> ComputePointCloudToPointCloudDistance(
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int i = 0; i < (int)source.points_.size(); i++) {
-        std::vector<int> indices(1);
+    for (int32_t i = 0; i < (int32_t)source.points_.size(); i++) {
+        std::vector<int32_t> indices(1);
         std::vector<double> dists(1);
         if (kdtree.SearchKNN(source.points_[i], 1, indices, dists) == 0) {
             PrintDebug("[ComputePointCloudToPointCloudDistance] Found a point without neighbors.\n");
@@ -202,7 +202,7 @@ std::vector<double> ComputePointCloudMahalanobisDistance(
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int i = 0; i < (int)input.points_.size(); i++) {
+    for (int32_t i = 0; i < (int32_t)input.points_.size(); i++) {
         Eigen::Vector3d p = input.points_[i] - mean;
         mahalanobis[i] = std::sqrt(p.transpose() * cov_inv * p);
     }
@@ -217,8 +217,8 @@ std::vector<double> ComputePointCloudNearestNeighborDistance(
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int i = 0; i < (int)input.points_.size(); i++) {
-        std::vector<int> indices(2);
+    for (int32_t i = 0; i < (int32_t)input.points_.size(); i++) {
+        std::vector<int32_t> indices(2);
         std::vector<double> dists(2);
         if (kdtree.SearchKNN(input.points_[i], 2, indices, dists) <= 1) {
             PrintDebug("[ComputePointCloudNearestNeighborDistance] Found a point without neighbors.\n");

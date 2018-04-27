@@ -90,7 +90,7 @@ public:
     void SetProjectionParameters();
     virtual void Reset();
     virtual void ChangeFieldOfView(double step);
-    virtual void ChangeWindowSize(int width, int height);
+    virtual void ChangeWindowSize(int32_t width, int32_t height);
 
     // Function to process scaling
     /// \param scale is the relative distance mouse has scrolled.
@@ -140,14 +140,14 @@ public:
     GLHelper::GLVector3f GetUp() const { return up_.cast<GLfloat>(); }
     GLHelper::GLVector3f GetFront() const { return front_.cast<GLfloat>(); }
     GLHelper::GLVector3f GetRight() const { return right_.cast<GLfloat>(); }
-    int GetWindowWidth() const { return window_width_; }
-    int GetWindowHeight() const { return window_height_; }
+    int32_t GetWindowWidth() const { return window_width_; }
+    int32_t GetWindowHeight() const { return window_height_; }
     double GetZNear() const { return z_near_; }
     double GetZFar() const { return z_far_; }
 
 protected:
-    int window_width_ = 0;
-    int window_height_ = 0;
+    int32_t window_width_ = 0;
+    int32_t window_height_ = 0;
     BoundingBox bounding_box_;
     Eigen::Vector3d eye_;
     Eigen::Vector3d lookat_;

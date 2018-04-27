@@ -50,14 +50,14 @@ namespace {
 
 std::shared_ptr<PointCloud> CreatePointCloudFromFloatDepthImage(
         const Image &depth, const PinholeCameraIntrinsic &intrinsic,
-        const Eigen::Matrix4d &extrinsic, int stride)
+        const Eigen::Matrix4d &extrinsic, int32_t stride)
 {
     auto pointcloud = std::make_shared<PointCloud>();
     Eigen::Matrix4d camera_pose = extrinsic.inverse();
     auto focal_length = intrinsic.GetFocalLength();
     auto principal_point = intrinsic.GetPrincipalPoint();
-    for (int i = 0; i < depth.height_; i += stride) {
-        for (int j = 0; j < depth.width_; j += stride) {
+    for (int32_t i = 0; i < depth.height_; i += stride) {
+        for (int32_t j = 0; j < depth.width_; j += stride) {
             const float *p = PointerAt<float>(depth, j, i);
             if (*p > 0) {
                 double z = (double)(*p);
@@ -74,7 +74,7 @@ std::shared_ptr<PointCloud> CreatePointCloudFromFloatDepthImage(
     return pointcloud;
 }
 
-template<typename TC, int NC>
+template<typename TC, int32_t NC>
 std::shared_ptr<PointCloud> CreatePointCloudFromRGBDImageT(
         const RGBDImage &image, const PinholeCameraIntrinsic &intrinsic,
         const Eigen::Matrix4d &extrinsic)
@@ -84,12 +84,12 @@ std::shared_ptr<PointCloud> CreatePointCloudFromRGBDImageT(
     auto focal_length = intrinsic.GetFocalLength();
     auto principal_point = intrinsic.GetPrincipalPoint();
     double scale = (sizeof(TC) == 1) ? 255.0 : 1.0;
-    for (int i = 0; i < image.depth_.height_; i++) {
+    for (int32_t i = 0; i < image.depth_.height_; i++) {
         float *p = (float *)(image.depth_.data_.data() +
                 i * image.depth_.BytesPerLine());
         TC *pc = (TC *)(image.color_.data_.data() +
                 i * image.color_.BytesPerLine());
-        for (int j = 0; j < image.depth_.width_; j++, p++, pc += NC) {
+        for (int32_t j = 0; j < image.depth_.width_; j++, p++, pc += NC) {
             if (*p > 0) {
                 double z = (double)(*p);
                 double x = (j - principal_point.first) * z /
@@ -113,7 +113,7 @@ std::shared_ptr<PointCloud> CreatePointCloudFromDepthImage(
         const Image &depth, const PinholeCameraIntrinsic &intrinsic,
         const Eigen::Matrix4d &extrinsic/* = Eigen::Matrix4d::Identity()*/,
         double depth_scale/* = 1000.0*/, double depth_trunc/* = 1000.0*/,
-        int stride/* = 1*/)
+        int32_t stride/* = 1*/)
 {
     if (depth.num_of_channels_ == 1) {
         if (depth.bytes_per_channel_ == 2) {

@@ -94,8 +94,8 @@ ScopeTimer::~ScopeTimer()
 }
 
 FPSTimer::FPSTimer(const std::string &fps_timer_info/* = ""*/,
-        int expectation/* = -1*/, double time_to_print/* = 3000.0*/,
-        int events_to_print/* = 100*/) : fps_timer_info_(fps_timer_info),
+        int32_t expectation/* = -1*/, double time_to_print/* = 3000.0*/,
+        int32_t events_to_print/* = 100*/) : fps_timer_info_(fps_timer_info),
         expectation_(expectation), time_to_print_(time_to_print),
         events_to_print_(events_to_print), event_fragment_count_(0),
         event_total_count_(0)

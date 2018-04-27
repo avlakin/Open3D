@@ -57,16 +57,16 @@ std::shared_ptr<Image> CreateDepthToCameraDistanceMultiplierFloatImage(
     };
     std::vector<float> xx(intrinsic.width_);
     std::vector<float> yy(intrinsic.height_);
-    for (int j = 0; j < intrinsic.width_; j++) {
+    for (int32_t j = 0; j < intrinsic.width_; j++) {
         xx[j] = (j - fpp[0]) * ffl_inv[0];
     }
-    for (int i = 0; i < intrinsic.height_; i++) {
+    for (int32_t i = 0; i < intrinsic.height_; i++) {
         yy[i] = (i - fpp[1]) * ffl_inv[1];
     }
-    for (int i = 0; i < intrinsic.height_; i++) {
+    for (int32_t i = 0; i < intrinsic.height_; i++) {
         float *fp = (float *)(fimage->data_.data() +
                 i * fimage->BytesPerLine());
-        for (int j = 0; j < intrinsic.width_; j++, fp++) {
+        for (int32_t j = 0; j < intrinsic.width_; j++, fp++) {
             *fp = sqrtf(xx[j] * xx[j] + yy[i] * yy[i] + 1.0f);
         }
     }
@@ -81,7 +81,7 @@ std::shared_ptr<Image> CreateFloatImageFromImage(const Image &image,
         return fimage;
     }
     fimage->PrepareImage(image.width_, image.height_, 1, 4);
-    for (int i = 0; i < image.height_ * image.width_; i++) {
+    for (int32_t i = 0; i < image.height_ * image.width_; i++) {
         float *p = (float *)(fimage->data_.data() + i * 4);
         const uint8_t *pi = image.data_.data() +
                 i * image.num_of_channels_ * image.bytes_per_channel_;
@@ -145,7 +145,7 @@ std::shared_ptr<Image> CreateImageFromFloatImage(const Image &input)
             input.width_, input.height_, input.num_of_channels_, sizeof(T));
     const float *pi = (const float *)input.data_.data();
     T *p = (T*)output->data_.data();
-    for (int i = 0; i < input.height_ * input.width_; i++, p++, pi++) {
+    for (int32_t i = 0; i < input.height_ * input.width_; i++, p++, pi++) {
         if (sizeof(T) == 1)
             *p = static_cast<T>(*pi * 255.0f);
         if (sizeof(T) == 2)
@@ -160,7 +160,7 @@ template std::shared_ptr<Image> CreateImageFromFloatImage<uint16_t>(
         const Image &input);
 
 ImagePyramid CreateImagePyramid(
-        const Image &input, size_t num_of_levels,
+        const Image &input, uint32_t num_of_levels,
         bool with_gaussian_filter /*= true*/)
 {
     std::vector<std::shared_ptr<Image>> pyramid_image;
@@ -170,7 +170,7 @@ ImagePyramid CreateImagePyramid(
         return pyramid_image;
     }
 
-    for (int i = 0; i < num_of_levels; i++) {
+    for (uint32_t i = 0; i < num_of_levels; i++) {
         if (i == 0) {
             std::shared_ptr<Image> input_copy_ptr = std::make_shared<Image>();
             *input_copy_ptr = input;

@@ -58,16 +58,16 @@ bool ReadImage(const std::string &filename, Image &image);
 /// Otherwise it will be ignored.
 /// \return return true if the write function is successful, false otherwise.
 bool WriteImage(const std::string &filename, const Image &image,
-        int quality = 90);
+        int32_t quality = 90);
 
 bool ReadImageFromPNG(const std::string &filename, Image &image);
 
 bool WriteImageToPNG(const std::string &filename, const Image &image,
-        int quality);
+        int32_t quality);
 
 bool ReadImageFromJPG(const std::string &filename, Image &image);
 
 bool WriteImageToJPG(const std::string &filename, const Image &image,
-        int quality = 90);
+        int32_t quality = 90);
 
 }   // namespace open3d

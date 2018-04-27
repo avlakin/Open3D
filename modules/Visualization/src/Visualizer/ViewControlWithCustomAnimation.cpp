@@ -122,7 +122,7 @@ void ViewControlWithCustomAnimation::AddKeyFrame()
             view_trajectory_.view_status_.push_back(current_status);
             current_keyframe_ = 0.0;
         } else {
-            size_t current_index = CurrentKeyframe();
+            uint32_t current_index = CurrentKeyframe();
             view_trajectory_.view_status_.insert(
                     view_trajectory_.view_status_.begin() + current_index + 1,
                     current_status);
@@ -144,7 +144,7 @@ void ViewControlWithCustomAnimation::DeleteKeyFrame()
 {
     if (animation_mode_ == AnimationMode::FreeMode &&
             !view_trajectory_.view_status_.empty()) {
-        size_t current_index = CurrentKeyframe();
+        uint32_t current_index = CurrentKeyframe();
         view_trajectory_.view_status_.erase(
                 view_trajectory_.view_status_.begin() + current_index);
         current_keyframe_ = RegularizeFrameIndex(current_index - 1.0,
@@ -154,12 +154,12 @@ void ViewControlWithCustomAnimation::DeleteKeyFrame()
     SetViewControlFromTrajectory();
 }
 
-void ViewControlWithCustomAnimation::AddSpinKeyFrames(int num_of_key_frames
+void ViewControlWithCustomAnimation::AddSpinKeyFrames(int32_t num_of_key_frames
         /* = 20*/)
 {
     if (animation_mode_ == AnimationMode::FreeMode) {
         double radian_per_step = M_PI * 2.0 / double(num_of_key_frames);
-        for (int i = 0; i < num_of_key_frames; i++) {
+        for (int32_t i = 0; i < num_of_key_frames; i++) {
             ViewControl::Rotate(radian_per_step / ROTATION_RADIAN_PER_PIXEL, 0);
             AddKeyFrame();
         }
@@ -186,8 +186,8 @@ std::string ViewControlWithCustomAnimation::GetStatusString() const
             sprintf(buffer, "empty trajectory");
         } else {
             sprintf(buffer, "#%u keyframe (%u in total%s)",
-                    (unsigned int)CurrentKeyframe() + 1,
-                    (unsigned int)view_trajectory_.view_status_.size(),
+                    (uint32_t)CurrentKeyframe() + 1,
+                    (uint32_t)view_trajectory_.view_status_.size(),
                     view_trajectory_.is_loop_ ? ", looped" : "");
         }
     } else {
@@ -195,8 +195,8 @@ std::string ViewControlWithCustomAnimation::GetStatusString() const
             sprintf(buffer, "empty trajectory");
         } else {
             sprintf(buffer, "#%u frame (%u in total%s)",
-                    (unsigned int)CurrentFrame() + 1,
-                    (unsigned int)view_trajectory_.NumOfFrames(),
+                    (uint32_t)CurrentFrame() + 1,
+                    (uint32_t)view_trajectory_.NumOfFrames(),
                     view_trajectory_.is_loop_ ? ", looped" : "");
         }
     }
@@ -286,7 +286,7 @@ bool ViewControlWithCustomAnimation::LoadTrajectoryFromCameraTrajectory(
     view_trajectory_.interval_ = ViewTrajectory::INTERVAL_MIN;
     view_trajectory_.is_loop_ = false;
     view_trajectory_.view_status_.resize(camera_trajectory.extrinsic_.size());
-    for (size_t i = 0; i < camera_trajectory.extrinsic_.size(); i++) {
+    for (uint32_t i = 0; i < camera_trajectory.extrinsic_.size(); i++) {
         ViewControlWithCustomAnimation view_control = *this;
         if (view_control.ConvertFromPinholeCameraParameters(
                 camera_trajectory.intrinsic_,
@@ -329,10 +329,10 @@ double ViewControlWithCustomAnimation::RegularizeFrameIndex(
     }
     double frame_index = current_frame;
     if (is_loop) {
-        while (int(round(frame_index)) < 0) {
+        while (int32_t(round(frame_index)) < 0) {
             frame_index += double(num_of_frames);
         }
-        while (int(round(frame_index)) >= int(num_of_frames)) {
+        while (int32_t(round(frame_index)) >= int32_t(num_of_frames)) {
             frame_index -= double(num_of_frames);
         }
     } else {

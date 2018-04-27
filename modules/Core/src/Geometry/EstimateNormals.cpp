@@ -90,7 +90,7 @@ Eigen::Vector3d FastEigen3x3(const Eigen::Matrix3d &A)
 }
 
 Eigen::Vector3d ComputeNormal(const PointCloud &cloud,
-        const std::vector<int> &indices)
+        const std::vector<int32_t> &indices)
 {
     if (indices.size() == 0) {
         return Eigen::Vector3d::Zero();
@@ -98,7 +98,7 @@ Eigen::Vector3d ComputeNormal(const PointCloud &cloud,
     Eigen::Matrix3d covariance;
     Eigen::Matrix<double, 9, 1> cumulants;
     cumulants.setZero();
-    for (size_t i = 0; i < indices.size(); i++) {
+    for (uint32_t i = 0; i < indices.size(); i++) {
         const Eigen::Vector3d &point = cloud.points_[indices[i]];
         cumulants(0) += point(0);
         cumulants(1) += point(1);
@@ -141,8 +141,8 @@ bool EstimateNormals(PointCloud &cloud,
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int i = 0; i < (int)cloud.points_.size(); i++) {
-        std::vector<int> indices;
+    for (int32_t i = 0; i < (int32_t)cloud.points_.size(); i++) {
+        std::vector<int32_t> indices;
         std::vector<double> distance2;
         Eigen::Vector3d normal;
         if (kdtree.Search(cloud.points_[i], search_param, indices,
@@ -177,7 +177,7 @@ bool OrientNormalsToAlignWithDirection(PointCloud &cloud,
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int i = 0; i < (int)cloud.points_.size(); i++) {
+    for (int32_t i = 0; i < (int32_t)cloud.points_.size(); i++) {
         auto &normal = cloud.normals_[i];
         if (normal.norm() == 0.0) {
             normal = orientation_reference;
@@ -197,7 +197,7 @@ bool OrientNormalsTowardsCameraLocation(PointCloud &cloud,
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int i = 0; i < (int)cloud.points_.size(); i++) {
+    for (int32_t i = 0; i < (int32_t)cloud.points_.size(); i++) {
         Eigen::Vector3d orientation_reference = camera_location -
                 cloud.points_[i];
         auto &normal = cloud.normals_[i];

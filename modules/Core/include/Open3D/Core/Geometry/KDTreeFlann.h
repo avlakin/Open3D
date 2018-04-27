@@ -71,20 +71,20 @@ public:
     bool SetFeature(const Feature &feature);
 
     template<typename T>
-    int Search(const T &query, const KDTreeSearchParam &param,
-            std::vector<int> &indices, std::vector<double> &distance2) const;
+    int32_t Search(const T &query, const KDTreeSearchParam &param,
+            std::vector<int32_t> &indices, std::vector<double> &distance2) const;
 
     template<typename T>
-    int SearchKNN(const T &query, int knn, std::vector<int> &indices,
+    int32_t SearchKNN(const T &query, int32_t knn, std::vector<int32_t> &indices,
             std::vector<double> &distance2) const;
 
     template<typename T>
-    int SearchRadius(const T &query, double radius, std::vector<int> &indices,
+    int32_t SearchRadius(const T &query, double radius, std::vector<int32_t> &indices,
             std::vector<double> &distance2) const;
 
     template<typename T>
-    int SearchHybrid(const T &query, double radius, int max_nn,
-            std::vector<int> &indices, std::vector<double> &distance2) const;
+    int32_t SearchHybrid(const T &query, double radius, int32_t max_nn,
+            std::vector<int32_t> &indices, std::vector<double> &distance2) const;
 
 private:
     bool SetRawData(const Eigen::Map<const Eigen::MatrixXd> &data);

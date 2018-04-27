@@ -87,7 +87,7 @@ void pybind_registration(py::module &m)
     py::detail::bind_copy_functions<ICPConvergenceCriteria>(
             convergence_criteria);
     convergence_criteria
-        .def(py::init([](double fitness, double rmse, int itr) {
+        .def(py::init([](double fitness, double rmse, int32_t itr) {
             return new ICPConvergenceCriteria(fitness, rmse, itr);
         }), "relative_fitness"_a = 1e-6, "relative_rmse"_a = 1e-6,
                 "max_iteration"_a = 30)
@@ -110,7 +110,7 @@ void pybind_registration(py::module &m)
     py::detail::bind_copy_functions<RANSACConvergenceCriteria>(
             ransac_criteria);
     ransac_criteria
-        .def(py::init([](int max_iteration, int max_validation) {
+        .def(py::init([](int32_t max_iteration, int32_t max_validation) {
             return new RANSACConvergenceCriteria(max_iteration, max_validation);
         }), "max_iteration"_a = 1000, "max_validation"_a = 1000)
         .def_readwrite("max_iteration",
@@ -231,8 +231,8 @@ void pybind_registration(py::module &m)
     fgr_option
         .def(py::init([](double division_factor, bool use_absolute_scale,
                 bool decrease_mu, double maximum_correspondence_distance,
-                int iteration_number, double tuple_scale,
-                int maximum_tuple_count) {
+                int32_t iteration_number, double tuple_scale,
+                int32_t maximum_tuple_count) {
             return new FastGlobalRegistrationOption(division_factor,
                     use_absolute_scale, decrease_mu,
                     maximum_correspondence_distance, iteration_number,

@@ -50,12 +50,12 @@ public:
 
 public:
     PinholeCameraIntrinsic();
-    PinholeCameraIntrinsic(int width, int height, double fx, double fy,
+    PinholeCameraIntrinsic(int32_t width, int32_t height, double fx, double fy,
             double cx, double cy);
     ~PinholeCameraIntrinsic() override;
 
 public:
-    void SetIntrinsics(int width, int height, double fx, double fy, double cx,
+    void SetIntrinsics(int32_t width, int32_t height, double fx, double fy, double cx,
             double cy) {
         width_ = width; height_ = height;
         intrinsic_matrix_.setIdentity();
@@ -79,8 +79,8 @@ public:
     bool ConvertFromJsonValue(const Json::Value &value) override;
 
 public:
-    int width_ = -1;
-    int height_ = -1;
+    int32_t width_ = -1;
+    int32_t height_ = -1;
     Eigen::Matrix3d intrinsic_matrix_;
 };
 

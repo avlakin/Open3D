@@ -67,19 +67,19 @@ public:
     void PrintVisualizerHelp() override;
     void UpdateWindowTitle() override;
     void BuildUtilities() override;
-    int PickPoint(double x, double y);
-    std::vector<size_t> &GetPickedPoints();
+    int32_t PickPoint(double x, double y);
+    std::vector<uint32_t> &GetPickedPoints();
 
 protected:
     bool InitViewControl() override;
     bool InitRenderOption() override;
-    void WindowResizeCallback(GLFWwindow *window, int w, int h) override;
+    void WindowResizeCallback(GLFWwindow *window, int32_t w, int32_t h) override;
     void MouseMoveCallback(GLFWwindow* window, double x, double y) override;
     void MouseScrollCallback(GLFWwindow* window, double x, double y) override;
     void MouseButtonCallback(GLFWwindow* window,
-            int button, int action, int mods) override;
+            int32_t button, int32_t action, int32_t mods) override;
     void KeyPressCallback(GLFWwindow *window,
-            int key, int scancode, int action, int mods) override;
+            int32_t key, int32_t scancode, int32_t action, int32_t mods) override;
     void InvalidateSelectionPolygon();
     void InvalidatePicking();
     void SaveCroppingResult(const std::string &filename = "");

@@ -54,7 +54,7 @@ void PrintHelp()
     printf("    --distance d              : Maximum distance. MUST HAVE.\n");
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     using namespace open3d;
 
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
         PrintHelp();
         return 0;
     }
-    int verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
+    int32_t verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
     SetVerbosityLevel((VerbosityLevel)verbose);
     auto in_mesh_file = GetProgramOptionAsString(argc, argv, "--in_mesh");
     auto out_mesh_file = GetProgramOptionAsString(argc, argv, "--out_mesh");
@@ -91,10 +91,10 @@ int main(int argc, char *argv[])
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int i = 0; i < (int)mesh->vertices_.size(); i++) {
-        std::vector<int> indices(1);
+    for (int32_t i = 0; i < (int32_t)mesh->vertices_.size(); i++) {
+        std::vector<int32_t> indices(1);
         std::vector<double> dists(1);
-        int k = kdtree.SearchKNN(mesh->vertices_[i], 1, indices, dists);
+        int32_t k = kdtree.SearchKNN(mesh->vertices_[i], 1, indices, dists);
         if (k == 0 || dists[0] > distance * distance) {
             remove_vertex_mask[i] = true;
         }
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    std::vector<int> index_old_to_new(mesh->vertices_.size());
+    std::vector<uint32_t> index_old_to_new(mesh->vertices_.size());
     bool has_vert_normal = mesh->HasVertexNormals();
     bool has_vert_color = mesh->HasVertexColors();
     size_t old_vertex_num = mesh->vertices_.size();
@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
                 mesh->vertex_normals_[k] = mesh->vertex_normals_[i];
             if (has_vert_color)
                 mesh->vertex_colors_[k] = mesh->vertex_colors_[i];
-            index_old_to_new[i] = (int)k;
+            index_old_to_new[i] = static_cast<uint32_t>(k);
             k++;
         } else {
             index_old_to_new[i] = -1;
@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
     if (has_vert_normal) mesh->vertex_normals_.resize(k);
     if (has_vert_color) mesh->vertex_colors_.resize(k);
     if (k < old_vertex_num) {
-        for (size_t i = 0; i < old_triangle_num; i++) {
+        for (uint32_t i = 0; i < old_triangle_num; i++) {
             auto &triangle = mesh->triangles_[i];
             triangle(0) = index_old_to_new[triangle(0)];
             triangle(1) = index_old_to_new[triangle(1)];

@@ -194,7 +194,7 @@ void VisualizerWithEditing::BuildUtilities()
     }
 }
 
-int VisualizerWithEditing::PickPoint(double x, double y)
+int32_t VisualizerWithEditing::PickPoint(double x, double y)
 {
     auto renderer_ptr = std::make_shared<glsl::PointCloudPickingRenderer>();
     if (renderer_ptr->AddGeometry(geometry_ptrs_[0]) == false) {
@@ -249,9 +249,9 @@ int VisualizerWithEditing::PickPoint(double x, double y)
     renderer_ptr->Render(GetRenderOption(), GetViewControl());
     glFinish();
     uint8_t rgba[4];
-    glReadPixels((int)(x + 0.5), (int)(view.GetWindowHeight() - y + 0.5), 1, 1,
+    glReadPixels((int32_t)(x + 0.5), (int32_t)(view.GetWindowHeight() - y + 0.5), 1, 1,
             GL_RGBA, GL_UNSIGNED_BYTE, rgba);
-    int index = GLHelper::ColorCodeToPickIndex(Eigen::Vector4i(rgba[0],
+    int32_t index = GLHelper::ColorCodeToPickIndex(Eigen::Vector4i(rgba[0],
             rgba[1], rgba[2], rgba[3]));
     // Recover rendering state
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -259,7 +259,7 @@ int VisualizerWithEditing::PickPoint(double x, double y)
     return index;
 }
 
-std::vector<size_t> &VisualizerWithEditing::GetPickedPoints()
+std::vector<uint32_t> &VisualizerWithEditing::GetPickedPoints()
 {
     return pointcloud_picker_ptr_->picked_indices_;
 }
@@ -280,7 +280,7 @@ bool VisualizerWithEditing::InitRenderOption()
 }
 
 void VisualizerWithEditing::KeyPressCallback(GLFWwindow *window,
-        int key, int scancode, int action, int mods)
+        int32_t key, int32_t scancode, int32_t action, int32_t mods)
 {
     auto &view_control = (ViewControlWithEditing &)(*view_control_ptr_);
     auto &option = (RenderOptionWithEditing &)(*render_option_ptr_);
@@ -432,7 +432,7 @@ void VisualizerWithEditing::KeyPressCallback(GLFWwindow *window,
 }
 
 void VisualizerWithEditing::WindowResizeCallback(GLFWwindow *window,
-        int w, int h)
+        int32_t w, int32_t h)
 {
     InvalidateSelectionPolygon();
     Visualizer::WindowResizeCallback(window, w, h);
@@ -477,7 +477,7 @@ void VisualizerWithEditing::MouseScrollCallback(GLFWwindow* window,
 }
 
 void VisualizerWithEditing::MouseButtonCallback(GLFWwindow* window,
-        int button, int action, int mods)
+        int32_t button, int32_t action, int32_t mods)
 {
     auto &view_control = (ViewControlWithEditing &)(*view_control_ptr_);
     if (view_control.IsLocked() && selection_polygon_ptr_ &&
@@ -559,7 +559,7 @@ void VisualizerWithEditing::MouseButtonCallback(GLFWwindow* window,
             x /= pixel_to_screen_coordinate_;
             y /= pixel_to_screen_coordinate_;
 #endif
-            int index = PickPoint(x, y);
+            int32_t index = PickPoint(x, y);
             if (index == -1) {
                 PrintInfo("No point has been picked.\n");
             } else {
@@ -568,7 +568,7 @@ void VisualizerWithEditing::MouseButtonCallback(GLFWwindow* window,
                 PrintInfo("Picked point #%d (%.2f, %.2f, %.2f) to add in queue.\n",
                         index, point(0), point(1), point(2));
                 pointcloud_picker_ptr_->picked_indices_.push_back(
-                        (size_t)index);
+                        (uint32_t)index);
                 is_redraw_required_ = true;
             }
         } else if (button == GLFW_MOUSE_BUTTON_RIGHT &&

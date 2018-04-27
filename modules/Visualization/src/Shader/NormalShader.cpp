@@ -166,7 +166,7 @@ bool NormalShaderForPointCloud::PrepareBinding(const Geometry &geometry,
     }
     points.resize(pointcloud.points_.size());
     normals.resize(pointcloud.points_.size());
-    for (size_t i = 0; i < pointcloud.points_.size(); i++) {
+    for (uint32_t i = 0; i < pointcloud.points_.size(); i++) {
         const auto &point = pointcloud.points_[i];
         const auto &normal = pointcloud.normals_[i];
         points[i] = point.cast<float>();
@@ -225,11 +225,11 @@ bool NormalShaderForTriangleMesh::PrepareBinding(const Geometry &geometry,
     }
     points.resize(mesh.triangles_.size() * 3);
     normals.resize(mesh.triangles_.size() * 3);
-    for (size_t i = 0; i < mesh.triangles_.size(); i++) {
+    for (uint32_t i = 0; i < mesh.triangles_.size(); i++) {
         const auto &triangle = mesh.triangles_[i];
-        for (size_t j = 0; j < 3; j++) {
-            size_t idx = i * 3 + j;
-            size_t vi = triangle(j);
+        for (uint32_t j = 0; j < 3; j++) {
+            uint32_t idx = i * 3 + j;
+            uint32_t vi = triangle(j);
             const auto &vertex = mesh.vertices_[vi];
             points[idx] = vertex.cast<float>();
             if (option.mesh_shade_option_ ==

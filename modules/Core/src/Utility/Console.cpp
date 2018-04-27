@@ -76,7 +76,7 @@ static VerbosityLevel global_verbosity_level = VerbosityLevel::VerboseInfo;
 /// \param text_color, from 0 to 7, they are black, red, green, yellow, blue,
 /// magenta, cyan, white
 /// \param emphasis_text is 0 or 1
-void ChangeConsoleColor(TextColor text_color, int highlight_text)
+void ChangeConsoleColor(TextColor text_color, int32_t highlight_text)
 {
 #ifdef _WIN32
     const WORD EMPHASIS_MASK[2] = { 0, FOREGROUND_INTENSITY };
@@ -92,9 +92,9 @@ void ChangeConsoleColor(TextColor text_color, int highlight_text)
     };
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(h,
-            EMPHASIS_MASK[highlight_text] | COLOR_MASK[(int)text_color]);
+            EMPHASIS_MASK[highlight_text] | COLOR_MASK[(int32_t)text_color]);
 #else
-    printf("%c[%d;%dm", 0x1B, highlight_text, (int)text_color + 30);
+    printf("%c[%d;%dm", 0x1B, highlight_text, (int32_t)text_color + 30);
 #endif
 }
 
@@ -113,11 +113,11 @@ static int64_t expected_console_count = 0;
 
 static int64_t current_console_progress = 0;
 
-static int current_console_progress_pixel = 0;
+static int32_t current_console_progress_pixel = 0;
 
 static std::string console_progress_info = "";
 
-static const int CONSOLE_PROGRESS_RESOLUTION = 40;
+static const int32_t CONSOLE_PROGRESS_RESOLUTION = 40;
 
 void PrintConsoleProgress()
 {
@@ -125,11 +125,11 @@ void PrintConsoleProgress()
         PrintInfo("%s[%s] 100%%\n", console_progress_info.c_str(),
                 std::string(CONSOLE_PROGRESS_RESOLUTION, '=').c_str());
     } else {
-        int new_console_progress_pixel = int(current_console_progress *
+        int32_t new_console_progress_pixel = int32_t(current_console_progress *
                 CONSOLE_PROGRESS_RESOLUTION / expected_console_count);
         if (new_console_progress_pixel > current_console_progress_pixel) {
             current_console_progress_pixel = new_console_progress_pixel;
-            int percent = int(current_console_progress *
+            int32_t percent = int32_t(current_console_progress *
                     100 / expected_console_count);
             PrintInfo("%s[%s>%s] %d%%\r", console_progress_info.c_str(),
                     std::string(current_console_progress_pixel, '=').c_str(),
@@ -243,7 +243,7 @@ std::string GetCurrentTimeStamp()
     return std::string(buffer);
 }
 
-std::string GetProgramOptionAsString(int argc, char **argv,
+std::string GetProgramOptionAsString(int32_t argc, char **argv,
         const std::string &option, const std::string &default_value/* = ""*/)
 {
     char **itr = std::find(argv, argv + argc, option);
@@ -253,8 +253,8 @@ std::string GetProgramOptionAsString(int argc, char **argv,
     return default_value;
 }
 
-int GetProgramOptionAsInt(int argc, char **argv,
-        const std::string &option, const int default_value/* = 0*/)
+int32_t GetProgramOptionAsInt(int32_t argc, char **argv,
+        const std::string &option, const int32_t default_value/* = 0*/)
 {
     std::string str = GetProgramOptionAsString(argc, argv, option, "");
     if (str.length() == 0) {
@@ -270,10 +270,10 @@ int GetProgramOptionAsInt(int argc, char **argv,
     } else if (*end != '\0') {
         return default_value;
     }
-    return (int)l;
+    return (int32_t)l;
 }
 
-double GetProgramOptionAsDouble(int argc, char **argv,
+double GetProgramOptionAsDouble(int32_t argc, char **argv,
         const std::string &option, const double default_value/* = 0.0*/)
 {
     std::string str = GetProgramOptionAsString(argc, argv, option, "");
@@ -291,7 +291,7 @@ double GetProgramOptionAsDouble(int argc, char **argv,
     return l;
 }
 
-Eigen::VectorXd GetProgramOptionAsEigenVectorXd(int argc, char **argv,
+Eigen::VectorXd GetProgramOptionAsEigenVectorXd(int32_t argc, char **argv,
         const std::string &option, const Eigen::VectorXd default_value/* =
         Eigen::VectorXd::Zero()*/)
 {
@@ -304,7 +304,7 @@ Eigen::VectorXd GetProgramOptionAsEigenVectorXd(int argc, char **argv,
     std::vector<std::string> tokens;
     SplitString(tokens, str.substr(1, str.length() - 2), ",");
     Eigen::VectorXd vec(tokens.size());
-    for (auto i = 0; i < tokens.size(); i++) {
+    for (int32_t i = 0; i < static_cast<int32_t>(tokens.size()); i++) {
         char *end;
         errno = 0;
         double l = std::strtod(tokens[i].c_str(), &end);
@@ -318,12 +318,12 @@ Eigen::VectorXd GetProgramOptionAsEigenVectorXd(int argc, char **argv,
     return vec;
 }
 
-bool ProgramOptionExists(int argc, char **argv, const std::string &option)
+bool ProgramOptionExists(int32_t argc, char **argv, const std::string &option)
 {
     return std::find(argv, argv + argc, option) != argv + argc;
 }
 
-bool ProgramOptionExistsAny(int argc, char **argv,
+bool ProgramOptionExistsAny(int32_t argc, char **argv,
         const std::vector<std::string> &options)
 {
     for (const auto &option : options) {

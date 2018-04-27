@@ -74,8 +74,8 @@ void pybind_utility_methods(py::module &m)
 {
     m.def("draw_geometries",
     [](const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
-            const std::string &window_name, int width, int height,
-            int left, int top) {
+            const std::string &window_name, int32_t width, int32_t height,
+            int32_t left, int32_t top) {
         std::string current_dir = filesystem::GetWorkingDirectory();
         DrawGeometries(geometry_ptrs, window_name, width, height, left, top);
         filesystem::ChangeWorkingDirectory(current_dir);
@@ -84,8 +84,8 @@ void pybind_utility_methods(py::module &m)
             "height"_a = 1080, "left"_a = 50, "top"_a = 50);
     m.def("draw_geometries_with_custom_animation",
     [](const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
-            const std::string &window_name, int width, int height,
-            int left, int top, const std::string &json_filename) {
+            const std::string &window_name, int32_t width, int32_t height,
+            int32_t left, int32_t top, const std::string &json_filename) {
         std::string current_dir = filesystem::GetWorkingDirectory();
         DrawGeometriesWithCustomAnimation(geometry_ptrs, window_name, width,
                 height, left, top, json_filename);
@@ -97,8 +97,8 @@ void pybind_utility_methods(py::module &m)
     m.def("draw_geometries_with_animation_callback",
     [](const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
             std::function<bool(Visualizer *)> callback_func,
-            const std::string &window_name, int width, int height,
-            int left, int top) {
+            const std::string &window_name, int32_t width, int32_t height,
+            int32_t left, int32_t top) {
         std::string current_dir = filesystem::GetWorkingDirectory();
         DrawGeometriesWithAnimationCallback(geometry_ptrs, callback_func,
                 window_name, width, height, left, top);
@@ -110,9 +110,9 @@ void pybind_utility_methods(py::module &m)
             py::return_value_policy::reference);
     m.def("draw_geometries_with_key_callbacks",
     [](const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
-            const std::map<int, std::function<bool(Visualizer *)>>
-            &key_to_callback, const std::string &window_name, int width,
-            int height, int left, int top) {
+            const std::map<int32_t, std::function<bool(Visualizer *)>>
+            &key_to_callback, const std::string &window_name, int32_t width,
+            int32_t height, int32_t left, int32_t top) {
         std::string current_dir = filesystem::GetWorkingDirectory();
         DrawGeometriesWithKeyCallbacks(geometry_ptrs, key_to_callback,
                 window_name, width, height, left, top);
@@ -122,8 +122,8 @@ void pybind_utility_methods(py::module &m)
             "width"_a = 1920, "height"_a = 1080, "left"_a = 50, "top"_a = 50);
     m.def("draw_geometries_with_editing",
     [](const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
-            const std::string &window_name, int width,
-            int height, int left, int top) {
+            const std::string &window_name, int32_t width,
+            int32_t height, int32_t left, int32_t top) {
         DrawGeometriesWithEditing(geometry_ptrs, window_name,
                 width, height, left, top);
     }, "Function to draw a list of Geometry providing user interaction",

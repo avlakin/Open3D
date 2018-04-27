@@ -93,7 +93,7 @@ GLMatrix4f Ortho(double left, double right, double bottom, double top,
 }
 
 Eigen::Vector3d Project(const Eigen::Vector3d &point,
-        const GLMatrix4f &mvp_matrix, const int width, const int height)
+        const GLMatrix4f &mvp_matrix, const int32_t width, const int32_t height)
 {
     Eigen::Vector4d pos = mvp_matrix.cast<double>() *
             Eigen::Vector4d(point(0), point(1), point(2), 1.0);
@@ -108,7 +108,7 @@ Eigen::Vector3d Project(const Eigen::Vector3d &point,
 }
 
 Eigen::Vector3d Unproject(const Eigen::Vector3d &screen_point,
-        const GLMatrix4f &mvp_matrix, const int width, const int height)
+        const GLMatrix4f &mvp_matrix, const int32_t width, const int32_t height)
 {
     Eigen::Vector4d point = mvp_matrix.cast<double>().inverse() *
             Eigen::Vector4d(screen_point(0) / (double)width * 2.0 - 1.0,
@@ -121,7 +121,7 @@ Eigen::Vector3d Unproject(const Eigen::Vector3d &screen_point,
     return point.block<3, 1>(0, 0);
 }
 
-int ColorCodeToPickIndex(const Eigen::Vector4i &color)
+int32_t ColorCodeToPickIndex(const Eigen::Vector4i &color)
 {
     if (color(0) == 255) {
         return -1;

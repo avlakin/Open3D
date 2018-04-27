@@ -60,7 +60,7 @@ void PrintHelp()
 }
 
 bool ReadLogFile(const std::string &filename,
-        std::vector<std::pair<int, int>> &pair_ids,
+        std::vector<std::pair<int32_t, int32_t>> &pair_ids,
         std::vector<Eigen::Matrix4d> &transformations)
 {
     using namespace open3d;
@@ -72,7 +72,7 @@ bool ReadLogFile(const std::string &filename,
         return false;
     }
     char line_buffer[DEFAULT_IO_BUFFER_SIZE];
-    int i, j, k;
+    int32_t i, j, k;
     Eigen::Matrix4d trans;
     while (fgets(line_buffer, DEFAULT_IO_BUFFER_SIZE, f)) {
         if (strlen(line_buffer) > 0 && line_buffer[0] != '#') {
@@ -116,7 +116,7 @@ bool ReadLogFile(const std::string &filename,
     return true;
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     using namespace open3d;
 
@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
         PrintHelp();
         return 0;
     }
-    int verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
+    int32_t verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
     SetVerbosityLevel((VerbosityLevel)verbose);
     std::string log_filename = GetProgramOptionAsString(argc, argv, "--log");
     std::string gt_filename = GetProgramOptionAsString(argc, argv, "--gt");
@@ -143,31 +143,31 @@ int main(int argc, char *argv[])
             pcd_names);
     std::vector<PointCloud> pcds(pcd_names.size());
     std::vector<KDTreeFlann> kdtrees(pcd_names.size());
-    for (auto i = 0; i < pcd_names.size(); i++) {
+    for (uint32_t i = 0; i < pcd_names.size(); i++) {
         ReadPointCloud(pcd_dirname + "cloud_bin_" + std::to_string(i) + ".pcd",
                 pcds[i]);
         kdtrees[i].SetGeometry(pcds[i]);
     }
 
-    std::vector<std::pair<int, int>> pair_ids;
+    std::vector<std::pair<int32_t, int32_t>> pair_ids;
     std::vector<Eigen::Matrix4d> transformations;
     ReadLogFile(log_filename, pair_ids, transformations);
     std::vector<Eigen::Matrix4d> gt_trans;
     ReadLogFile(gt_filename, pair_ids, gt_trans);
 
     double total_rmse = 0.0;
-    int positive = 0;
+    int32_t positive = 0;
     double positive_rmse = 0;
-    for (auto k = 0; k < pair_ids.size(); k++) {
+    for (uint32_t k = 0; k < pair_ids.size(); k++) {
         PointCloud source = pcds[pair_ids[k].second];
         source.Transform(transformations[k]);
         PointCloud gtsource = pcds[pair_ids[k].second];
         gtsource.Transform(gt_trans[k]);
-        std::vector<int> indices(1);
+        std::vector<int32_t> indices(1);
         std::vector<double> distance2(1);
-        int correspondence_num = 0;
+        int32_t correspondence_num = 0;
         double rmse = 0.0;
-        for (auto i = 0; i < source.points_.size(); i++) {
+        for (uint32_t i = 0; i < source.points_.size(); i++) {
             if (kdtrees[pair_ids[k].first].SearchKNN(gtsource.points_[i], 1,
                     indices, distance2) > 0) {
                 if (distance2[0] < threshold2) {
@@ -189,10 +189,10 @@ int main(int argc, char *argv[])
         }
     }
     PrintInfo("Average rmse %.8f (%.8f / %d)\n", total_rmse /
-            (double)pair_ids.size(), total_rmse, (int)pair_ids.size());
+            (double)pair_ids.size(), total_rmse, (int32_t)pair_ids.size());
     PrintInfo("Average rmse of positives %.8f (%.8f / %d)\n", positive_rmse /
             (double)positive, positive_rmse, positive);
     PrintInfo("Accuracy %.2f%% (%d / %d)\n", (double)positive * 100.0 /
-            (double)pair_ids.size(), positive, (int)pair_ids.size());
+            (double)pair_ids.size(), positive, (int32_t)pair_ids.size());
     return 0;
 }

@@ -64,7 +64,7 @@ public:
     void AddKeyFrame();
     void UpdateKeyFrame();
     void DeleteKeyFrame();
-    void AddSpinKeyFrames(int num_of_key_frames = 20);
+    void AddSpinKeyFrames(int32_t num_of_key_frames = 20);
     void ClearAllKeyFrames() {
         view_trajectory_.view_status_.clear();
     }
@@ -79,12 +79,12 @@ public:
             view_trajectory_.is_loop_ = !view_trajectory_.is_loop_;
         }
     }
-    void ChangeTrajectoryInterval(int change) {
+    void ChangeTrajectoryInterval(int32_t change) {
         if (animation_mode_ == AnimationMode::FreeMode) {
             view_trajectory_.ChangeInterval(change);
         }
     }
-    int GetTrajectoryInterval() const {
+    int32_t GetTrajectoryInterval() const {
         return view_trajectory_.interval_;
     }
     std::string GetStatusString() const;
@@ -98,14 +98,14 @@ public:
     bool IsPreviewing() {
         return animation_mode_ == AnimationMode::PreviewMode; }
     bool IsPlaying() { return animation_mode_ == AnimationMode::PlayMode; }
-    bool IsPlayingEnd(size_t num) {
+    bool IsPlayingEnd(uint32_t num) {
         return (IsPlaying() && num >= view_trajectory_.NumOfFrames());
     }
     bool IsValidPinholeCameraTrajectory() const;
 
 protected:
-    size_t CurrentFrame() const { return (size_t)round(current_frame_); }
-    size_t CurrentKeyframe() const { return (size_t)round(current_keyframe_); }
+    uint32_t CurrentFrame() const { return (uint32_t)round(current_frame_); }
+    uint32_t CurrentKeyframe() const { return (uint32_t)round(current_keyframe_); }
     double RegularizeFrameIndex(double current_frame, size_t num_of_frames,
             bool is_loop);
     void SetViewControlFromTrajectory();

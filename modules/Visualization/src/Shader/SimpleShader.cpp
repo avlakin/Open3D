@@ -161,7 +161,7 @@ bool SimpleShaderForPointCloud::PrepareBinding(const Geometry &geometry,
     const ColorMap &global_color_map = *GetGlobalColorMap();
     points.resize(pointcloud.points_.size());
     colors.resize(pointcloud.points_.size());
-    for (size_t i = 0; i < pointcloud.points_.size(); i++) {
+    for (uint32_t i = 0; i < pointcloud.points_.size(); i++) {
         const auto &point = pointcloud.points_[i];
         points[i] = point.cast<float>();
         Eigen::Vector3d color;
@@ -227,7 +227,7 @@ bool SimpleShaderForLineSet::PrepareBinding(const Geometry &geometry,
     }
     points.resize(lineset.lines_.size() * 2);
     colors.resize(lineset.lines_.size() * 2);
-    for (size_t i = 0; i < lineset.lines_.size(); i++) {
+    for (uint32_t i = 0; i < lineset.lines_.size(); i++) {
         const auto point_pair = lineset.GetLineCoordinate(i);
         points[i * 2] = point_pair.first.cast<float>();
         points[i * 2 + 1] = point_pair.second.cast<float>();
@@ -288,11 +288,11 @@ bool SimpleShaderForTriangleMesh::PrepareBinding(const Geometry &geometry,
     points.resize(mesh.triangles_.size() * 3);
     colors.resize(mesh.triangles_.size() * 3);
 
-    for (size_t i = 0; i < mesh.triangles_.size(); i++) {
+    for (uint32_t i = 0; i < mesh.triangles_.size(); i++) {
         const auto &triangle = mesh.triangles_[i];
-        for (size_t j = 0; j < 3; j++) {
-            size_t idx = i * 3 + j;
-            size_t vi = triangle(j);
+        for (uint32_t j = 0; j < 3; j++) {
+            uint32_t idx = i * 3 + j;
+            uint32_t vi = triangle(j);
             const auto &vertex = mesh.vertices_[vi];
             points[idx] = vertex.cast<float>();
 

@@ -240,7 +240,7 @@ void ViewControl::ChangeFieldOfView(double step)
     SetProjectionParameters();
 }
 
-void ViewControl::ChangeWindowSize(int width, int height)
+void ViewControl::ChangeWindowSize(int32_t width, int32_t height)
 {
     window_width_ = width;
     window_height_ = height;

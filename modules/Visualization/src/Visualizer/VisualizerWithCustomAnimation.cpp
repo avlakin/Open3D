@@ -187,7 +187,7 @@ bool VisualizerWithCustomAnimation::InitViewControl()
 }
 
 void VisualizerWithCustomAnimation::KeyPressCallback(GLFWwindow *window,
-        int key, int scancode, int action, int mods)
+        int32_t key, int32_t scancode, int32_t action, int32_t mods)
 {
     auto &view_control = (ViewControlWithCustomAnimation &)(*view_control_ptr_);
     if (action == GLFW_RELEASE || view_control.IsPlaying()) {
@@ -308,7 +308,7 @@ void VisualizerWithCustomAnimation::MouseScrollCallback(GLFWwindow* window,
 }
 
 void VisualizerWithCustomAnimation::MouseButtonCallback(GLFWwindow* window,
-        int button, int action, int mods)
+        int32_t button, int32_t action, int32_t mods)
 {
     auto &view_control = (ViewControlWithCustomAnimation &)(*view_control_ptr_);
     if (view_control.IsPreviewing()) {

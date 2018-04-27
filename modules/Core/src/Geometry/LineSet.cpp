@@ -134,18 +134,18 @@ LineSet &LineSet::operator+=(const LineSet &lineset)
         colors_.clear();
     }
     point_set_[0].resize(new_point_num[0]);
-    for (size_t i = 0; i < add_point_num[0]; i++) {
+    for (uint32_t i = 0; i < add_point_num[0]; i++) {
         point_set_[0][old_point_num[0] + i] = lineset.point_set_[0][i];
     }
     point_set_[1].resize(new_point_num[1]);
-    for (size_t i = 0; i < add_point_num[1]; i++) {
+    for (uint32_t i = 0; i < add_point_num[1]; i++) {
         point_set_[1][old_point_num[1] + i] = lineset.point_set_[1][i];
     }
     lines_.resize(new_line_num);
-    for (size_t i = 0; i < add_line_num; i++) {
+    for (uint32_t i = 0; i < add_line_num; i++) {
         lines_[old_line_num + i] = std::make_pair(
-                lineset.lines_[i].first + (int)old_point_num[0],
-                lineset.lines_[i].second + (int)old_point_num[1]);
+                lineset.lines_[i].first + (int32_t)old_point_num[0],
+                lineset.lines_[i].second + (int32_t)old_point_num[1]);
     }
     return (*this);
 }

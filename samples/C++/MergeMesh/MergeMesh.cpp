@@ -52,7 +52,7 @@ void PrintHelp()
     printf("                                triangles.\n");
  }
 
-int main(int argc, char **argv)
+int32_t main(int32_t argc, char **argv)
 {
     using namespace open3d;
     using namespace open3d::filesystem;
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
         PrintHelp();
         return 0;
     }
-    int verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
+    int32_t verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
     SetVerbosityLevel((VerbosityLevel)verbose);
 
     std::string directory(argv[1]);

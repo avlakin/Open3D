@@ -212,7 +212,7 @@ bool ImageMaskShaderForImage::PrepareBinding(const Geometry &geometry,
         return false;
     }
     render_image.PrepareImage(image.width_, image.height_, 1, 1);
-    for (int i = 0; i < image.height_ * image.width_; i++) {
+    for (int32_t i = 0; i < image.height_ * image.width_; i++) {
         render_image.data_[i] = (image.data_[i] != 0) * 255;
     }
     draw_arrays_mode_ = GL_TRIANGLES;

@@ -81,8 +81,8 @@ public:
                 data_.size() == height_ * BytesPerLine();
     }
 
-    void PrepareImage(int width, int height, int num_of_channels,
-            int bytes_per_channel) {
+    void PrepareImage(int32_t width, int32_t height, int32_t num_of_channels,
+            int32_t bytes_per_channel) {
         width_ = width;
         height_ = height;
         num_of_channels_ = num_of_channels;
@@ -90,7 +90,7 @@ public:
         AllocateDataBuffer();
     }
 
-    int BytesPerLine() const {
+    int32_t BytesPerLine() const {
         return width_ * num_of_channels_ * bytes_per_channel_;
     }
 
@@ -104,10 +104,10 @@ protected:
     }
 
 public:
-    int width_ = 0;
-    int height_ = 0;
-    int num_of_channels_ = 0;
-    int bytes_per_channel_ = 0;
+    int32_t width_ = 0;
+    int32_t height_ = 0;
+    int32_t num_of_channels_ = 0;
+    int32_t bytes_per_channel_ = 0;
     std::vector<uint8_t> data_;
 };
 
@@ -128,11 +128,11 @@ std::shared_ptr<Image> CreateFloatImageFromImage(
 
 /// Function to access the raw data of a single-channel Image
 template<typename T>
-T *PointerAt(const Image &image, int u, int v);
+T *PointerAt(const Image &image, int32_t u, int32_t v);
 
 /// Function to access the raw data of a multi-channel Image
 template<typename T>
-T *PointerAt(const Image &image, int u, int v, int ch);
+T *PointerAt(const Image &image, int32_t u, int32_t v, int32_t ch);
 
 std::shared_ptr<Image> ConvertDepthToFloatImage(const Image &depth,
         double depth_scale = 1000.0, double depth_trunc = 3.0);
@@ -175,6 +175,6 @@ ImagePyramid FilterImagePyramid(const ImagePyramid &input,
         Image::FilterType type);
 
 ImagePyramid CreateImagePyramid(const Image& image,
-        size_t num_of_levels, bool with_gaussian_filter = true);
+        uint32_t num_of_levels, bool with_gaussian_filter = true);
 
 }   // namespace open3d

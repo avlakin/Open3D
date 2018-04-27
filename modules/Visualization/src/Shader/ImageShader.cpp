@@ -241,7 +241,7 @@ bool ImageShaderForImage::PrepareBinding(const Geometry &geometry,
         if (image.num_of_channels_ == 1 &&
                 image.bytes_per_channel_ == 1) {
             // grayscale image
-            for (int i = 0; i < image.height_ * image.width_; i++) {
+            for (int32_t i = 0; i < image.height_ * image.width_; i++) {
                 render_image.data_[i * 3] = image.data_[i];
                 render_image.data_[i * 3 + 1] = image.data_[i];
                 render_image.data_[i * 3 + 2] = image.data_[i];
@@ -249,7 +249,7 @@ bool ImageShaderForImage::PrepareBinding(const Geometry &geometry,
         } else if (image.num_of_channels_ == 1 &&
                 image.bytes_per_channel_ == 4) {
             // grayscale image with floating point per channel
-            for (int i = 0; i < image.height_ * image.width_; i++) {
+            for (int32_t i = 0; i < image.height_ * image.width_; i++) {
                 float *p = (float*)(image.data_.data() + i * 4);
                 uint8_t color = ConvertColorFromFloatToUnsignedChar(*p);
                 render_image.data_[i * 3] = color;
@@ -259,14 +259,14 @@ bool ImageShaderForImage::PrepareBinding(const Geometry &geometry,
         } else if (image.num_of_channels_ == 3 &&
                 image.bytes_per_channel_ == 4) {
             // RGB image with floating point per channel
-            for (int i = 0; i < image.height_ * image.width_ * 3; i++) {
+            for (int32_t i = 0; i < image.height_ * image.width_ * 3; i++) {
                 float *p = (float*)(image.data_.data() + i * 4);
                 render_image.data_[i] = ConvertColorFromFloatToUnsignedChar(*p);
             }
         } else if (image.num_of_channels_ == 3 &&
                 image.bytes_per_channel_ == 2) {
             // image with RGB channels, each channel is a 16-bit integer
-            for (int i = 0; i < image.height_ * image.width_ * 3; i++) {
+            for (int32_t i = 0; i < image.height_ * image.width_ * 3; i++) {
                 uint16_t *p = (uint16_t*)(image.data_.data() + i * 2);
                 render_image.data_[i] = (uint8_t)((*p) & 0xff);
             }
@@ -274,8 +274,8 @@ bool ImageShaderForImage::PrepareBinding(const Geometry &geometry,
                 image.bytes_per_channel_ == 2) {
             // depth image, one channel of 16-bit integer
             const ColorMap &global_color_map = *GetGlobalColorMap();
-            const int max_depth = option.image_max_depth_;
-            for (int i = 0; i < image.height_ * image.width_; i++) {
+            const int32_t max_depth = option.image_max_depth_;
+            for (int32_t i = 0; i < image.height_ * image.width_; i++) {
                 uint16_t *p = (uint16_t*)(image.data_.data() + i * 2);
                 double depth = std::min(double(*p) / double(max_depth), 1.0);
                 Eigen::Vector3d color = global_color_map.GetColor(depth);

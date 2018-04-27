@@ -80,8 +80,8 @@ std::pair<bool, double> Image::FloatValueAt(double u, double v) const
         v < 0.0 || v >(double)(height_ - 1))) {
         return std::make_pair(false, 0.0);
     }
-    int ui = std::max(std::min((int)u, width_ - 2), 0);
-    int vi = std::max(std::min((int)v, height_ - 2), 0);
+    int32_t ui = std::max(std::min((int32_t)u, width_ - 2), 0);
+    int32_t vi = std::max(std::min((int32_t)v, height_ - 2), 0);
     double pu = u - ui;
     double pv = v - vi;
     float value[4] = {
@@ -96,27 +96,27 @@ std::pair<bool, double> Image::FloatValueAt(double u, double v) const
 }
 
 template<typename T>
-T *PointerAt(const Image &image, int u, int v) {
+T *PointerAt(const Image &image, int32_t u, int32_t v) {
     return (T *)(image.data_.data() +
             (v * image.width_ + u) * sizeof(T));
 }
 
-template float * PointerAt<float>(const Image &image, int u, int v);
-template int * PointerAt<int>(const Image &image, int u, int v);
-template uint8_t * PointerAt<uint8_t>(const Image &image, int u, int v);
-template uint16_t * PointerAt<uint16_t>(const Image &image, int u, int v);
+template float * PointerAt<float>(const Image &image, int32_t u, int32_t v);
+template int32_t * PointerAt<int32_t>(const Image &image, int32_t u, int32_t v);
+template uint8_t * PointerAt<uint8_t>(const Image &image, int32_t u, int32_t v);
+template uint16_t * PointerAt<uint16_t>(const Image &image, int32_t u, int32_t v);
 
 template<typename T>
-T *PointerAt(const Image &image, int u, int v, int ch) {
+T *PointerAt(const Image &image, int32_t u, int32_t v, int32_t ch) {
     return (T *)(image.data_.data() +
             ((v * image.width_ + u) * image.num_of_channels_ + ch) * sizeof(T));
 }
 
-template float * PointerAt<float>(const Image &image, int u, int v, int ch);
-template int * PointerAt<int>(const Image &image, int u, int v, int ch);
-template uint8_t * PointerAt<uint8_t>(const Image &image, int u, int v, int ch);
-template uint16_t * PointerAt<uint16_t>(const Image &image, int u, int v,
-        int ch);
+template float * PointerAt<float>(const Image &image, int32_t u, int32_t v, int32_t ch);
+template int32_t * PointerAt<int32_t>(const Image &image, int32_t u, int32_t v, int32_t ch);
+template uint8_t * PointerAt<uint8_t>(const Image &image, int32_t u, int32_t v, int32_t ch);
+template uint16_t * PointerAt<uint16_t>(const Image &image, int32_t u, int32_t v,
+        int32_t ch);
 
 std::shared_ptr<Image> ConvertDepthToFloatImage(const Image &depth,
         double depth_scale/* = 1000.0*/, double depth_trunc/* = 3.0*/)
@@ -124,8 +124,8 @@ std::shared_ptr<Image> ConvertDepthToFloatImage(const Image &depth,
     // don't need warning message about image type
     // as we call CreateFloatImageFromImage
     auto output = CreateFloatImageFromImage(depth);
-    for (int y = 0; y < output->height_; y++) {
-        for (int x = 0; x < output->width_; x++) {
+    for (int32_t y = 0; y < output->height_; y++) {
+        for (int32_t x = 0; x < output->width_; x++) {
             float *p = PointerAt<float>(*output, x, y);
             *p /= (float)depth_scale;
             if (*p >= depth_trunc)
@@ -142,8 +142,8 @@ void ClipIntensityImage(Image &input, double min/* = 0.0*/,
         PrintWarning("[ClipIntensityImage] Unsupported image format.\n");
         return;
     }
-    for (int y = 0; y < input.height_; y++) {
-        for (int x = 0; x < input.width_; x++) {
+    for (int32_t y = 0; y < input.height_; y++) {
+        for (int32_t x = 0; x < input.width_; x++) {
             float *p = PointerAt<float>(input, x, y);
             if (*p > max)
                 *p = (float)max;
@@ -159,8 +159,8 @@ void LinearTransformImage(Image &input, double scale, double offset/* = 0.0*/)
         PrintWarning("[LinearTransformImage] Unsupported image format.\n");
         return;
     }
-    for (int y = 0; y < input.height_; y++) {
-        for (int x = 0; x < input.width_; x++) {
+    for (int32_t y = 0; y < input.height_; y++) {
+        for (int32_t x = 0; x < input.width_; x++) {
             float *p = PointerAt<float>(input, x, y);
             (*p) = (float)(scale * (*p) + offset);
         }
@@ -174,15 +174,15 @@ std::shared_ptr<Image> DownsampleImage(const Image &input)
         PrintWarning("[DownsampleImage] Unsupported image format.\n");
         return output;
     }
-    int half_width = (int)floor((double)input.width_ / 2.0);
-    int half_height = (int)floor((double)input.height_ / 2.0);
+    int32_t half_width = (int32_t)floor((double)input.width_ / 2.0);
+    int32_t half_height = (int32_t)floor((double)input.height_ / 2.0);
     output->PrepareImage(half_width, half_height, 1, 4);
 
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int y = 0; y < output->height_; y++) {
-        for (int x = 0; x < output->width_; x++) {
+    for (int32_t y = 0; y < output->height_; y++) {
+        for (int32_t x = 0; x < output->width_; x++) {
             float *p1 = PointerAt<float>(input, x * 2, y * 2);
             float *p2 = PointerAt<float>(input, x * 2 + 1, y * 2);
             float *p3 = PointerAt<float>(input, x * 2, y * 2 + 1);
@@ -205,16 +205,16 @@ std::shared_ptr<Image> FilterHorizontalImage(
     }
     output->PrepareImage(input.width_, input.height_, 1, 4);
 
-    const int half_kernel_size = (int)(floor((double)kernel.size() / 2.0));
+    const int32_t half_kernel_size = (int32_t)(floor((double)kernel.size() / 2.0));
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int y = 0; y < input.height_; y++) {
-        for (int x = 0; x < input.width_; x++) {
+    for (int32_t y = 0; y < input.height_; y++) {
+        for (int32_t x = 0; x < input.width_; x++) {
             float* po = PointerAt<float>(*output, x, y, 0);
             double temp = 0;
-            for (int i = -half_kernel_size; i <= half_kernel_size; i++) {
-                int x_shift = x + i;
+            for (int32_t i = -half_kernel_size; i <= half_kernel_size; i++) {
+                int32_t x_shift = x + i;
                 if (x_shift < 0)
                     x_shift = 0;
                 if (x_shift > input.width_ - 1)
@@ -263,7 +263,7 @@ ImagePyramid FilterImagePyramid(const ImagePyramid &input,
         Image::FilterType type)
 {
     std::vector<std::shared_ptr<Image>> output;
-    for (size_t i = 0; i < input.size(); i++) {
+    for (uint32_t i = 0; i < input.size(); i++) {
         auto layer_filtered = FilterImage(*input[i], type);
         output.push_back(layer_filtered);
     }
@@ -298,8 +298,8 @@ std::shared_ptr<Image> FlipImage(const Image &input)
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int y = 0; y < input.height_; y++) {
-        for (int x = 0; x < input.width_; x++) {
+    for (int32_t y = 0; y < input.height_; y++) {
+        for (int32_t x = 0; x < input.width_; x++) {
             float* pi = PointerAt<float>(input, x, y, 0);
             float* po = PointerAt<float>(*output, y, x, 0);
             *po = *pi;

@@ -263,7 +263,7 @@ bool SelectionPolygonRenderer::UpdateGeometry()
 bool PointCloudPickerRenderer::Render(const RenderOption &option,
         const ViewControl &view)
 {
-    const int NUM_OF_COLOR_PALETTE = 5;
+    const int32_t NUM_OF_COLOR_PALETTE = 5;
     Eigen::Vector3d color_palette[NUM_OF_COLOR_PALETTE] = {
         Eigen::Vector3d(255, 180, 0) / 255.0,
         Eigen::Vector3d(0, 166, 237) / 255.0,
@@ -275,8 +275,8 @@ bool PointCloudPickerRenderer::Render(const RenderOption &option,
     const auto &picker = (const PointCloudPicker &)(*geometry_ptr_);
     const auto &pointcloud = (const PointCloud &)(*picker.pointcloud_ptr_);
     const auto &_option = (const RenderOptionWithEditing &)option;
-    for (size_t i = 0; i < picker.picked_indices_.size(); i++) {
-        size_t index = picker.picked_indices_[i];
+    for (uint32_t i = 0; i < picker.picked_indices_.size(); i++) {
+        uint32_t index = picker.picked_indices_[i];
         if (index < pointcloud.points_.size()) {
             auto sphere = CreateMeshSphere(view.GetBoundingBox().GetSize() *
                     _option.pointcloud_picker_sphere_size_);

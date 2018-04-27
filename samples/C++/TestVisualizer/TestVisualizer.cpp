@@ -44,7 +44,7 @@
 #include <Open3D/IO/IO.h>
 #include <Open3D/Visualization/Visualization.h>
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     using namespace open3d;
 

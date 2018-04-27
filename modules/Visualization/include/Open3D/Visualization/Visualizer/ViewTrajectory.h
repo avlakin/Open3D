@@ -49,10 +49,10 @@ namespace open3d {
 class ViewTrajectory : public IJsonConvertible
 {
 public:
-    static const int INTERVAL_MAX;
-    static const int INTERVAL_MIN;
-    static const int INTERVAL_STEP;
-    static const int INTERVAL_DEFAULT;
+    static const int32_t INTERVAL_MAX;
+    static const int32_t INTERVAL_MIN;
+    static const int32_t INTERVAL_STEP;
+    static const int32_t INTERVAL_DEFAULT;
 
 public:
     ViewTrajectory() {}
@@ -69,8 +69,8 @@ public:
     /// http://mathworld.wolfram.com/CubicSpline.html
     void ComputeInterpolationCoefficients();
 
-    void ChangeInterval(int change) {
-        int new_interval = interval_ + change * INTERVAL_STEP;
+    void ChangeInterval(int32_t change) {
+        int32_t new_interval = interval_ + change * INTERVAL_STEP;
         if (new_interval >= INTERVAL_MIN && new_interval <= INTERVAL_MAX)
         {
             interval_ = new_interval;
@@ -92,7 +92,7 @@ public:
         view_status_.clear();
     }
 
-    std::tuple<bool, ViewParameters> GetInterpolatedFrame(size_t k);
+    std::tuple<bool, ViewParameters> GetInterpolatedFrame(uint32_t k);
 
     bool ConvertToJsonValue(Json::Value &value) const override;
     bool ConvertFromJsonValue(const Json::Value &value) override;
@@ -100,7 +100,7 @@ public:
 public:
     std::vector<ViewParameters> view_status_;
     bool is_loop_ = false;
-    int interval_ = INTERVAL_DEFAULT;
+    int32_t interval_ = INTERVAL_DEFAULT;
     std::vector<ViewParameters::Matrix17x4d> coeff_;
 };
 

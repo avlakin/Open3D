@@ -149,7 +149,7 @@ bool SimpleBlackShaderForPointCloudNormal::PrepareBinding(
     points.resize(pointcloud.points_.size() * 2);
     double line_length = option.point_size_ *
             0.01 * view.GetBoundingBox().GetSize();
-    for (size_t i = 0; i < pointcloud.points_.size(); i++) {
+    for (uint32_t i = 0; i < pointcloud.points_.size(); i++) {
         const auto &point = pointcloud.points_[i];
         const auto &normal = pointcloud.normals_[i];
         points[i * 2] = point.cast<float>();
@@ -192,11 +192,11 @@ bool SimpleBlackShaderForTriangleMeshWireFrame::PrepareBinding(
         return false;
     }
     points.resize(mesh.triangles_.size() * 3);
-    for (size_t i = 0; i < mesh.triangles_.size(); i++) {
+    for (uint32_t i = 0; i < mesh.triangles_.size(); i++) {
         const auto &triangle = mesh.triangles_[i];
-        for (size_t j = 0; j < 3; j++) {
-            size_t idx = i * 3 + j;
-            size_t vi = triangle(j);
+        for (uint32_t j = 0; j < 3; j++) {
+            uint32_t idx = i * 3 + j;
+            uint32_t vi = triangle(j);
             const auto &vertex = mesh.vertices_[vi];
             points[idx] = vertex.cast<float>();
         }

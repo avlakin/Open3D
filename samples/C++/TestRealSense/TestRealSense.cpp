@@ -44,7 +44,7 @@
 
 using namespace open3d;
 
-int main(int argc, char **args)
+int32_t main(int32_t argc, char **args)
 {
     rs::context ctx;
     PrintInfo("There are %d connected RealSense devices.\n",
@@ -77,11 +77,11 @@ int main(int argc, char **args)
 
     rs::extrinsics extrinsics = dev->get_extrinsics(rs::stream::depth,
             rs::stream::rectified_color);
-    for (int i = 0; i < 9; i++) {
+    for (int32_t i = 0; i < 9; i++) {
         PrintInfo("%.6f ", extrinsics.rotation[i]);
     }
     PrintInfo("\n");
-    for (int i = 0; i < 3; i++) {
+    for (int32_t i = 0; i < 3; i++) {
         PrintInfo("%.6f ", extrinsics.translation[i]);
     }
     PrintInfo("\n");
@@ -91,7 +91,7 @@ int main(int argc, char **args)
             depth_intr.width, depth_intr.height,
             depth_intr.fx, depth_intr.fy,
             depth_intr.ppx, depth_intr.ppy);
-    for (int i = 0; i < 5; i++) {
+    for (int32_t i = 0; i < 5; i++) {
         PrintInfo("%.6f ", depth_intr.coeffs[i]);
     }
     PrintInfo("\n\n");
@@ -101,7 +101,7 @@ int main(int argc, char **args)
             color_intr.width, color_intr.height,
             color_intr.fx, color_intr.fy,
             color_intr.ppx, color_intr.ppy);
-    for (int i = 0; i < 5; i++) {
+    for (int32_t i = 0; i < 5; i++) {
         PrintInfo("%.6f ", color_intr.coeffs[i]);
     }
     PrintInfo("\n\n");
@@ -112,7 +112,7 @@ int main(int argc, char **args)
             rect_intr.width, rect_intr.height,
             rect_intr.fx, rect_intr.fy,
             rect_intr.ppx, rect_intr.ppy);
-    for (int i = 0; i < 5; i++) {
+    for (int32_t i = 0; i < 5; i++) {
         PrintInfo("%.6f ", rect_intr.coeffs[i]);
     }
     PrintInfo("\n\n");

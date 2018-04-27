@@ -41,7 +41,7 @@
 #include <Open3D/Core/Core.h>
 #include <Open3D/IO/IO.h>
 
-int main(int argc, char **argv)
+int32_t main(int32_t argc, char **argv)
 {
     using namespace open3d;
 
@@ -103,7 +103,7 @@ int main(int argc, char **argv)
 
         PrintDebug("Build Pyramid\n");
         auto pyramid = CreateImagePyramid(*gray_image, 4);
-        for (int i = 0; i < 4; i++) {
+        for (int32_t i = 0; i < 4; i++) {
             auto level = pyramid[i];
             auto level_8bit = CreateImageFromFloatImage<uint8_t>(*level);
             std::string outputname =
@@ -154,7 +154,7 @@ int main(int argc, char **argv)
 
         PrintDebug("Build Pyramid\n");
         auto pyramid = CreateImagePyramid(*depth_image, 4);
-        for (int i = 0; i < 4; i++) {
+        for (int32_t i = 0; i < 4; i++) {
             auto level = pyramid[i];
             auto level_16bit = CreateImageFromFloatImage<uint16_t>(*level);
             std::string outputname =

@@ -65,10 +65,10 @@ private:
 class KDTreeSearchParamKNN : public KDTreeSearchParam
 {
 public:
-    KDTreeSearchParamKNN(int knn = 30) :
+    KDTreeSearchParamKNN(int32_t knn = 30) :
             KDTreeSearchParam(SearchType::Knn), knn_(knn) {}
 public:
-    int knn_;
+    int32_t knn_;
 };
 
 class KDTreeSearchParamRadius : public KDTreeSearchParam
@@ -83,12 +83,12 @@ public:
 class KDTreeSearchParamHybrid : public KDTreeSearchParam
 {
 public:
-    KDTreeSearchParamHybrid(double radius, int max_nn) :
+    KDTreeSearchParamHybrid(double radius, int32_t max_nn) :
             KDTreeSearchParam(SearchType::Hybrid), radius_(radius),
             max_nn_(max_nn) {}
 public:
     double radius_;
-    int max_nn_;
+    int32_t max_nn_;
 };
 
 }   // namespace open3d

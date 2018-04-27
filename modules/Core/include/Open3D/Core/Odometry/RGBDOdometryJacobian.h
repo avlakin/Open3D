@@ -66,7 +66,7 @@ public:
     /// easily extendable to 6xn matrix.
     /// See RGBDOdometryJacobianFromHybridTerm for this case.
     virtual void ComputeJacobianAndResidual(
-            int row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
+            int32_t row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
             const RGBDImage &source, const RGBDImage &target,
             const Image &source_xyz,
             const RGBDImage &target_dx, const RGBDImage &target_dy,
@@ -89,7 +89,7 @@ public:
 
 public:
     void ComputeJacobianAndResidual(
-            int row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
+            int32_t row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
             const RGBDImage &source, const RGBDImage &target,
             const Image &source_xyz,
             const RGBDImage &target_dx, const RGBDImage &target_dy,
@@ -111,7 +111,7 @@ public:
 
 public:
     void ComputeJacobianAndResidual(
-            int row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
+            int32_t row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
             const RGBDImage &source, const RGBDImage &target,
             const Image &source_xyz,
             const RGBDImage &target_dx, const RGBDImage &target_dy,

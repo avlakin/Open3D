@@ -124,13 +124,13 @@ void pybind_eigen_vector_of_vector(py::module &m, const std::string &bind_name,
     // such as [:,:]. It is recommanded to convert it to numpy.asarray()
     // to access raw data.
     //v.def("__getitem__", [](const std::vector<Eigen::Vector3d> &v,
-    //      std::pair<size_t, size_t> i) {
+    //      std::pair<int32_t, int32_t> i) {
     //  if (i.first >= v.size() || i.second >= 3)
     //      throw py::index_error();
     //  return v[i.first](i.second);
     //});
     //v.def("__setitem__", [](std::vector<Eigen::Vector3d> &v,
-    //      std::pair<size_t, size_t> i, double x) {
+    //      std::pair<int32_t, int32_t> i, double x) {
     //  if (i.first >= v.size() || i.second >= 3)
     //      throw py::index_error();
     //  v[i.first](i.second) = x;
@@ -186,7 +186,7 @@ void pybind_eigen_vector_of_matrix(py::module &m, const std::string &bind_name,
 
 void pybind_eigen(py::module &m)
 {
-    pybind_eigen_vector_of_scalar<int>(m, "IntVector");
+    pybind_eigen_vector_of_scalar<int32_t>(m, "IntVector");
     pybind_eigen_vector_of_scalar<double>(m, "DoubleVector");
     pybind_eigen_vector_of_vector<Eigen::Vector3d>(m, "Vector3dVector",
             "std::vector<Eigen::Vector3d>");

@@ -52,7 +52,7 @@ class PyRGBDOdometryJacobian : public RGBDOdometryJacobianBase
 public:
     using RGBDOdometryJacobianBase::RGBDOdometryJacobianBase;
     void ComputeJacobianAndResidual(
-            int row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
+            int32_t row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
             const RGBDImage &source, const RGBDImage &target,
             const Image &source_xyz,
             const RGBDImage &target_dx, const RGBDImage &target_dy,
@@ -73,14 +73,14 @@ void pybind_odometry(py::module &m)
     py::class_<OdometryOption> odometry_option(m, "OdometryOption");
     odometry_option
         .def(py::init([](double minimum_correspondence_ratio,
-                std::vector<int> iteration_number_per_pyramid_level,
+                std::vector<int32_t> iteration_number_per_pyramid_level,
                 double max_depth_diff, double min_depth, double max_depth) {
             return new OdometryOption(minimum_correspondence_ratio,
                 iteration_number_per_pyramid_level,
                 max_depth_diff, min_depth, max_depth);
         }), "minimum_correspondence_ratio"_a = 0.1,
                 "iteration_number_per_pyramid_level"_a =
-                std::vector<int>{ 20,10,5 }, "max_depth_diff"_a = 0.03,
+                std::vector<int32_t>{ 20,10,5 }, "max_depth_diff"_a = 0.03,
                 "min_depth"_a = 0.0, "max_depth"_a = 4.0)
         .def_readwrite("minimum_correspondence_num",
                 &OdometryOption::minimum_correspondence_ratio_)
@@ -90,10 +90,10 @@ void pybind_odometry(py::module &m)
         .def_readwrite("min_depth", &OdometryOption::min_depth_)
         .def_readwrite("max_depth", &OdometryOption::max_depth_)
         .def("__repr__", [](const OdometryOption &c) {
-        int num_pyramid_level =
-                (int)c.iteration_number_per_pyramid_level_.size();
+        int32_t num_pyramid_level =
+                (int32_t)c.iteration_number_per_pyramid_level_.size();
         std::string str_iteration_number_per_pyramid_level_ = "[ ";
-        for (int i = 0; i < num_pyramid_level; i++)
+        for (int32_t i = 0; i < num_pyramid_level; i++)
             str_iteration_number_per_pyramid_level_ +=
                     std::to_string(c.iteration_number_per_pyramid_level_[i]) + ", ";
         str_iteration_number_per_pyramid_level_ += "] ";

@@ -48,7 +48,7 @@ void Visualizer::WindowRefreshCallback(GLFWwindow *window)
     }
 }
 
-void Visualizer::WindowResizeCallback(GLFWwindow *window, int w, int h)
+void Visualizer::WindowResizeCallback(GLFWwindow *window, int32_t w, int32_t h)
 {
     view_control_ptr_->ChangeWindowSize(w, h);
     is_redraw_required_ = true;
@@ -87,7 +87,7 @@ void Visualizer::MouseScrollCallback(GLFWwindow* window, double x, double y)
 }
 
 void Visualizer::MouseButtonCallback(GLFWwindow* window,
-        int button, int action, int mods)
+        int32_t button, int32_t action, int32_t mods)
 {
     double x, y;
     glfwGetCursorPos(window, &x, &y);
@@ -116,7 +116,7 @@ void Visualizer::MouseButtonCallback(GLFWwindow* window,
 }
 
 void Visualizer::KeyPressCallback(GLFWwindow *window,
-        int key, int scancode, int action, int mods)
+        int32_t key, int32_t scancode, int32_t action, int32_t mods)
 {
     if (action == GLFW_RELEASE) {
         return;
@@ -222,7 +222,7 @@ void Visualizer::KeyPressCallback(GLFWwindow *window,
     case GLFW_KEY_T:
         render_option_ptr_->ToggleImageStretchOption();
         PrintDebug("[Visualizer] Image stretch mode is #%d.\n",
-                int(render_option_ptr_->image_stretch_option_));
+                int32_t(render_option_ptr_->image_stretch_option_));
         break;
     case GLFW_KEY_0:
         if (mods & GLFW_MOD_CONTROL) {

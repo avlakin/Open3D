@@ -53,7 +53,7 @@ PinholeCameraIntrinsic::PinholeCameraIntrinsic()
 {
 }
 
-PinholeCameraIntrinsic::PinholeCameraIntrinsic(int width, int height,
+PinholeCameraIntrinsic::PinholeCameraIntrinsic(int32_t width, int32_t height,
         double fx, double fy, double cx, double cy)
 {
     SetIntrinsics(width, height, fx, fy, cx, cy);

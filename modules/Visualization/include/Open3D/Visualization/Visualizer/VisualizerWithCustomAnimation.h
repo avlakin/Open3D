@@ -75,9 +75,9 @@ protected:
     void MouseMoveCallback(GLFWwindow* window, double x, double y) override;
     void MouseScrollCallback(GLFWwindow* window, double x, double y) override;
     void MouseButtonCallback(GLFWwindow* window,
-            int button, int action, int mods) override;
+            int32_t button, int32_t action, int32_t mods) override;
     void KeyPressCallback(GLFWwindow *window,
-            int key, int scancode, int action, int mods) override;
+            int32_t key, int32_t scancode, int32_t action, int32_t mods) override;
 
 protected:
     std::string recording_image_basedir_ = "image/";
@@ -86,7 +86,7 @@ protected:
     std::string recording_depth_basedir_ = "depth/";
     std::string recording_depth_filename_format_ = "depth_%06d.png";
     std::string recording_depth_trajectory_filename_ = "depth_trajectory.json";
-    size_t recording_file_index_ = 0;
+    uint32_t recording_file_index_ = 0;
 };
 
 }   // namespace open3d

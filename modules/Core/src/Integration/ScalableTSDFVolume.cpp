@@ -48,8 +48,8 @@
 namespace open3d {
 
 ScalableTSDFVolume::ScalableTSDFVolume(double voxel_length, double sdf_trunc,
-        bool with_color, int volume_unit_resolution/* = 16*/,
-        int depth_sampling_stride/* = 4*/) :
+        bool with_color, int32_t volume_unit_resolution/* = 16*/,
+        int32_t depth_sampling_stride/* = 4*/) :
         TSDFVolume(voxel_length, sdf_trunc, with_color),
         volume_unit_resolution_(volume_unit_resolution),
         volume_unit_length_(voxel_length * volume_unit_resolution),
@@ -92,9 +92,9 @@ void ScalableTSDFVolume::Integrate(const RGBDImage &image,
                 sdf_trunc_, sdf_trunc_, sdf_trunc_));
         auto max_bound = LocateVolumeUnit(point + Eigen::Vector3d(
                 sdf_trunc_, sdf_trunc_, sdf_trunc_));
-        for (auto x = min_bound(0); x <= max_bound(0); x++) {
-            for (auto y = min_bound(1); y <= max_bound(1); y++) {
-                for (auto z = min_bound(2); z <= max_bound(2); z++) {
+        for (int32_t x = min_bound(0); x <= max_bound(0); x++) {
+            for (int32_t y = min_bound(1); y <= max_bound(1); y++) {
+                for (int32_t z = min_bound(2); z <= max_bound(2); z++) {
                     auto loc = Eigen::Vector3i(x, y, z);
                     if (touched_volume_units_.find(loc) ==
                             touched_volume_units_.end()) {
@@ -120,9 +120,9 @@ std::shared_ptr<PointCloud> ScalableTSDFVolume::ExtractPointCloud()
         if (unit.second.volume_) {
             const auto &volume0 = *unit.second.volume_;
             const auto &index0 = unit.second.index_;
-            for (int x = 0; x < volume0.resolution_; x++) {
-                for (int y = 0; y < volume0.resolution_; y++) {
-                    for (int z = 0; z < volume0.resolution_; z++) {
+            for (int32_t x = 0; x < volume0.resolution_; x++) {
+                for (int32_t y = 0; y < volume0.resolution_; y++) {
+                    for (int32_t z = 0; z < volume0.resolution_; z++) {
                         Eigen::Vector3i idx0(x, y, z);
                         w0 = volume0.weight_[volume0.IndexOf(idx0)];
                         f0 = volume0.tsdf_[volume0.IndexOf(idx0)];
@@ -134,7 +134,7 @@ std::shared_ptr<PointCloud> ScalableTSDFVolume::ExtractPointCloud()
                                 half_voxel_length + voxel_length_ * y,
                                 half_voxel_length + voxel_length_ * z) +
                                 index0.cast<double>() * volume_unit_length_;
-                            for (int i = 0; i < 3; i++) {
+                            for (int32_t i = 0; i < 3; i++) {
                                 Eigen::Vector3d p1 = p0;
                                 Eigen::Vector3i idx1 = idx0;
                                 Eigen::Vector3i index1 = index0;
@@ -198,22 +198,22 @@ std::shared_ptr<TriangleMesh> ScalableTSDFVolume::ExtractTriangleMesh()
     // http://paulbourke.net/geometry/polygonise/
     auto mesh = std::make_shared<TriangleMesh>();
     double half_voxel_length = voxel_length_ * 0.5;
-    std::unordered_map<Eigen::Vector4i, int, hash_eigen::hash<Eigen::Vector4i>>
+    std::unordered_map<Eigen::Vector4i, int32_t, hash_eigen::hash<Eigen::Vector4i>>
         edgeindex_to_vertexindex;
-    int edge_to_index[12];
+    int32_t edge_to_index[12];
     for (const auto &unit : volume_units_) {
         if (unit.second.volume_) {
             const auto &volume0 = *unit.second.volume_;
             const auto &index0 = unit.second.index_;
-            for (int x = 0; x < volume0.resolution_; x++) {
-                for (int y = 0; y < volume0.resolution_; y++) {
-                    for (int z = 0; z < volume0.resolution_; z++) {
+            for (int32_t x = 0; x < volume0.resolution_; x++) {
+                for (int32_t y = 0; y < volume0.resolution_; y++) {
+                    for (int32_t z = 0; z < volume0.resolution_; z++) {
                         Eigen::Vector3i idx0(x, y, z);
-                        int cube_index = 0;
+                        int32_t cube_index = 0;
                         float w[8];
                         float f[8];
                         Eigen::Vector3d c[8];
-                        for (int i = 0; i < 8; i++) {
+                        for (int32_t i = 0; i < 8; i++) {
                             Eigen::Vector3i index1 = index0;
                             Eigen::Vector3i idx1 = idx0 + shift[i];
                             if (idx1(0) < volume_unit_resolution_ &&
@@ -225,7 +225,7 @@ std::shared_ptr<TriangleMesh> ScalableTSDFVolume::ExtractTriangleMesh()
                                     c[i] = volume0.color_[volume0.IndexOf(
                                             idx1)].cast<double>() / 255.0;;
                             } else {
-                                for (int j = 0; j < 3; j++) {
+                                for (int32_t j = 0; j < 3; j++) {
                                     if (idx1(j) >= volume_unit_resolution_) {
                                         idx1(j) -= volume_unit_resolution_;
                                         index1(j) += 1;
@@ -257,7 +257,7 @@ std::shared_ptr<TriangleMesh> ScalableTSDFVolume::ExtractTriangleMesh()
                         if (cube_index == 0 || cube_index == 255) {
                             continue;
                         }
-                        for (int i = 0; i < 12; i++) {
+                        for (int32_t i = 0; i < 12; i++) {
                             if (edge_table[cube_index] & (1 << i)) {
                                 Eigen::Vector4i edge_index = Eigen::Vector4i(
                                         index0(0), index0(1), index0(2), 0) *
@@ -267,9 +267,9 @@ std::shared_ptr<TriangleMesh> ScalableTSDFVolume::ExtractTriangleMesh()
                                 if (edgeindex_to_vertexindex.find(edge_index) ==
                                         edgeindex_to_vertexindex.end()) {
                                     edge_to_index[i] =
-                                            (int)mesh->vertices_.size();
+                                            (int32_t)mesh->vertices_.size();
                                     edgeindex_to_vertexindex[edge_index] =
-                                            (int)mesh->vertices_.size();
+                                            (int32_t)mesh->vertices_.size();
                                     Eigen::Vector3d pt(
                                             half_voxel_length +
                                             voxel_length_ * edge_index(0),
@@ -297,7 +297,7 @@ std::shared_ptr<TriangleMesh> ScalableTSDFVolume::ExtractTriangleMesh()
                                 }
                             }
                         }
-                        for (int i = 0; tri_table[cube_index][i] != -1; i += 3)
+                        for (int32_t i = 0; tri_table[cube_index][i] != -1; i += 3)
                         {
                             mesh->triangles_.push_back(Eigen::Vector3i(
                                 edge_to_index[tri_table[cube_index][i]],
@@ -341,7 +341,7 @@ Eigen::Vector3d ScalableTSDFVolume::GetNormalAt(const Eigen::Vector3d &p)
 {
     Eigen::Vector3d n;
     const double half_gap = 0.99 * voxel_length_;
-    for (int i = 0; i < 3; i++) {
+    for (int32_t i = 0; i < 3; i++) {
         Eigen::Vector3d p0 = p;
         p0(i) -= half_gap;
         Eigen::Vector3d p1 = p;
@@ -364,15 +364,15 @@ double ScalableTSDFVolume::GetTSDFAt(const Eigen::Vector3d &p)
     Eigen::Vector3i idx0;
     Eigen::Vector3d p_grid = (p_locate - index0.cast<double>() *
             volume_unit_length_) / voxel_length_;
-    for (int i = 0; i < 3; i++) {
-        idx0(i) = (int)std::floor(p_grid(i));
+    for (int32_t i = 0; i < 3; i++) {
+        idx0(i) = (int32_t)std::floor(p_grid(i));
         if (idx0(i) < 0) idx0(i) = 0;
         if (idx0(i) >= volume_unit_resolution_)
             idx0(i) = volume_unit_resolution_ - 1;
     }
     Eigen::Vector3d r = p_grid - idx0.cast<double>();
     float f[8];
-    for (int i = 0; i < 8; i++) {
+    for (int32_t i = 0; i < 8; i++) {
         Eigen::Vector3i index1 = index0;
         Eigen::Vector3i idx1 = idx0 + shift[i];
         if (idx1(0) < volume_unit_resolution_ &&
@@ -380,7 +380,7 @@ double ScalableTSDFVolume::GetTSDFAt(const Eigen::Vector3d &p)
             idx1(2) < volume_unit_resolution_) {
             f[i] = volume0.tsdf_[volume0.IndexOf(idx1)];
         } else {
-            for (int j = 0; j < 3; j++) {
+            for (int32_t j = 0; j < 3; j++) {
                 if (idx1(j) >= volume_unit_resolution_) {
                     idx1(j) -= volume_unit_resolution_;
                     index1(j) += 1;

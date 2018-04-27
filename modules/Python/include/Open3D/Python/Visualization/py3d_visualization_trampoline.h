@@ -83,7 +83,7 @@ public:
     void ChangeFieldOfView(double step) override {
         PYBIND11_OVERLOAD(void, ViewControlBase, ChangeFieldOfView, step);
     }
-    void ChangeWindowSize(int width, int height) override {
+    void ChangeWindowSize(int32_t width, int32_t height) override {
         PYBIND11_OVERLOAD(void, ViewControlBase, ChangeWindowSize, width,
                 height);
     }

@@ -50,7 +50,7 @@ class VisualizerWithDepthCapture : public VisualizerWithCustomAnimation
 {
 protected:
     void KeyPressCallback(GLFWwindow *window,
-            int key, int scancode, int action, int mods) override {
+            int32_t key, int32_t scancode, int32_t action, int32_t mods) override {
         if (action == GLFW_RELEASE) {
             return;
         }
@@ -93,7 +93,7 @@ protected:
     }
 };
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     SetVerbosityLevel(VerbosityLevel::VerboseAlways);
     if (argc < 2) {

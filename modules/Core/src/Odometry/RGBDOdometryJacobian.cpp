@@ -52,7 +52,7 @@ const double LAMBDA_HYBRID_DEPTH = 0.968;
 }   // unnamed namespace
 
 void RGBDOdometryJacobianFromColorTerm::ComputeJacobianAndResidual(
-        int row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
+        int32_t row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
         const RGBDImage &source, const RGBDImage &target,
         const Image &source_xyz,
         const RGBDImage &target_dx, const RGBDImage &target_dy,
@@ -63,10 +63,10 @@ void RGBDOdometryJacobianFromColorTerm::ComputeJacobianAndResidual(
     Eigen::Matrix3d R = extrinsic.block<3, 3>(0, 0);
     Eigen::Vector3d t = extrinsic.block<3, 1>(0, 3);
 
-    int u_s = corresps[row](0);
-    int v_s = corresps[row](1);
-    int u_t = corresps[row](2);
-    int v_t = corresps[row](3);
+    int32_t u_s = corresps[row](0);
+    int32_t v_s = corresps[row](1);
+    int32_t u_t = corresps[row](2);
+    int32_t v_t = corresps[row](3);
     double diff = *PointerAt<float>(target.color_, u_t, v_t) -
             *PointerAt<float>(source.color_, u_s, v_s);
     double dIdx = SOBEL_SCALE * (*PointerAt<float>(target_dx.color_, u_t, v_t));
@@ -93,7 +93,7 @@ void RGBDOdometryJacobianFromColorTerm::ComputeJacobianAndResidual(
 }
 
 void RGBDOdometryJacobianFromHybridTerm::ComputeJacobianAndResidual(
-        int row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
+        int32_t row, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r,
         const RGBDImage &source, const RGBDImage &target,
         const Image &source_xyz,
         const RGBDImage &target_dx, const RGBDImage &target_dy,
@@ -110,10 +110,10 @@ void RGBDOdometryJacobianFromHybridTerm::ComputeJacobianAndResidual(
     Eigen::Matrix3d R = extrinsic.block<3, 3>(0, 0);
     Eigen::Vector3d t = extrinsic.block<3, 1>(0, 3);
 
-    int u_s = corresps[row](0);
-    int v_s = corresps[row](1);
-    int u_t = corresps[row](2);
-    int v_t = corresps[row](3);
+    int32_t u_s = corresps[row](0);
+    int32_t v_s = corresps[row](1);
+    int32_t u_t = corresps[row](2);
+    int32_t v_t = corresps[row](3);
     double diff_photo = (*PointerAt<float>(target.color_, u_t, v_t) -
             *PointerAt<float>(source.color_, u_s, v_s));
     double dIdx = SOBEL_SCALE *

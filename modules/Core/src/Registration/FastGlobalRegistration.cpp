@@ -55,27 +55,27 @@ double GlobalScale;
 double StartScale;
 std::vector<std::shared_ptr<PointCloud>> pointcloud_;
 std::vector<std::shared_ptr<Feature>> features_;
-std::vector<std::pair<int, int>> corres_;
+std::vector<std::pair<int32_t, int32_t>> corres_;
 Eigen::Matrix4d TransOutput_;
 
 void AdvancedMatching(const FastGlobalRegistrationOption& option)
 {
-    int fi = 0;
-    int fj = 1;
+    int32_t fi = 0;
+    int32_t fj = 1;
 
     PrintDebug("Advanced matching : [%d - %d]\n", fi, fj);
     bool swapped = false;
 
     if (pointcloud_[fj]->points_.size() > pointcloud_[fi]->points_.size())
     {
-        int temp = fi;
+        int32_t temp = fi;
         fi = fj;
         fj = temp;
         swapped = true;
     }
 
-    int nPti = static_cast<int>(pointcloud_[fi]->points_.size());
-    int nPtj = static_cast<int>(pointcloud_[fj]->points_.size());
+    size_t nPti = pointcloud_[fi]->points_.size();
+    size_t nPtj = pointcloud_[fj]->points_.size();
 
     ///////////////////////////
     /// BUILD FLANNTREE
@@ -88,53 +88,53 @@ void AdvancedMatching(const FastGlobalRegistrationOption& option)
     bool crosscheck = true;
     bool tuple = true;
 
-    std::vector<int> corres_K, corres_K2;
+    std::vector<int32_t> corres_K, corres_K2;
     std::vector<double> dis;
-    std::vector<int> ind;
+    std::vector<int32_t> ind;
 
-    std::vector<std::pair<int, int>> corres;
-    std::vector<std::pair<int, int>> corres_cross;
-    std::vector<std::pair<int, int>> corres_ij;
-    std::vector<std::pair<int, int>> corres_ji;
+    std::vector<std::pair<int32_t, int32_t>> corres;
+    std::vector<std::pair<int32_t, int32_t>> corres_cross;
+    std::vector<std::pair<int32_t, int32_t>> corres_ij;
+    std::vector<std::pair<int32_t, int32_t>> corres_ji;
 
     ///////////////////////////
     /// INITIAL MATCHING
     ///////////////////////////
 
-    std::vector<int> i_to_j(nPti, -1);
-    for (int j = 0; j < nPtj; j++)
+    std::vector<int32_t> i_to_j(nPti, -1);
+    for (uint32_t j = 0; j < nPtj; j++)
     {
         feature_tree_i.SearchKNN(Eigen::VectorXd(features_[fj]->data_.col(j)),
                 1, corres_K, dis);
-        int i = corres_K[0];
+        int32_t i = corres_K[0];
         if (i_to_j[i] == -1)
         {
             feature_tree_j.SearchKNN(
                     Eigen::VectorXd(features_[fi]->data_.col(i)),
                     1, corres_K, dis);
-            int ij = corres_K[0];
+            int32_t ij = corres_K[0];
             i_to_j[i] = ij;
         }
-        corres_ji.push_back(std::pair<int, int>(i, j));
+        corres_ji.push_back(std::pair<int32_t, int32_t>(i, j));
     }
 
-    for (int i = 0; i < nPti; i++)
+    for (uint32_t i = 0; i < nPti; i++)
     {
         if (i_to_j[i] != -1)
-            corres_ij.push_back(std::pair<int, int>(i, i_to_j[i]));
+            corres_ij.push_back(std::pair<int32_t, int32_t>(i, i_to_j[i]));
     }
 
 
-    int ncorres_ij = static_cast<int>(corres_ij.size());
-    int ncorres_ji = static_cast<int>(corres_ji.size());
+    int32_t ncorres_ij = static_cast<int32_t>(corres_ij.size());
+    int32_t ncorres_ji = static_cast<int32_t>(corres_ji.size());
 
     // corres = corres_ij + corres_ji;
-    for (int i = 0; i < ncorres_ij; ++i)
-        corres.push_back(std::pair<int, int>(corres_ij[i].first, corres_ij[i].second));
-    for (int j = 0; j < ncorres_ji; ++j)
-        corres.push_back(std::pair<int, int>(corres_ji[j].first, corres_ji[j].second));
+    for (int32_t i = 0; i < ncorres_ij; ++i)
+        corres.push_back(std::pair<int32_t, int32_t>(corres_ij[i].first, corres_ij[i].second));
+    for (int32_t j = 0; j < ncorres_ji; ++j)
+        corres.push_back(std::pair<int32_t, int32_t>(corres_ji[j].first, corres_ji[j].second));
 
-    PrintDebug("points are remained : %d\n", (int)corres.size());
+    PrintDebug("points are remained : %d\n", (int32_t)corres.size());
 
     ///////////////////////////
     /// CROSS CHECK
@@ -148,17 +148,17 @@ void AdvancedMatching(const FastGlobalRegistrationOption& option)
         // build data structure for cross check
         corres.clear();
         corres_cross.clear();
-        std::vector<std::vector<int>> Mi(nPti);
-        std::vector<std::vector<int>> Mj(nPtj);
+        std::vector<std::vector<int32_t>> Mi(nPti);
+        std::vector<std::vector<int32_t>> Mj(nPtj);
 
-        int ci, cj;
-        for (int i = 0; i < ncorres_ij; ++i)
+        int32_t ci, cj;
+        for (int32_t i = 0; i < ncorres_ij; ++i)
         {
             ci = corres_ij[i].first;
             cj = corres_ij[i].second;
             Mi[ci].push_back(cj);
         }
-        for (int j = 0; j < ncorres_ji; ++j)
+        for (int32_t j = 0; j < ncorres_ji; ++j)
         {
             ci = corres_ji[j].first;
             cj = corres_ji[j].second;
@@ -166,22 +166,22 @@ void AdvancedMatching(const FastGlobalRegistrationOption& option)
         }
 
         // cross check
-        for (int i = 0; i < nPti; ++i)
+        for (uint32_t i = 0; i < nPti; ++i)
         {
-            for (int ii = 0; ii < Mi[i].size(); ++ii)
+            for (uint32_t ii = 0; ii < Mi[i].size(); ++ii)
             {
-                int j = Mi[i][ii];
-                for (int jj = 0; jj < Mj[j].size(); ++jj)
+                int32_t j = Mi[i][ii];
+                for (uint32_t jj = 0; jj < Mj[j].size(); ++jj)
                 {
                     if (Mj[j][jj] == i)
                     {
-                        corres.push_back(std::pair<int, int>(i, j));
-                        corres_cross.push_back(std::pair<int, int>(i, j));
+                        corres.push_back(std::pair<int32_t, int32_t>(i, j));
+                        corres_cross.push_back(std::pair<int32_t, int32_t>(i, j));
                     }
                 }
             }
         }
-        PrintDebug("points are remained : %d\n", (int)corres.size());
+        PrintDebug("points are remained : %d\n", (int32_t)corres.size());
     }
 
     ///////////////////////////
@@ -191,19 +191,19 @@ void AdvancedMatching(const FastGlobalRegistrationOption& option)
     ///////////////////////////
     if (tuple)
     {
-        std::srand((unsigned int)std::time(0));
+        std::srand((uint32_t)std::time(0));
 
         PrintDebug("\t[tuple constraint] ");
-        int rand0, rand1, rand2;
-        int idi0, idi1, idi2;
-        int idj0, idj1, idj2;
+        int32_t rand0, rand1, rand2;
+        int32_t idi0, idi1, idi2;
+        int32_t idj0, idj1, idj2;
         double scale = option.tuple_scale_;
-        int ncorr = static_cast<int>(corres.size());
-        int number_of_trial = ncorr * 100;
-        std::vector<std::pair<int, int>> corres_tuple;
+        int32_t ncorr = static_cast<int32_t>(corres.size());
+        int32_t number_of_trial = ncorr * 100;
+        std::vector<std::pair<int32_t, int32_t>> corres_tuple;
 
-        int cnt = 0;
-        int i;
+        int32_t cnt = 0;
+        int32_t i;
         for (i = 0; i < number_of_trial; i++)
         {
             rand0 = rand() % ncorr;
@@ -239,9 +239,9 @@ void AdvancedMatching(const FastGlobalRegistrationOption& option)
                 (li1 * scale < lj1) && (lj1 < li1 / scale) &&
                 (li2 * scale < lj2) && (lj2 < li2 / scale))
             {
-                corres_tuple.push_back(std::pair<int, int>(idi0, idj0));
-                corres_tuple.push_back(std::pair<int, int>(idi1, idj1));
-                corres_tuple.push_back(std::pair<int, int>(idi2, idj2));
+                corres_tuple.push_back(std::pair<int32_t, int32_t>(idi0, idj0));
+                corres_tuple.push_back(std::pair<int32_t, int32_t>(idi1, idj1));
+                corres_tuple.push_back(std::pair<int32_t, int32_t>(idi2, idj2));
                 cnt++;
             }
 
@@ -252,20 +252,20 @@ void AdvancedMatching(const FastGlobalRegistrationOption& option)
         PrintDebug("%d tuples (%d trial, %d actual).\n", cnt, number_of_trial, i);
         corres.clear();
 
-        for (int i = 0; i < corres_tuple.size(); ++i)
-            corres.push_back(std::pair<int, int>(corres_tuple[i].first, corres_tuple[i].second));
+        for (uint32_t i = 0; i < corres_tuple.size(); ++i)
+            corres.push_back(std::pair<int32_t, int32_t>(corres_tuple[i].first, corres_tuple[i].second));
     }
 
     if (swapped)
     {
-        std::vector<std::pair<int, int>> temp;
-        for (int i = 0; i < corres.size(); i++)
-            temp.push_back(std::pair<int, int>(corres[i].second, corres[i].first));
+        std::vector<std::pair<int32_t, int32_t>> temp;
+        for (uint32_t i = 0; i < corres.size(); i++)
+            temp.push_back(std::pair<int32_t, int32_t>(corres[i].second, corres[i].first));
         corres.clear();
         corres = temp;
     }
 
-    PrintDebug("\t[final] matches %d.\n", (int)corres.size());
+    PrintDebug("\t[final] matches %d.\n", (int32_t)corres.size());
     corres_ = corres;
 }
 
@@ -274,12 +274,12 @@ void AdvancedMatching(const FastGlobalRegistrationOption& option)
 // X' = (X-\mu)/scale
 void NormalizePoints(const FastGlobalRegistrationOption& option)
 {
-    int num = 2;
+    int32_t num = 2;
     double scale = 0;
 
     Means.clear();
 
-    for (int i = 0; i < num; ++i)
+    for (int32_t i = 0; i < num; ++i)
     {
         double max_scale = 0.0;
 
@@ -287,8 +287,8 @@ void NormalizePoints(const FastGlobalRegistrationOption& option)
         Eigen::Vector3d mean;
         mean.setZero();
 
-        int npti = static_cast<int>(pointcloud_[i]->points_.size());
-        for (int ii = 0; ii < npti; ++ii)
+        int32_t npti = static_cast<int32_t>(pointcloud_[i]->points_.size());
+        for (int32_t ii = 0; ii < npti; ++ii)
         {
             mean = mean + pointcloud_[i]->points_[ii];
         }
@@ -297,13 +297,13 @@ void NormalizePoints(const FastGlobalRegistrationOption& option)
 
         PrintDebug("normalize points :: mean = [%f %f %f]\n", mean(0), mean(1), mean(2));
 
-        for (int ii = 0; ii < npti; ++ii)
+        for (int32_t ii = 0; ii < npti; ++ii)
         {
             pointcloud_[i]->points_[ii] -= mean;
         }
 
         // compute scale
-        for (int ii = 0; ii < npti; ++ii)
+        for (int32_t ii = 0; ii < npti; ++ii)
         {
             Eigen::Vector3d p(pointcloud_[i]->points_[ii]);
             double temp = p.norm(); // because we extract mean in the previous stage.
@@ -325,10 +325,10 @@ void NormalizePoints(const FastGlobalRegistrationOption& option)
     }
     PrintDebug("normalize points :: global scale : %f\n", GlobalScale);
 
-    for (int i = 0; i < num; ++i)
+    for (int32_t i = 0; i < num; ++i)
     {
-        int npti = static_cast<int>(pointcloud_[i]->points_.size());
-        for (int ii = 0; ii < npti; ++ii)
+        int32_t npti = static_cast<int32_t>(pointcloud_[i]->points_.size());
+        for (int32_t ii = 0; ii < npti; ++ii)
         {
             pointcloud_[i]->points_[ii] /= GlobalScale;
         }
@@ -340,19 +340,19 @@ double OptimizePairwise(const FastGlobalRegistrationOption& option)
     PrintDebug("Pairwise rigid pose optimization\n");
 
     double par;
-    int numIter = option.iteration_number_;
+    int32_t numIter = option.iteration_number_;
     TransOutput_ = Eigen::Matrix4d::Identity();
 
     par = StartScale;
 
-    int i = 0;
-    int j = 1;
+    int32_t i = 0;
+    int32_t j = 1;
 
     // make another copy of pointcloud_[j].
     std::vector<Eigen::Vector3d> pcj_copy;
-    int npcj = static_cast<int>(pointcloud_[j]->points_.size());
+    int32_t npcj = static_cast<int32_t>(pointcloud_[j]->points_.size());
     pcj_copy.resize(npcj);
-    for (int cnt = 0; cnt < npcj; cnt++)
+    for (int32_t cnt = 0; cnt < npcj; cnt++)
         pcj_copy[cnt] = pointcloud_[j]->points_[cnt];
 
     if (corres_.size() < 10)
@@ -363,7 +363,7 @@ double OptimizePairwise(const FastGlobalRegistrationOption& option)
     Eigen::Matrix4d trans;
     trans.setIdentity();
 
-    for (int itr = 0; itr < numIter; itr++) {
+    for (int32_t itr = 0; itr < numIter; itr++) {
 
         // graduated non-convexity.
         if (option.decrease_mu_)
@@ -373,7 +373,7 @@ double OptimizePairwise(const FastGlobalRegistrationOption& option)
             }
         }
 
-        const int nvariable = 6;    // 3 for rotation and 3 for translation
+        const int32_t nvariable = 6;    // 3 for rotation and 3 for translation
         Eigen::MatrixXd JTJ(nvariable, nvariable);
         Eigen::MatrixXd JTr(nvariable, 1);
         Eigen::MatrixXd J(nvariable, 1);
@@ -383,15 +383,15 @@ double OptimizePairwise(const FastGlobalRegistrationOption& option)
         double r;
         double r2 = 0.0;
 
-        for (int c = 0; c < corres_.size(); c++) {
-            int ii = corres_[c].first;
-            int jj = corres_[c].second;
+        for (uint32_t c = 0; c < corres_.size(); c++) {
+            int32_t ii = corres_[c].first;
+            int32_t jj = corres_[c].second;
             Eigen::Vector3d p, q;
             p = pointcloud_[i]->points_[ii];
             q = pcj_copy[jj];
             Eigen::Vector3d rpq = p - q;
 
-            int c2 = c;
+            int32_t c2 = c;
 
             double temp = par / (rpq.dot(rpq) + par);
             s[c2] = temp * temp;
@@ -442,7 +442,7 @@ double OptimizePairwise(const FastGlobalRegistrationOption& option)
         // transform point clouds
         Eigen::Matrix3d R = delta.block<3, 3>(0, 0);
         Eigen::Vector3d t = delta.block<3, 1>(0, 3);
-        for (int cnt = 0; cnt < npcj; cnt++)
+        for (int32_t cnt = 0; cnt < npcj; cnt++)
             pcj_copy[cnt] = R * pcj_copy[cnt] + t;
 
     }

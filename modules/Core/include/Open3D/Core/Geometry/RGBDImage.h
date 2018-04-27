@@ -96,7 +96,7 @@ RGBDImagePyramid FilterRGBDImagePyramid(
         const RGBDImagePyramid &rgbd_image_pyramid, Image::FilterType type);
 
 RGBDImagePyramid CreateRGBDImagePyramid(const RGBDImage &rgbd_image,
-        size_t num_of_levels,
+        uint32_t num_of_levels,
         bool with_gaussian_filter_for_color = true,
         bool with_gaussian_filter_for_depth = false);
 

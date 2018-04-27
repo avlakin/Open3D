@@ -85,7 +85,7 @@ bool SelectionPolygonVolume::ConvertFromJsonValue(const Json::Value &value)
         return false;
     }
     bounding_polygon_.resize(polygon_array.size());
-    for (int i = 0; i < (int)polygon_array.size(); i++) {
+    for (int32_t i = 0; i < (int32_t)polygon_array.size(); i++) {
         const Json::Value &point_object = polygon_array[i];
         if (EigenVector3dFromJsonArray(bounding_polygon_[i], point_object) ==
                 false) {
@@ -109,11 +109,11 @@ std::shared_ptr<PointCloud> SelectionPolygonVolume::CropPointCloudInPolygon(
     return SelectDownSample(input, CropInPolygon(input.points_));
 }
 
-std::vector<size_t> SelectionPolygonVolume::CropInPolygon(
+std::vector<uint32_t> SelectionPolygonVolume::CropInPolygon(
         const std::vector<Eigen::Vector3d> &input) const
 {
-    std::vector<size_t> output_index;
-    int u, v, w;
+    std::vector<uint32_t> output_index;
+    int32_t u, v, w;
     if (orthogonal_axis_ == "x" || orthogonal_axis_ == "X") {
         u = 1; v = 2; w = 0;
     } else if (orthogonal_axis_ == "y" || orthogonal_axis_ == "Y") {
@@ -123,13 +123,13 @@ std::vector<size_t> SelectionPolygonVolume::CropInPolygon(
     }
     std::vector<double> nodes;
     ResetConsoleProgress((int64_t)input.size(), "Cropping geometry: ");
-    for (size_t k = 0; k < input.size(); k++) {
+    for (uint32_t k = 0; k < input.size(); k++) {
         AdvanceConsoleProgress();
         const auto &point = input[k];
         if (point(w) < axis_min_ || point(w) > axis_max_) continue;
         nodes.clear();
-        for (size_t i = 0; i < bounding_polygon_.size(); i++) {
-            size_t j = (i + 1) % bounding_polygon_.size();
+        for (uint32_t i = 0; i < bounding_polygon_.size(); i++) {
+            uint32_t j = (i + 1) % bounding_polygon_.size();
             if ((bounding_polygon_[i](v) < point(v) &&
                     bounding_polygon_[j](v) >= point(v)) ||
                     (bounding_polygon_[j](v) < point(v) &&

@@ -61,12 +61,12 @@ GLMatrix4f Ortho(double left, double right, double bottom, double top,
         double z_near, double z_far);
 
 Eigen::Vector3d Project(const Eigen::Vector3d &point,
-        const GLMatrix4f &mvp_matrix, const int width, const int height);
+        const GLMatrix4f &mvp_matrix, const int32_t width, const int32_t height);
 
 Eigen::Vector3d Unproject(const Eigen::Vector3d &screen_point,
-        const GLMatrix4f &mvp_matrix, const int width, const int height);
+        const GLMatrix4f &mvp_matrix, const int32_t width, const int32_t height);
 
-int ColorCodeToPickIndex(const Eigen::Vector4i &color);
+int32_t ColorCodeToPickIndex(const Eigen::Vector4i &color);
 
 }   // namespace GLHelper
 

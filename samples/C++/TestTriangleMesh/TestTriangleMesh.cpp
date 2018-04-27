@@ -54,12 +54,12 @@ void PrintHelp()
 void PaintMesh(open3d::TriangleMesh &mesh, const Eigen::Vector3d &color)
 {
     mesh.vertex_colors_.resize(mesh.vertices_.size());
-    for (size_t i = 0; i < mesh.vertices_.size(); i++) {
+    for (uint32_t i = 0; i < mesh.vertices_.size(); i++) {
         mesh.vertex_colors_[i] = color;
     }
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     using namespace open3d;
 
@@ -152,10 +152,10 @@ int main(int argc, char *argv[])
         mesh1->vertex_colors_.resize(mesh1->vertices_.size());
         KDTreeFlann kdtree;
         kdtree.SetGeometry(*mesh2);
-        std::vector<int> indices(1);
+        std::vector<int32_t> indices(1);
         std::vector<double> dists(1);
         double r = 0.0;
-        for (size_t i = 0; i < mesh1->vertices_.size(); i++) {
+        for (uint32_t i = 0; i < mesh1->vertices_.size(); i++) {
             kdtree.SearchKNN(mesh1->vertices_[i], 1, indices, dists);
             double color = std::min(sqrt(dists[0]) / scale, 1.0);
             mesh1->vertex_colors_[i] = Eigen::Vector3d(color, color, color);
@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
             PrintWarning("No image!\n");
             return 0;
         }
-        int idx = 3000;
+        int32_t idx = 3000;
         std::vector<std::shared_ptr<const Geometry>> ptrs;
         ptrs.push_back(mesh);
         auto mesh_sphere = CreateMeshSphere(0.05);
@@ -197,9 +197,9 @@ int main(int argc, char *argv[])
         ptrs.push_back(mesh_sphere);
         DrawGeometries(ptrs);
 
-        for (size_t i = 0; i < trajectory.extrinsic_.size(); i += 10) {
+        for (uint32_t i = 0; i < trajectory.extrinsic_.size(); i += 10) {
             char buffer[1024];
-            sprintf(buffer, "image/image_%06d.png", (int)i + 1);
+            sprintf(buffer, "image/image_%06d.png", (int32_t)i + 1);
             auto image = CreateImageFromFile(buffer);
             auto fimage = CreateFloatImageFromImage(*image);
             Eigen::Vector4d pt_in_camera = trajectory.extrinsic_[i] *

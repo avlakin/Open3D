@@ -71,8 +71,8 @@ RegistrationResult GetRegistrationResultAndCorrespondences(
 #ifdef _OPENMP
 #pragma omp for nowait
 #endif
-        for (int i = 0; i < (int)source.points_.size(); i++) {
-            std::vector<int> indices(1);
+        for (int32_t i = 0; i < (int32_t)source.points_.size(); i++) {
+            std::vector<int32_t> indices(1);
             std::vector<double> dists(1);
             const auto &point = source.points_[i];
             if (target_kdtree.SearchHybrid(point, max_correspondence_distance, 1,
@@ -86,7 +86,7 @@ RegistrationResult GetRegistrationResultAndCorrespondences(
 #pragma omp critical
 #endif
         {
-            for (int i = 0; i < (int)correspondence_set_private.size(); i++) {
+            for (int32_t i = 0; i < (int32_t)correspondence_set_private.size(); i++) {
                 result.correspondence_set_.push_back(
                         correspondence_set_private[i]);
             }
@@ -114,7 +114,7 @@ RegistrationResult EvaluateRANSACBasedOnCorrespondence(const PointCloud &source,
 {
     RegistrationResult result(transformation);
     double error2 = 0.0;
-    int good = 0;
+    int32_t good = 0;
     double max_dis2 = max_correspondence_distance * max_correspondence_distance;
     for (const auto &c : corres) {
         double dis2 =
@@ -170,7 +170,7 @@ RegistrationResult RegistrationICP(const PointCloud &source,
     RegistrationResult result;
     result = GetRegistrationResultAndCorrespondences(
             pcd, target, kdtree, max_correspondence_distance, transformation);
-    for (int i = 0; i < criteria.max_iteration_; i++) {
+    for (int32_t i = 0; i < criteria.max_iteration_; i++) {
         PrintDebug("ICP Iteration #%d: Fitness %.4f, RMSE %.4f\n", i,
                 result.fitness_, result.inlier_rmse_);
         Eigen::Matrix4d update = estimation.ComputeTransformation(
@@ -194,21 +194,21 @@ RegistrationResult RegistrationRANSACBasedOnCorrespondence(
         const CorrespondenceSet &corres, double max_correspondence_distance,
         const TransformationEstimation &estimation
         /* = TransformationEstimationPointToPoint(false)*/,
-        int ransac_n/* = 6*/, const RANSACConvergenceCriteria &criteria
+        int32_t ransac_n/* = 6*/, const RANSACConvergenceCriteria &criteria
         /* = RANSACConvergenceCriteria()*/)
 {
-    if (ransac_n < 3 || (int)corres.size() < ransac_n ||
+    if (ransac_n < 3 || (int32_t)corres.size() < ransac_n ||
             max_correspondence_distance <= 0.0) {
         return RegistrationResult();
     }
-    std::srand((unsigned int)std::time(0));
+    std::srand((uint32_t)std::time(0));
     Eigen::Matrix4d transformation;
     CorrespondenceSet ransac_corres(ransac_n);
     RegistrationResult result;
-    for (int itr = 0; itr < criteria.max_iteration_ &&
+    for (int32_t itr = 0; itr < criteria.max_iteration_ &&
             itr < criteria.max_validation_; itr++) {
-        for (int j = 0; j < ransac_n; j++) {
-            ransac_corres[j] = corres[std::rand() % (int)corres.size()];
+        for (int32_t j = 0; j < ransac_n; j++) {
+            ransac_corres[j] = corres[std::rand() % (int32_t)corres.size()];
         }
         transformation = estimation.ComputeTransformation(source,
                 target, ransac_corres);
@@ -233,7 +233,7 @@ RegistrationResult RegistrationRANSACBasedOnFeatureMatching(
         double max_correspondence_distance,
         const TransformationEstimation &estimation
         /* = TransformationEstimationPointToPoint(false)*/,
-        int ransac_n/* = 4*/, const std::vector<std::reference_wrapper<const
+        int32_t ransac_n/* = 4*/, const std::vector<std::reference_wrapper<const
         CorrespondenceChecker>> &checkers/* = {}*/,
         const RANSACConvergenceCriteria &criteria
         /* = RANSACConvergenceCriteria()*/)
@@ -243,10 +243,10 @@ RegistrationResult RegistrationRANSACBasedOnFeatureMatching(
     }
 
     RegistrationResult result;
-    int total_validation = 0;
+    int32_t total_validation = 0;
     bool finished_validation = false;
-    int num_similar_features = 1;
-    std::vector<std::vector<int>> similar_features(source.points_.size());
+    int32_t num_similar_features = 1;
+    std::vector<std::vector<int32_t>> similar_features(source.points_.size());
 
 #ifdef _OPENMP
 #pragma omp parallel
@@ -256,28 +256,28 @@ RegistrationResult RegistrationRANSACBasedOnFeatureMatching(
     KDTreeFlann kdtree(target);
     KDTreeFlann kdtree_feature(target_feature);
     RegistrationResult result_private;
-    unsigned int seed_number;
+    uint32_t seed_number;
 #ifdef _OPENMP
         // each thread has different seed_number
-    seed_number = (unsigned int)std::time(0) *
+    seed_number = (uint32_t)std::time(0) *
             (omp_get_thread_num() + 1);
 #else
-    seed_number = (unsigned int)std::time(0);
+    seed_number = (uint32_t)std::time(0);
 #endif
     std::srand(seed_number);
 
 #ifdef _OPENMP
 #pragma omp for nowait
 #endif
-    for (int itr = 0; itr < criteria.max_iteration_; itr++) {
+    for (int32_t itr = 0; itr < criteria.max_iteration_; itr++) {
         if (!finished_validation)
         {
             std::vector<double> dists(num_similar_features);
             Eigen::Matrix4d transformation;
-            for (int j = 0; j < ransac_n; j++) {
-                int source_sample_id = std::rand() % (int)source.points_.size();
+            for (int32_t j = 0; j < ransac_n; j++) {
+                int32_t source_sample_id = std::rand() % (int32_t)source.points_.size();
                 if (similar_features[source_sample_id].empty()) {
-                    std::vector<int> indices(num_similar_features);
+                    std::vector<int32_t> indices(num_similar_features);
                     kdtree_feature.SearchKNN(Eigen::VectorXd(
                             source_feature.data_.col(source_sample_id)),
                             num_similar_features, indices, dists);
@@ -379,8 +379,8 @@ Eigen::Matrix6d GetInformationMatrixFromPointClouds(
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-        for (auto c = 0; c < result.correspondence_set_.size(); c++) {
-            int t = result.correspondence_set_[c](1);
+        for (int32_t c = 0; c < static_cast<int32_t>(result.correspondence_set_.size()); c++) {
+            int32_t t = result.correspondence_set_[c](1);
             double x = target.points_[t](0);
             double y = target.points_[t](1);
             double z = target.points_[t](2);

@@ -75,7 +75,7 @@ void PrintHelp()
     printf("    --camera_location [x,y,z] : Orient the normals w.r.t camera location [x,y,z].\n");
 }
 
-void convert(int argc, char **argv, const std::string &file_in,
+void convert(int32_t argc, char **argv, const std::string &file_in,
         const std::string &file_out)
 {
     using namespace open3d;
@@ -110,20 +110,20 @@ void convert(int argc, char **argv, const std::string &file_in,
     if (mahalanobis_threshold > 0.0) {
         auto mahalanobis = ComputePointCloudMahalanobisDistance(
                 *pointcloud_ptr);
-        std::vector<size_t> indices;
-        for (size_t i = 0; i < pointcloud_ptr->points_.size(); i++) {
+        std::vector<uint32_t> indices;
+        for (uint32_t i = 0; i < pointcloud_ptr->points_.size(); i++) {
             if (mahalanobis[i] < mahalanobis_threshold) {
                 indices.push_back(i);
             }
         }
         auto pcd = SelectDownSample(*pointcloud_ptr, indices);
         PrintDebug("Based on Mahalanobis distance, %d points were filtered.\n",
-                (int)(pointcloud_ptr->points_.size() - pcd->points_.size()));
+                (int32_t)(pointcloud_ptr->points_.size() - pcd->points_.size()));
         pointcloud_ptr = pcd;
     }
 
     // uniform_downsample
-    int every_k = GetProgramOptionAsInt(argc, argv, "--uniform_sample_every",
+    int32_t every_k = GetProgramOptionAsInt(argc, argv, "--uniform_sample_every",
             0);
     if (every_k > 1) {
         PrintDebug("Downsample point cloud uniformly every %d points.\n",
@@ -151,7 +151,7 @@ void convert(int argc, char **argv, const std::string &file_in,
         processed = true;
     }
 
-    int k = GetProgramOptionAsInt(argc, argv, "--estimate_normals_knn", 0);
+    int32_t k = GetProgramOptionAsInt(argc, argv, "--estimate_normals_knn", 0);
     if (k > 0) {
         PrintDebug("Estimate normals with search knn %d.\n", k);
         EstimateNormals(*pointcloud_ptr, KDTreeSearchParamKNN(k));
@@ -181,12 +181,12 @@ void convert(int argc, char **argv, const std::string &file_in,
     size_t point_num_out = pointcloud_ptr->points_.size();
     if (processed) {
         PrintInfo("Processed point cloud from %d points to %d points.\n",
-                (int)point_num_in, (int)point_num_out);
+                (int32_t)point_num_in, (int32_t)point_num_out);
     }
     WritePointCloud(file_out.c_str(), *pointcloud_ptr, false, true);
 }
 
-int main(int argc, char **argv)
+int32_t main(int32_t argc, char **argv)
 {
     using namespace open3d;
     using namespace open3d::filesystem;
@@ -197,7 +197,7 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    int verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
+    int32_t verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
     SetVerbosityLevel((VerbosityLevel)verbose);
 
     if (FileExists(argv[1])) {

@@ -53,19 +53,19 @@
 
 void simple_task()
 {
-    int n_a_rows = 2000;
-    int n_a_cols = 2000;
-    int n_b_rows = 2000;
-    int n_b_cols = 2000;
+    int32_t n_a_rows = 2000;
+    int32_t n_a_cols = 2000;
+    int32_t n_b_rows = 2000;
+    int32_t n_b_cols = 2000;
 
     Eigen::MatrixXd a(n_a_rows, n_a_cols);
-    for (int i = 0; i < n_a_rows; ++i)
-        for (int j = 0; j < n_a_cols; ++j)
+    for (int32_t i = 0; i < n_a_rows; ++i)
+        for (int32_t j = 0; j < n_a_cols; ++j)
             a(i, j) = n_a_cols * i + j;
 
     Eigen::MatrixXd b(n_b_rows, n_b_cols);
-    for (int i = 0; i < n_b_rows; ++i)
-        for (int j = 0; j < n_b_cols; ++j)
+    for (int32_t i = 0; i < n_b_rows; ++i)
+        for (int32_t j = 0; j < n_b_cols; ++j)
             b(i, j) = n_b_cols * i + j;
 
     Eigen::MatrixXd d(n_a_rows, n_b_cols);
@@ -74,11 +74,11 @@ void simple_task()
 
 void svd_task()
 {
-    int n_a_rows = 10000;
-    int n_a_cols = 200;
+    int32_t n_a_rows = 10000;
+    int32_t n_a_cols = 200;
     Eigen::MatrixXd a(n_a_rows, n_a_cols);
-    for (int i = 0; i < n_a_rows; ++i)
-        for (int j = 0; j < n_a_cols; ++j)
+    for (int32_t i = 0; i < n_a_rows; ++i)
+        for (int32_t j = 0; j < n_a_cols; ++j)
             a(i, j) = n_a_cols * i + j;
     Eigen::JacobiSVD<Eigen::MatrixXd> svd(a,
             Eigen::ComputeThinU | Eigen::ComputeThinV);
@@ -86,12 +86,12 @@ void svd_task()
             ).transpose() * a;
 }
 
-void TestMatrixMultiplication(int argc, char** argv)
+void TestMatrixMultiplication(int32_t argc, char** argv)
 {
-    int i = 0, nRet = 0, nSum = 0, nStart = NUM_START, nEnd = NUM_END;
-    int nThreads = 1, nTmp = nStart + nEnd;
+    int32_t i = 0, nRet = 0, nSum = 0, nStart = NUM_START, nEnd = NUM_END;
+    int32_t nThreads = 1, nTmp = nStart + nEnd;
     unsigned uTmp = (unsigned(nEnd - nStart + 1) * unsigned(nTmp)) / 2;
-    int nSumCalc = uTmp;
+    int32_t nSumCalc = uTmp;
 
     if (nTmp < 0) {
         nSumCalc = -nSumCalc;
@@ -140,14 +140,14 @@ void TestMatrixMultiplication(int argc, char** argv)
                 NUM_START, NUM_END, nSum);
     }
 
-    int test_thread = 256;
+    int32_t test_thread = 256;
     if (argc > 1) {
         test_thread = std::stoi(argv[1]);
     }
     open3d::PrintInfo("Benchmark multithreading up to %d threads.\n",
             test_thread);
 
-    for (int i = 1; i <= test_thread; i *= 2) {
+    for (int32_t i = 1; i <= test_thread; i *= 2) {
         char buff[1024];
         sprintf(buff, "simple task, %d tasks, %d threads", i, i);
         open3d::ScopeTimer t(buff);
@@ -160,20 +160,20 @@ void TestMatrixMultiplication(int argc, char** argv)
         }
     }
 
-    for (int i = 1; i <= test_thread; i *= 2) {
+    for (int32_t i = 1; i <= test_thread; i *= 2) {
         char buff[1024];
         sprintf(buff, "simple task, %d tasks, %d threads", i, i);
         open3d::ScopeTimer t(buff);
         std::vector<std::thread> threads(i);
-        for (int k = 0; k < i; k++) {
+        for (int32_t k = 0; k < i; k++) {
             threads[k] = std::thread(simple_task);
         }
-        for (int k = 0; k < i; k++) {
+        for (int32_t k = 0; k < i; k++) {
             threads[k].join();
         }
     }
 
-    for (int i = 1; i <= test_thread; i *= 2) {
+    for (int32_t i = 1; i <= test_thread; i *= 2) {
         char buff[1024];
         sprintf(buff, "svd, %d tasks, %d threads", i, i);
         open3d::ScopeTimer t(buff);
@@ -186,21 +186,21 @@ void TestMatrixMultiplication(int argc, char** argv)
         }
     }
 
-    for (int i = 1; i <= test_thread; i *= 2) {
+    for (int32_t i = 1; i <= test_thread; i *= 2) {
         char buff[1024];
         sprintf(buff, "svd task, %d tasks, %d threads", i, i);
         open3d::ScopeTimer t(buff);
         std::vector<std::thread> threads(i);
-        for (int k = 0; k < i; k++) {
+        for (int32_t k = 0; k < i; k++) {
             threads[k] = std::thread(svd_task);
         }
-        for (int k = 0; k < i; k++) {
+        for (int32_t k = 0; k < i; k++) {
             threads[k].join();
         }
     }
 }
 
-inline void ComputeSomething(int i, Eigen::Vector6d &A_r, double &r,
+inline void ComputeSomething(int32_t i, Eigen::Vector6d &A_r, double &r,
         std::vector<Eigen::Vector3d> &data)
 {
     const Eigen::Vector3d &vs = data[i];
@@ -217,7 +217,7 @@ inline void ComputeSomething(int i, Eigen::Vector6d &A_r, double &r,
 void TestBindedFunction()
 {
     // data generation
-    const int NCORR = 200000000;
+    const int32_t NCORR = 200000000;
     std::vector<Eigen::Vector3d> data;
     {
         open3d::ScopeTimer timer1("Data generation");
@@ -225,7 +225,7 @@ void TestBindedFunction()
 #ifdef _OPENMP
 #pragma omp for nowait
 #endif
-        for (int i = 0; i < NCORR; i++) {
+        for (int32_t i = 0; i < NCORR; i++) {
             data[i] = Eigen::Vector3d::Random();
         }
     }
@@ -239,7 +239,7 @@ void TestBindedFunction()
     auto f = std::bind(ComputeSomething, std::placeholders::_1,
         std::placeholders::_2, std::placeholders::_3, data);
 
-    auto f_lambda = [&](int i, Eigen::Vector6d &A_r, double &r) {
+    auto f_lambda = [&](int32_t i, Eigen::Vector6d &A_r, double &r) {
         ComputeSomething(i, A_r, r, data);
     };
 
@@ -258,7 +258,7 @@ void TestBindedFunction()
 #ifdef _OPENMP
 #pragma omp for nowait
 #endif
-            for (int i = 0; i < NCORR; i++) {
+            for (int32_t i = 0; i < NCORR; i++) {
                 Eigen::Vector6d A_r;
                 double r;
                 f(i, A_r, r);
@@ -294,7 +294,7 @@ void TestBindedFunction()
 #ifdef _OPENMP
 #pragma omp for nowait
 #endif
-            for (int i = 0; i < NCORR; i++) {
+            for (int32_t i = 0; i < NCORR; i++) {
                 Eigen::Vector6d A_r;
                 double r;
                 f_lambda(i, A_r, r);
@@ -330,7 +330,7 @@ void TestBindedFunction()
 #ifdef _OPENMP
 #pragma omp for nowait
 #endif
-            for (int i = 0; i < NCORR; i++) {
+            for (int32_t i = 0; i < NCORR; i++) {
                 Eigen::Vector6d A_r;
                 double r;
                 ComputeSomething(i, A_r, r, data);
@@ -366,7 +366,7 @@ void TestBindedFunction()
 #ifdef _OPENMP
 #pragma omp for nowait
 #endif
-            for (int i = 0; i < NCORR; i++) {
+            for (int32_t i = 0; i < NCORR; i++) {
                 const Eigen::Vector3d &vs = data[i];
                 const Eigen::Vector3d &vt = data[i];
                 const Eigen::Vector3d &nt = data[i];
@@ -393,7 +393,7 @@ void TestBindedFunction()
 }
 
 
-int main(int argc, char **argv)
+int32_t main(int32_t argc, char **argv)
 {
     using namespace open3d;
 

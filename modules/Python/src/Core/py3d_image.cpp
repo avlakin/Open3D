@@ -53,7 +53,7 @@ void pybind_image(py::module &m)
     image
         .def(py::init([](py::buffer b) {
             py::buffer_info info = b.request();
-            int width, height, num_of_channels = 0, bytes_per_channel;
+            int32_t width, height, num_of_channels = 0, bytes_per_channel;
             if (info.format == py::format_descriptor<uint8_t>::format() ||
                     info.format == py::format_descriptor<int8_t>::format()) {
                 bytes_per_channel = 1;
@@ -72,9 +72,9 @@ void pybind_image(py::module &m)
             if (info.ndim == 2) {
                 num_of_channels = 1;
             } else if (info.ndim == 3) {
-                num_of_channels = (int)info.shape[2];
+                num_of_channels = (int32_t)info.shape[2];
             }
-            height = (int)info.shape[0]; width = (int)info.shape[1];
+            height = (int32_t)info.shape[0]; width = (int32_t)info.shape[1];
             auto img = new Image();
             img->PrepareImage(width, height,
                     num_of_channels, bytes_per_channel);
@@ -155,7 +155,7 @@ void pybind_image_methods(py::module &m)
         return image;
     }, "Function to read Image from file", "filename"_a);
     m.def("write_image", [](const std::string &filename,
-            const Image &image, int quality) {
+            const Image &image, int32_t quality) {
         return WriteImage(filename, image, quality);
     }, "Function to write Image to file", "filename"_a, "image"_a,
             "quality"_a = 90);
@@ -179,7 +179,7 @@ void pybind_image_methods(py::module &m)
         }
     }, "Function to filter Image", "image"_a, "filter_type"_a);
     m.def("create_image_pyramid", [](const Image &input,
-            size_t num_of_levels, bool with_gaussian_filter) {
+            uint32_t num_of_levels, bool with_gaussian_filter) {
         if (input.num_of_channels_ != 1 ||
             input.bytes_per_channel_ != 4) {
             auto input_f = CreateFloatImageFromImage(input);

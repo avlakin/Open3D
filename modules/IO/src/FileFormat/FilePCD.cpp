@@ -63,26 +63,26 @@ enum PCDDataType {
 struct PCLPointField {
 public:
     std::string name;
-    int size;
+    int32_t size;
     char type;
-    int count;
+    int32_t count;
     // helper variable
-    int count_offset;
-    int offset;
+    int32_t count_offset;
+    int32_t offset;
 };
 
 struct PCDHeader {
 public:
     std::string version;
     std::vector<PCLPointField> fields;
-    int width;
-    int height;
-    int points;
+    int32_t width;
+    int32_t height;
+    int32_t points;
     PCDDataType datatype;
     std::string viewpoint;
     // helper variables
-    int elementnum;
-    int pointsize;
+    int32_t elementnum;
+    int32_t pointsize;
     bool has_points;
     bool has_normals;
     bool has_colors;
@@ -167,8 +167,8 @@ bool ReadPCDHeader(FILE *file, PCDHeader &header)
                 return false;
             }
             header.fields.resize(specified_channel_count);
-            int count_offset = 0, offset = 0;
-            for (size_t i = 0; i < specified_channel_count; i++,
+            int32_t count_offset = 0, offset = 0;
+            for (uint32_t i = 0; i < specified_channel_count; i++,
                     count_offset += 1, offset += 4) {
                 header.fields[i].name = st[i + 1];
                 header.fields[i].size = 4;
@@ -184,8 +184,8 @@ bool ReadPCDHeader(FILE *file, PCDHeader &header)
                 PrintDebug("[ReadPCDHeader] Bad PCD file format.\n");
                 return false;
             }
-            int offset = 0, col_type = 0;
-            for (size_t i = 0; i < specified_channel_count; i++, offset +=
+            int32_t offset = 0, col_type = 0;
+            for (uint32_t i = 0; i < specified_channel_count; i++, offset +=
                     col_type) {
                 sstream >> col_type;
                 header.fields[i].size = col_type;
@@ -197,7 +197,7 @@ bool ReadPCDHeader(FILE *file, PCDHeader &header)
                 PrintDebug("[ReadPCDHeader] Bad PCD file format.\n");
                 return false;
             }
-            for (size_t i = 0; i < specified_channel_count; i++) {
+            for (uint32_t i = 0; i < specified_channel_count; i++) {
                 header.fields[i].type = st[i + 1].c_str()[0];
             }
         } else if (line_type.substr(0, 5) == "COUNT") {
@@ -205,8 +205,8 @@ bool ReadPCDHeader(FILE *file, PCDHeader &header)
                 PrintDebug("[ReadPCDHeader] Bad PCD file format.\n");
                 return false;
             }
-            int count_offset = 0, offset = 0, col_count = 0;
-            for (size_t i = 0; i < specified_channel_count; i++) {
+            int32_t count_offset = 0, offset = 0, col_count = 0;
+            for (uint32_t i = 0; i < specified_channel_count; i++) {
                 sstream >> col_count;
                 header.fields[i].count = col_count;
                 header.fields[i].count_offset = count_offset;
@@ -246,7 +246,7 @@ bool ReadPCDHeader(FILE *file, PCDHeader &header)
 }
 
 double UnpackBinaryPCDElement(const char *data_ptr, const char type,
-        const int size)
+        const int32_t size)
 {
     if (type == 'I') {
         if (size == 1) {
@@ -293,7 +293,7 @@ double UnpackBinaryPCDElement(const char *data_ptr, const char type,
 }
 
 Eigen::Vector3d UnpackBinaryPCDColor(const char *data_ptr, const char type,
-        const int size)
+        const int32_t size)
 {
     if (size == 4) {
         std::uint8_t data[4];
@@ -307,7 +307,7 @@ Eigen::Vector3d UnpackBinaryPCDColor(const char *data_ptr, const char type,
 }
 
 double UnpackASCIIPCDElement(const char *data_ptr, const char type,
-        const int size)
+        const int32_t size)
 {
     char *end;
     if (type == 'I') {
@@ -321,7 +321,7 @@ double UnpackASCIIPCDElement(const char *data_ptr, const char type,
 }
 
 Eigen::Vector3d UnpackASCIIPCDColor(const char *data_ptr, const char type,
-        const int size)
+        const int32_t size)
 {
     if (size == 4) {
         std::uint8_t data[4];
@@ -360,16 +360,16 @@ bool ReadPCDData(FILE *file, const PCDHeader &header, PointCloud &pointcloud)
     }
     if (header.datatype == PCD_DATA_ASCII) {
         char line_buffer[DEFAULT_IO_BUFFER_SIZE];
-        int idx = 0;
+        int32_t idx = 0;
         while (fgets(line_buffer, DEFAULT_IO_BUFFER_SIZE, file) &&
                 idx < header.points) {
             std::string line(line_buffer);
             std::vector<std::string> strs;
             SplitString(strs, line, "\t\r\n ");
-            if ((int)strs.size() < header.elementnum) {
+            if ((int32_t)strs.size() < header.elementnum) {
                 continue;
             }
-            for (size_t i = 0; i < header.fields.size(); i++) {
+            for (uint32_t i = 0; i < header.fields.size(); i++) {
                 const auto &field = header.fields[i];
                 if (field.name == "x") {
                     pointcloud.points_[idx](0) = UnpackASCIIPCDElement(
@@ -405,7 +405,7 @@ bool ReadPCDData(FILE *file, const PCDHeader &header, PointCloud &pointcloud)
         }
     } else if (header.datatype == PCD_DATA_BINARY) {
         std::unique_ptr<char []> buffer(new char[header.pointsize]);
-        for (int i = 0; i < header.points; i++) {
+        for (int32_t i = 0; i < header.points; i++) {
             if (fread(buffer.get(), header.pointsize, 1, file) != 1) {
                 PrintDebug("[ReadPCDData] Failed to read data record.\n");
                 pointcloud.Clear();
@@ -467,8 +467,8 @@ bool ReadPCDData(FILE *file, const PCDHeader &header, PointCloud &pointcloud)
         }
         std::unique_ptr<char []> buffer(new char[uncompressed_size]);
         if (lzf_decompress(buffer_compressed.get(),
-                (unsigned int)compressed_size, buffer.get(),
-                (unsigned int)uncompressed_size) != uncompressed_size) {
+                (uint32_t)compressed_size, buffer.get(),
+                (uint32_t)uncompressed_size) != uncompressed_size) {
             PrintDebug("[ReadPCDData] Uncompression failed.\n");
             pointcloud.Clear();
             return false;
@@ -476,43 +476,43 @@ bool ReadPCDData(FILE *file, const PCDHeader &header, PointCloud &pointcloud)
         for (const auto &field : header.fields) {
             const char *base_ptr = buffer.get() + field.offset * header.points;
             if (field.name == "x") {
-                for (int i = 0; i < header.points; i++) {
+                for (int32_t i = 0; i < header.points; i++) {
                     pointcloud.points_[i](0) = UnpackBinaryPCDElement(
                             base_ptr + i * field.size * field.count, field.type,
                             field.size);
                 }
             } else if (field.name == "y") {
-                for (int i = 0; i < header.points; i++) {
+                for (int32_t i = 0; i < header.points; i++) {
                     pointcloud.points_[i](1) = UnpackBinaryPCDElement(
                             base_ptr + i * field.size * field.count, field.type,
                             field.size);
                 }
             } else if (field.name == "z") {
-                for (int i = 0; i < header.points; i++) {
+                for (int32_t i = 0; i < header.points; i++) {
                     pointcloud.points_[i](2) = UnpackBinaryPCDElement(
                             base_ptr + i * field.size * field.count, field.type,
                             field.size);
                 }
             } else if (field.name == "normal_x") {
-                for (int i = 0; i < header.points; i++) {
+                for (int32_t i = 0; i < header.points; i++) {
                     pointcloud.normals_[i](0) = UnpackBinaryPCDElement(
                             base_ptr + i * field.size * field.count, field.type,
                             field.size);
                 }
             } else if (field.name == "normal_y") {
-                for (int i = 0; i < header.points; i++) {
+                for (int32_t i = 0; i < header.points; i++) {
                     pointcloud.normals_[i](1) = UnpackBinaryPCDElement(
                             base_ptr + i * field.size * field.count, field.type,
                             field.size);
                 }
             } else if (field.name == "normal_z") {
-                for (int i = 0; i < header.points; i++) {
+                for (int32_t i = 0; i < header.points; i++) {
                     pointcloud.normals_[i](2) = UnpackBinaryPCDElement(
                             base_ptr + i * field.size * field.count, field.type,
                             field.size);
                 }
             } else if (field.name == "rgb" || field.name == "rgba") {
-                for (int i = 0; i < header.points; i++) {
+                for (int32_t i = 0; i < header.points; i++) {
                     pointcloud.colors_[i] = UnpackBinaryPCDColor(
                             base_ptr + i * field.size * field.count, field.type,
                             field.size);
@@ -542,7 +542,7 @@ void RemoveNanData(PointCloud &pointcloud)
     pointcloud.points_.resize(k);
     if (has_normal) pointcloud.normals_.resize(k);
     if (has_color) pointcloud.colors_.resize(k);
-    PrintDebug("[Purge] %d nan points have been removed.\n", (int)(old_point_num - k));
+    PrintDebug("[Purge] %d nan points have been removed.\n", (int32_t)(old_point_num - k));
 }
 
 bool GenerateHeader(const PointCloud &pointcloud, const bool write_ascii,
@@ -552,7 +552,7 @@ bool GenerateHeader(const PointCloud &pointcloud, const bool write_ascii,
         return false;
     }
     header.version = "0.7";
-    header.width = (int)pointcloud.points_.size();
+    header.width = (int32_t)pointcloud.points_.size();
     header.height = 1;
     header.points = header.width;
     header.fields.clear();
@@ -644,9 +644,9 @@ bool WritePCDHeader(FILE *file, const PCDHeader &header)
 float ConvertRGBToFloat(const Eigen::Vector3d &color)
 {
     std::uint8_t rgba[4] = {0, 0, 0, 0};
-    rgba[2] = (std::uint8_t)std::max(std::min((int)(color(0) * 255.0), 255), 0);
-    rgba[1] = (std::uint8_t)std::max(std::min((int)(color(1) * 255.0), 255), 0);
-    rgba[0] = (std::uint8_t)std::max(std::min((int)(color(2) * 255.0), 255), 0);
+    rgba[2] = (std::uint8_t)std::max(std::min((int32_t)(color(0) * 255.0), 255), 0);
+    rgba[1] = (std::uint8_t)std::max(std::min((int32_t)(color(1) * 255.0), 255), 0);
+    rgba[0] = (std::uint8_t)std::max(std::min((int32_t)(color(2) * 255.0), 255), 0);
     float value;
     memcpy(&value, rgba, 4);
     return value;
@@ -658,7 +658,7 @@ bool WritePCDData(FILE *file, const PCDHeader &header,
     bool has_normal = pointcloud.HasNormals();
     bool has_color = pointcloud.HasColors();
     if (header.datatype == PCD_DATA_ASCII) {
-        for (size_t i = 0; i < pointcloud.points_.size(); i++) {
+        for (uint32_t i = 0; i < pointcloud.points_.size(); i++) {
             const auto &point = pointcloud.points_[i];
             fprintf(file, "%.10g %.10g %.10g", point(0), point(1), point(2));
             if (has_normal) {
@@ -674,12 +674,12 @@ bool WritePCDData(FILE *file, const PCDHeader &header,
         }
     } else if (header.datatype == PCD_DATA_BINARY) {
         std::unique_ptr<float []> data(new float[header.elementnum]);
-        for (size_t i = 0; i < pointcloud.points_.size(); i++) {
+        for (uint32_t i = 0; i < pointcloud.points_.size(); i++) {
             const auto &point = pointcloud.points_[i];
             data[0] = (float)point(0);
             data[1] = (float)point(1);
             data[2] = (float)point(2);
-            int idx = 3;
+            int32_t idx = 3;
             if (has_normal) {
                 const auto &normal = pointcloud.normals_[i];
                 data[idx + 0] = (float)normal(0);
@@ -694,17 +694,17 @@ bool WritePCDData(FILE *file, const PCDHeader &header,
             fwrite(data.get(), sizeof(float), header.elementnum, file);
         }
     } else if (header.datatype == PCD_DATA_BINARY_COMPRESSED) {
-        int strip_size = header.points;
+        int32_t strip_size = header.points;
         std::uint32_t buffer_size = (std::uint32_t)(header.elementnum *
                 header.points);
         std::unique_ptr<float []> buffer(new float[buffer_size]);
         std::unique_ptr<float []> buffer_compressed(new float[buffer_size * 2]);
-        for (size_t i = 0; i < pointcloud.points_.size(); i++) {
+        for (uint32_t i = 0; i < pointcloud.points_.size(); i++) {
             const auto &point = pointcloud.points_[i];
             buffer[0 * strip_size + i] = (float)point(0);
             buffer[1 * strip_size + i] = (float)point(1);
             buffer[2 * strip_size + i] = (float)point(2);
-            int idx = 3;
+            int32_t idx = 3;
             if (has_normal) {
                 const auto &normal = pointcloud.normals_[i];
                 buffer[(idx + 0) * strip_size + i] = (float)normal(0);
@@ -750,12 +750,12 @@ bool ReadPointCloudFromPCD(const std::string &filename, PointCloud &pointcloud)
         return false;
     }
     PrintDebug("PCD header indicates %d fields, %d bytes per point, and %d points in total.\n",
-            (int)header.fields.size(), header.pointsize, header.points);
+            (int32_t)header.fields.size(), header.pointsize, header.points);
     for (const auto &field : header.fields) {
         PrintDebug("%s, %c, %d, %d, %d\n", field.name.c_str(),
                 field.type, field.size, field.count, field.offset);
     }
-    PrintDebug("Compression method is %d.\n", (int)header.datatype);
+    PrintDebug("Compression method is %d.\n", (int32_t)header.datatype);
     PrintDebug("Points: %s;  normals: %s;  colors: %s\n",
             header.has_points ? "yes" : "no",
             header.has_normals ? "yes" : "no",

@@ -58,7 +58,7 @@ void PrintHelp(char* argv[])
     PrintInfo("\n");
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     using namespace open3d;
 
@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     if (ProgramOptionExists(argc, argv, "--verbose"))
         SetVerbosityLevel(VerbosityLevel::VerboseAlways);
 
-    int rgbd_type = GetProgramOptionAsInt(argc, argv, "--rgbd_type", 0);
+    int32_t rgbd_type = GetProgramOptionAsInt(argc, argv, "--rgbd_type", 0);
     auto color_source = CreateImageFromFile(argv[1]);
     auto depth_source = CreateImageFromFile(argv[2]);
     auto color_target = CreateImageFromFile(argv[3]);

@@ -154,7 +154,7 @@ void ShaderWrapper::ReleaseProgram()
 bool ShaderWrapper::ValidateShader(GLuint shader_index)
 {
     GLint result = GL_FALSE;
-    int info_log_length;
+    int32_t info_log_length;
     glGetShaderiv(shader_index, GL_COMPILE_STATUS, &result);
     if (result == GL_FALSE) {
         glGetShaderiv(shader_index, GL_INFO_LOG_LENGTH, &info_log_length);
@@ -172,7 +172,7 @@ bool ShaderWrapper::ValidateShader(GLuint shader_index)
 bool ShaderWrapper::ValidateProgram(GLuint program_index)
 {
     GLint result = GL_FALSE;
-    int info_log_length;
+    int32_t info_log_length;
     glGetProgramiv(program_index, GL_LINK_STATUS, &result);
     if (result == GL_FALSE) {
         glGetProgramiv(program_index, GL_INFO_LOG_LENGTH, &info_log_length);

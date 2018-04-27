@@ -58,7 +58,7 @@ struct PLYReaderState {
     long color_num;
 };
 
-int ReadVertexCallback(p_ply_argument argument)
+int32_t ReadVertexCallback(p_ply_argument argument)
 {
     PLYReaderState *state_ptr;
     long index;
@@ -77,7 +77,7 @@ int ReadVertexCallback(p_ply_argument argument)
     return 1;
 }
 
-int ReadNormalCallback(p_ply_argument argument)
+int32_t ReadNormalCallback(p_ply_argument argument)
 {
     PLYReaderState *state_ptr;
     long index;
@@ -95,7 +95,7 @@ int ReadNormalCallback(p_ply_argument argument)
     return 1;
 }
 
-int ReadColorCallback(p_ply_argument argument)
+int32_t ReadColorCallback(p_ply_argument argument)
 {
     PLYReaderState *state_ptr;
     long index;
@@ -130,7 +130,7 @@ struct PLYReaderState {
     long triangle_num;
 };
 
-int ReadVertexCallback(p_ply_argument argument)
+int32_t ReadVertexCallback(p_ply_argument argument)
 {
     PLYReaderState *state_ptr;
     long index;
@@ -149,7 +149,7 @@ int ReadVertexCallback(p_ply_argument argument)
     return 1;
 }
 
-int ReadNormalCallback(p_ply_argument argument)
+int32_t ReadNormalCallback(p_ply_argument argument)
 {
     PLYReaderState *state_ptr;
     long index;
@@ -168,7 +168,7 @@ int ReadNormalCallback(p_ply_argument argument)
     return 1;
 }
 
-int ReadColorCallback(p_ply_argument argument)
+int32_t ReadColorCallback(p_ply_argument argument)
 {
     PLYReaderState *state_ptr;
     long index;
@@ -187,7 +187,7 @@ int ReadColorCallback(p_ply_argument argument)
     return 1;
 }
 
-int ReadFaceCallBack(p_ply_argument argument)
+int32_t ReadFaceCallBack(p_ply_argument argument)
 {
     PLYReaderState *state_ptr;
     long dummy, length, index;
@@ -201,7 +201,7 @@ int ReadFaceCallBack(p_ply_argument argument)
     ply_get_argument_property(argument, NULL, &length, &index);
     if((index >= 0) && (index <= 2)) {
         state_ptr->mesh_ptr->triangles_[state_ptr->triangle_index](index) =
-                static_cast<int>(value);
+                static_cast<int32_t>(value);
     }
     if(index == 2) {    // reading 'triangles_[n](2)'
         state_ptr->triangle_index++;
@@ -312,10 +312,10 @@ bool WritePointCloudToPLY(const std::string &filename,
         return false;
     }
 
-    ResetConsoleProgress(static_cast<int>(pointcloud.points_.size()),
+    ResetConsoleProgress(static_cast<int32_t>(pointcloud.points_.size()),
             "Writing PLY: ");
 
-    for (size_t i = 0; i < pointcloud.points_.size(); i++) {
+    for (uint32_t i = 0; i < pointcloud.points_.size(); i++) {
         const Eigen::Vector3d &point = pointcloud.points_[i];
         ply_write(ply_file, point(0));
         ply_write(ply_file, point(1));
@@ -452,9 +452,9 @@ bool WriteTriangleMeshToPLY(const std::string &filename,
     }
 
     ResetConsoleProgress(
-            static_cast<int>(mesh.vertices_.size() + mesh.triangles_.size()),
+            static_cast<int32_t>(mesh.vertices_.size() + mesh.triangles_.size()),
             "Writing PLY: ");
-    for (size_t i = 0; i < mesh.vertices_.size(); i++) {
+    for (uint32_t i = 0; i < mesh.vertices_.size(); i++) {
         const auto &vertex = mesh.vertices_[i];
         ply_write(ply_file, vertex(0));
         ply_write(ply_file, vertex(1));
@@ -473,7 +473,7 @@ bool WriteTriangleMeshToPLY(const std::string &filename,
         }
         AdvanceConsoleProgress();
     }
-    for (size_t i = 0; i < mesh.triangles_.size(); i++) {
+    for (uint32_t i = 0; i < mesh.triangles_.size(); i++) {
         const auto &triangle = mesh.triangles_[i];
         ply_write(ply_file, 3);
         ply_write(ply_file, triangle(0));

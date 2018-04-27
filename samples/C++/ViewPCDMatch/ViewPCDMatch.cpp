@@ -45,7 +45,7 @@
 #include <Open3D/Visualization/Visualization.h>
 
 bool ReadLogFile(const std::string &filename,
-        std::vector<std::tuple<int, int, int>> &metadata,
+        std::vector<std::tuple<int32_t, int32_t, int32_t>> &metadata,
         std::vector<Eigen::Matrix4d> &transformations)
 {
     using namespace open3d;
@@ -57,7 +57,7 @@ bool ReadLogFile(const std::string &filename,
         return false;
     }
     char line_buffer[DEFAULT_IO_BUFFER_SIZE];
-    int i, j, k;
+    int32_t i, j, k;
     Eigen::Matrix4d trans;
     while (fgets(line_buffer, DEFAULT_IO_BUFFER_SIZE, f)) {
         if (strlen(line_buffer) > 0 && line_buffer[0] != '#') {
@@ -114,7 +114,7 @@ void PrintHelp()
     printf("    --verbose n               : Set verbose level (0-4). Default: 2.\n");
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     using namespace open3d;
 
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
         PrintHelp();
         return 0;
     }
-    const int NUM_OF_COLOR_PALETTE = 5;
+    const int32_t NUM_OF_COLOR_PALETTE = 5;
     Eigen::Vector3d color_palette[NUM_OF_COLOR_PALETTE] = {
         Eigen::Vector3d(255, 180, 0) / 255.0,
         Eigen::Vector3d(0, 166, 237) / 255.0,
@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
         Eigen::Vector3d(13, 44, 84) / 255.0,
     };
 
-    int verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
+    int32_t verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
     SetVerbosityLevel((VerbosityLevel)verbose);
     std::string log_filename = GetProgramOptionAsString(argc, argv, "--log");
     std::string pcd_dirname = GetProgramOptionAsString(argc, argv, "--dir");
@@ -141,11 +141,11 @@ int main(int argc, char *argv[])
                 "pcds/";
     }
 
-    std::vector<std::tuple<int, int, int>> metadata;
+    std::vector<std::tuple<int32_t, int32_t, int32_t>> metadata;
     std::vector<Eigen::Matrix4d> transformations;
     ReadLogFile(log_filename, metadata, transformations);
 
-    for (auto k = 0; k < metadata.size(); k++) {
+    for (uint32_t k = 0; k < metadata.size(); k++) {
         auto i = std::get<0>(metadata[k]), j = std::get<1>(metadata[k]);
         PrintInfo("Showing matched point cloud #%d and #%d.\n", i, j);
         auto pcd_target = CreatePointCloudFromFile(pcd_dirname + "cloud_bin_" +

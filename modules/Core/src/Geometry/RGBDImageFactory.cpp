@@ -88,8 +88,8 @@ std::shared_ptr<RGBDImage> CreateRGBDImageFromSUNFormat(
         PrintWarning("[CreateRGBDImageFromSUNFormat] Unsupported image format.\n");
         return rgbd_image;
     }
-    for (int v = 0; v < depth.height_; v++) {
-        for (int u = 0; u < depth.width_; u++) {
+    for (int32_t v = 0; v < depth.height_; v++) {
+        for (int32_t u = 0; u < depth.width_; u++) {
             uint16_t  &d = *PointerAt<uint16_t>(depth, u, v);
             d = (d >> 3) | (d << 13);
         }
@@ -109,8 +109,8 @@ std::shared_ptr<RGBDImage> CreateRGBDImageFromNYUFormat(
         PrintWarning("[CreateRGBDImageFromNYUFormat] Unsupported image format.\n");
         return rgbd_image;
     }
-    for (int v = 0; v < depth.height_; v++) {
-        for (int u = 0; u < depth.width_; u++) {
+    for (int32_t v = 0; v < depth.height_; v++) {
+        for (int32_t u = 0; u < depth.width_; u++) {
             uint16_t *d = PointerAt<uint16_t>(depth, u, v);
             uint8_t *p = (uint8_t *)d;
             uint8_t x = *p;

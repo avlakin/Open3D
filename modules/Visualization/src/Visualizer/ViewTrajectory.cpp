@@ -44,10 +44,10 @@
 
 namespace open3d {
 
-const int ViewTrajectory::INTERVAL_MAX = 59;
-const int ViewTrajectory::INTERVAL_MIN = 0;
-const int ViewTrajectory::INTERVAL_STEP = 1;
-const int ViewTrajectory::INTERVAL_DEFAULT = 29;
+const int32_t ViewTrajectory::INTERVAL_MAX = 59;
+const int32_t ViewTrajectory::INTERVAL_MIN = 0;
+const int32_t ViewTrajectory::INTERVAL_STEP = 1;
+const int32_t ViewTrajectory::INTERVAL_DEFAULT = 29;
 
 void ViewTrajectory::ComputeInterpolationCoefficients()
 {
@@ -56,11 +56,11 @@ void ViewTrajectory::ComputeInterpolationCoefficients()
     }
 
     // num_of_status is used frequently, give it an alias
-    int n = int(view_status_.size());
+    int32_t n = int32_t(view_status_.size());
     coeff_.resize(n);
 
     // Consider ViewStatus as a point in an 17-dimensional space.
-    for (int i = 0; i < n; i++) {
+    for (int32_t i = 0; i < n; i++) {
         coeff_[i].setZero();
         coeff_[i].block<17, 1>(0, 0) = view_status_[i].ConvertToVector17d();
     }
@@ -98,7 +98,7 @@ void ViewTrajectory::ComputeInterpolationCoefficients()
     }
 
     // Set middle part
-    for (int i = 1; i < n - 1; i++) {
+    for (int32_t i = 1; i < n - 1; i++) {
         A(i, i) = 4.0;
         A(i, i - 1) = 1.0;
         A(i, i + 1) = 1.0;
@@ -106,7 +106,7 @@ void ViewTrajectory::ComputeInterpolationCoefficients()
 
     auto llt_solver = A.llt();
 
-    for (int k = 0; k < 17; k++) {
+    for (int32_t k = 0; k < 17; k++) {
         // Now we work for the k-th coefficient
         b.setZero();
 
@@ -120,15 +120,15 @@ void ViewTrajectory::ComputeInterpolationCoefficients()
         }
 
         // Set middle part
-        for (int i = 1; i < n - 1; i++) {
+        for (int32_t i = 1; i < n - 1; i++) {
             b(i) = 3.0 * (coeff_[i + 1](k, 0) - coeff_[i - 1](k, 0));
         }
 
         // Solve the linear system
         Eigen::VectorXd x = llt_solver.solve(b);
 
-        for (int i = 0; i < n; i++) {
-            int i1 = (i + 1) % n;
+        for (int32_t i = 0; i < n; i++) {
+            int32_t i1 = (i + 1) % n;
             coeff_[i](k, 1) = x(i);
             coeff_[i](k, 2) = 3.0 * (coeff_[i1](k, 0) - coeff_[i](k, 0))
                     - 2.0 * x(i) - x(i1);
@@ -138,13 +138,13 @@ void ViewTrajectory::ComputeInterpolationCoefficients()
     }
 }
 
-std::tuple<bool, ViewParameters> ViewTrajectory::GetInterpolatedFrame(size_t k)
+std::tuple<bool, ViewParameters> ViewTrajectory::GetInterpolatedFrame(uint32_t k)
 {
     ViewParameters status;
     if (view_status_.empty() || k >= NumOfFrames()) {
         return std::make_tuple(false, status);
     }
-    size_t segment_index = k / (interval_ + 1);
+    uint32_t segment_index = k / (interval_ + 1);
     double segment_fraction = double(k - segment_index * (interval_ + 1)) /
             double(interval_ + 1);
     Eigen::Vector4d s(1.0, segment_fraction,
@@ -194,7 +194,7 @@ bool ViewTrajectory::ConvertFromJsonValue(const Json::Value &value)
         return false;
     }
     view_status_.resize(trajectory_array.size());
-    for (int i = 0; i < (int)trajectory_array.size(); i++) {
+    for (int32_t i = 0; i < (int32_t)trajectory_array.size(); i++) {
         const Json::Value &status_object = trajectory_array[i];
         ViewParameters status;
         if (status.ConvertFromJsonValue(status_object) == false) {

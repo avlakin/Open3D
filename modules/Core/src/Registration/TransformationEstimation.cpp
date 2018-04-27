@@ -63,7 +63,7 @@ Eigen::Matrix4d TransformationEstimationPointToPoint::ComputeTransformation(
     if (corres.empty()) return Eigen::Matrix4d::Identity();
     Eigen::MatrixXd source_mat(3, corres.size());
     Eigen::MatrixXd target_mat(3, corres.size());
-    for (size_t i = 0; i < corres.size(); i++) {
+    for (uint32_t i = 0; i < corres.size(); i++) {
         source_mat.block<3, 1>(0, i) = source.points_[corres[i][0]];
         target_mat.block<3, 1>(0, i) = target.points_[corres[i][1]];
     }
@@ -92,7 +92,7 @@ Eigen::Matrix4d TransformationEstimationPointToPlane::ComputeTransformation(
         return Eigen::Matrix4d::Identity();
 
     auto compute_jacobian_and_residual = [&]
-            (int i, Eigen::Vector6d &J_r, double &r) {
+            (int32_t i, Eigen::Vector6d &J_r, double &r) {
         const Eigen::Vector3d &vs = source.points_[corres[i][0]];
         const Eigen::Vector3d &vt = target.points_[corres[i][1]];
         const Eigen::Vector3d &nt = target.normals_[corres[i][1]];
@@ -104,7 +104,7 @@ Eigen::Matrix4d TransformationEstimationPointToPlane::ComputeTransformation(
     Eigen::Matrix6d JTJ;
     Eigen::Vector6d JTr;
     std::tie(JTJ, JTr) = ComputeJTJandJTr<Eigen::Matrix6d, Eigen::Vector6d>(
-            compute_jacobian_and_residual, (int)corres.size());
+            compute_jacobian_and_residual, (int32_t)corres.size());
 
     bool is_success;
     Eigen::Matrix4d extrinsic;

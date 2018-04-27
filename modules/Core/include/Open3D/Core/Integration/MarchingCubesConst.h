@@ -42,7 +42,7 @@
 
 namespace {
 
-    const int edge_table[256] = {
+    const int32_t edge_table[256] = {
         0x0  , 0x109, 0x203, 0x30a, 0x406, 0x50f, 0x605, 0x70c,
         0x80c, 0x905, 0xa0f, 0xb06, 0xc0a, 0xd03, 0xe09, 0xf00,
         0x190, 0x99 , 0x393, 0x29a, 0x596, 0x49f, 0x795, 0x69c,
@@ -76,7 +76,7 @@ namespace {
         0xf00, 0xe09, 0xd03, 0xc0a, 0xb06, 0xa0f, 0x905, 0x80c,
         0x70c, 0x605, 0x50f, 0x406, 0x30a, 0x203, 0x109, 0x0 };
 
-    const int tri_table[256][16] =
+    const int32_t tri_table[256][16] =
     { { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
     { 0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
     { 0, 1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
@@ -360,7 +360,7 @@ namespace {
         Eigen::Vector4i(0, 1, 0, 2),
     };
 
-    const int edge_to_vert[12][2] = {
+    const int32_t edge_to_vert[12][2] = {
         { 0, 1 },
         { 1, 2 },
         { 3, 2 },

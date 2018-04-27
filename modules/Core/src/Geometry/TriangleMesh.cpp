@@ -124,27 +124,27 @@ TriangleMesh &TriangleMesh::operator+=(const TriangleMesh &mesh)
     }
     if ((!HasVertices() || HasVertexColors()) && mesh.HasVertexColors()) {
         vertex_colors_.resize(new_vert_num);
-        for (size_t i = 0; i < add_vert_num; i++)
+        for (uint32_t i = 0; i < add_vert_num; i++)
             vertex_colors_[old_vert_num + i] = mesh.vertex_colors_[i];
     } else {
         vertex_colors_.clear();
     }
     vertices_.resize(new_vert_num);
-    for (size_t i = 0; i < add_vert_num; i++)
+    for (uint32_t i = 0; i < add_vert_num; i++)
         vertices_[old_vert_num + i] = mesh.vertices_[i];
 
     if ((!HasTriangles() || HasTriangleNormals()) &&
             mesh.HasTriangleNormals()) {
         triangle_normals_.resize(new_tri_num);
-        for (size_t i = 0; i < add_tri_num; i++)
+        for (uint32_t i = 0; i < add_tri_num; i++)
             triangle_normals_[old_tri_num + i] = mesh.triangle_normals_[i];
     } else {
         triangle_normals_.clear();
     }
     triangles_.resize(triangles_.size() + mesh.triangles_.size());
-    Eigen::Vector3i index_shift((int)old_vert_num, (int)old_vert_num,
-            (int)old_vert_num);
-    for (size_t i = 0; i < add_tri_num; i++) {
+    Eigen::Vector3i index_shift((int32_t)old_vert_num, (int32_t)old_vert_num,
+            (int32_t)old_vert_num);
+    for (uint32_t i = 0; i < add_tri_num; i++) {
         triangles_[old_tri_num + i] = mesh.triangles_[i] + index_shift;
     }
     return (*this);
@@ -158,7 +158,7 @@ TriangleMesh TriangleMesh::operator+(const TriangleMesh &mesh) const
 void TriangleMesh::ComputeTriangleNormals(bool normalized/* = true*/)
 {
     triangle_normals_.resize(triangles_.size());
-    for (size_t i = 0; i < triangles_.size(); i++) {
+    for (uint32_t i = 0; i < triangles_.size(); i++) {
         auto &triangle = triangles_[i];
         Eigen::Vector3d v01 = vertices_[triangle(1)] - vertices_[triangle(0)];
         Eigen::Vector3d v02 = vertices_[triangle(2)] - vertices_[triangle(0)];
@@ -175,7 +175,7 @@ void TriangleMesh::ComputeVertexNormals(bool normalized/* = true*/)
         ComputeTriangleNormals(false);
     }
     vertex_normals_.resize(vertices_.size(), Eigen::Vector3d::Zero());
-    for (size_t i = 0; i < triangles_.size(); i++) {
+    for (uint32_t i = 0; i < triangles_.size(); i++) {
         auto &triangle = triangles_[i];
         vertex_normals_[triangle(0)] += triangle_normals_[i];
         vertex_normals_[triangle(1)] += triangle_normals_[i];
@@ -197,14 +197,14 @@ void TriangleMesh::Purge()
 void TriangleMesh::RemoveDuplicatedVertices()
 {
     typedef std::tuple<double, double, double> Coordinate3;
-    std::unordered_map<Coordinate3, size_t, hash_tuple::hash<Coordinate3>>
+    std::unordered_map<Coordinate3, uint32_t, hash_tuple::hash<Coordinate3>>
             point_to_old_index;
-    std::vector<int> index_old_to_new(vertices_.size());
+    std::vector<int32_t> index_old_to_new(vertices_.size());
     bool has_vert_normal = HasVertexNormals();
     bool has_vert_color = HasVertexColors();
     size_t old_vertex_num = vertices_.size();
     size_t k = 0;                                           // new index
-    for (size_t i = 0; i < old_vertex_num; i++) {           // old index
+    for (uint32_t i = 0; i < old_vertex_num; i++) {           // old index
         Coordinate3 coord = std::make_tuple(vertices_[i](0), vertices_[i](1),
                 vertices_[i](2));
         if (point_to_old_index.find(coord) == point_to_old_index.end()) {
@@ -212,7 +212,7 @@ void TriangleMesh::RemoveDuplicatedVertices()
             vertices_[k] = vertices_[i];
             if (has_vert_normal) vertex_normals_[k] = vertex_normals_[i];
             if (has_vert_color) vertex_colors_[k] = vertex_colors_[i];
-            index_old_to_new[i] = (int)k;
+            index_old_to_new[i] = (int32_t)k;
             k++;
         } else {
             index_old_to_new[i] = index_old_to_new[point_to_old_index[coord]];
@@ -229,18 +229,18 @@ void TriangleMesh::RemoveDuplicatedVertices()
         }
     }
     PrintDebug("[RemoveDuplicatedVertices] %d vertices have been removed.\n",
-            (int)(old_vertex_num - k));
+            (int32_t)(old_vertex_num - k));
 }
 
 void TriangleMesh::RemoveDuplicatedTriangles()
 {
-    typedef std::tuple<int, int, int> Index3;
-    std::unordered_map<Index3, size_t, hash_tuple::hash<Index3>>
+    typedef std::tuple<int32_t, int32_t, int32_t> Index3;
+    std::unordered_map<Index3, uint32_t, hash_tuple::hash<Index3>>
             triangle_to_old_index;
     bool has_tri_normal = HasTriangleNormals();
     size_t old_triangle_num = triangles_.size();
     size_t k = 0;
-    for (size_t i = 0; i < old_triangle_num; i++) {
+    for (uint32_t i = 0; i < old_triangle_num; i++) {
         Index3 index;
         // We first need to find the minimum index. Because triangle (0-1-2) and
         // triangle (2-0-1) are the same.
@@ -271,7 +271,7 @@ void TriangleMesh::RemoveDuplicatedTriangles()
     triangles_.resize(k);
     if (has_tri_normal) triangle_normals_.resize(k);
     PrintDebug("[RemoveDuplicatedTriangles] %d triangles have been removed.\n",
-            (int)(old_triangle_num - k));
+            (int32_t)(old_triangle_num - k));
 }
 
 void TriangleMesh::RemoveNonManifoldVertices()
@@ -284,7 +284,7 @@ void TriangleMesh::RemoveNonManifoldVertices()
         vertex_has_reference[triangle(1)] = true;
         vertex_has_reference[triangle(2)] = true;
     }
-    std::vector<int> index_old_to_new(vertices_.size());
+    std::vector<int32_t> index_old_to_new(vertices_.size());
     bool has_vert_normal = HasVertexNormals();
     bool has_vert_color = HasVertexColors();
     size_t old_vertex_num = vertices_.size();
@@ -294,7 +294,7 @@ void TriangleMesh::RemoveNonManifoldVertices()
             vertices_[k] = vertices_[i];
             if (has_vert_normal) vertex_normals_[k] = vertex_normals_[i];
             if (has_vert_color) vertex_colors_[k] = vertex_colors_[i];
-            index_old_to_new[i] = (int)k;
+            index_old_to_new[i] = (int32_t)k;
             k++;
         } else {
             index_old_to_new[i] = -1;
@@ -311,7 +311,7 @@ void TriangleMesh::RemoveNonManifoldVertices()
         }
     }
     PrintDebug("[RemoveNonManifoldVertices] %d vertices have been removed.\n",
-            (int)(old_vertex_num - k));
+            (int32_t)(old_vertex_num - k));
 }
 
 void TriangleMesh::RemoveNonManifoldTriangles()
@@ -334,7 +334,7 @@ void TriangleMesh::RemoveNonManifoldTriangles()
     triangles_.resize(k);
     if (has_tri_normal) triangle_normals_.resize(k);
     PrintDebug("[RemoveNonManifoldTriangles] %d triangles have been removed.\n",
-            (int)(old_triangle_num - k));
+            (int32_t)(old_triangle_num - k));
 }
 
 }   // namespace open3d

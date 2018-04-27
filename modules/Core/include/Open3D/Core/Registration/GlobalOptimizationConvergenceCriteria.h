@@ -46,7 +46,7 @@ public:
     GlobalOptimizationOption(
             double max_correspondence_distance = 0.075,
             double edge_prune_threshold = 0.25,
-            int reference_node = -1) :
+            int32_t reference_node = -1) :
             max_correspondence_distance_(max_correspondence_distance),
             edge_prune_threshold_(edge_prune_threshold),
             reference_node_(reference_node) {
@@ -68,19 +68,19 @@ public:
     /// line_process weight < edge_prune_threshold_ (0.25) is pruned.
     double edge_prune_threshold_;
     /// This node is unchanged after optimization
-    int reference_node_;
+    int32_t reference_node_;
 };
 
 class GlobalOptimizationConvergenceCriteria
 {
 public:
     GlobalOptimizationConvergenceCriteria(
-        int max_iteration = 100,
+        int32_t max_iteration = 100,
         double min_relative_increment = 1e-6,
         double min_relative_residual_increment = 1e-6,
         double min_right_term = 1e-6,
         double min_residual = 1e-6,
-        int max_iteration_lm = 20,
+        int32_t max_iteration_lm = 20,
         double upper_scale_factor = 2. / 3.,
         double lower_scale_factor = 1. / 3.) :
         max_iteration_(max_iteration),
@@ -103,7 +103,7 @@ public:
 
 public:
     /// maximum iteration number for iterative optmization module.
-    int max_iteration_;
+    int32_t max_iteration_;
     /// several convergence criteria to determine
     /// stability of iterative optimization
     double min_relative_increment_;
@@ -112,7 +112,7 @@ public:
     double min_residual_;
     /// max_iteration_lm_ is used for additional Levenberg-Marquardt inner loop
     /// that automatically changes steepest gradient gain
-    int max_iteration_lm_;
+    int32_t max_iteration_lm_;
     /// below two variables used for levenberg marquardt algorithm
     /// these are scaling factors that increase/decrease lambda
     /// used in H_LM = H + lambda * I

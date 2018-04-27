@@ -50,8 +50,8 @@ namespace open3d {
 bool DrawGeometries(
         const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
         const std::string &window_name/* = "Open3D"*/,
-        int width/* = 640*/, int height/* = 480*/,
-        int left/* = 50*/, int top/* = 50*/)
+        int32_t width/* = 640*/, int32_t height/* = 480*/,
+        int32_t left/* = 50*/, int32_t top/* = 50*/)
 {
     Visualizer visualizer;
     if (visualizer.CreateWindow(window_name, width, height, left, top) ==
@@ -74,8 +74,8 @@ bool DrawGeometries(
 bool DrawGeometriesWithCustomAnimation(
         const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
         const std::string &window_name/* = "Open3D"*/,
-        int width/* = 640*/, int height/* = 480*/,
-        int left/* = 50*/, int top/* = 50*/,
+        int32_t width/* = 640*/, int32_t height/* = 480*/,
+        int32_t left/* = 50*/, int32_t top/* = 50*/,
         const std::string &json_filename/* = ""*/)
 {
     VisualizerWithCustomAnimation visualizer;
@@ -110,8 +110,8 @@ bool DrawGeometriesWithAnimationCallback(
         const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
         std::function<bool(Visualizer *)> callback_func,
         const std::string &window_name/* = "Open3D"*/,
-        int width/* = 640*/, int height/* = 480*/,
-        int left/* = 50*/, int top/* = 50*/)
+        int32_t width/* = 640*/, int32_t height/* = 480*/,
+        int32_t left/* = 50*/, int32_t top/* = 50*/)
 {
     Visualizer visualizer;
     if (visualizer.CreateWindow(window_name, width, height, left, top) ==
@@ -134,10 +134,10 @@ bool DrawGeometriesWithAnimationCallback(
 
 bool DrawGeometriesWithKeyCallbacks(
         const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
-        const std::map<int, std::function<bool(Visualizer *)>> &key_to_callback,
+        const std::map<int32_t, std::function<bool(Visualizer *)>> &key_to_callback,
         const std::string &window_name/* = "Open3D"*/,
-        int width/* = 640*/, int height/* = 480*/,
-        int left/* = 50*/, int top/* = 50*/)
+        int32_t width/* = 640*/, int32_t height/* = 480*/,
+        int32_t left/* = 50*/, int32_t top/* = 50*/)
 {
     VisualizerWithKeyCallback visualizer;
     if (visualizer.CreateWindow(window_name, width, height, left, top) ==
@@ -164,8 +164,8 @@ bool DrawGeometriesWithKeyCallbacks(
 bool DrawGeometriesWithEditing(
         const std::vector<std::shared_ptr<const Geometry>> &geometry_ptrs,
         const std::string &window_name/* = "Open3D"*/,
-        int width/* = 640*/, int height/* = 480*/,
-        int left/* = 50*/, int top/* = 50*/)
+        int32_t width/* = 640*/, int32_t height/* = 480*/,
+        int32_t left/* = 50*/, int32_t top/* = 50*/)
 {
     VisualizerWithEditing visualizer;
     if (visualizer.CreateWindow(window_name, width, height, left, top) ==

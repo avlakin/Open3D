@@ -63,12 +63,12 @@ public:
         return singleton;
     }
 
-    static int InitGLFW() {
+    static int32_t InitGLFW() {
         GLFWEnvironmentSingleton::GetInstance();
         return glfwInit();
     }
 
-    static void GLFWErrorCallback(int error, const char* description) {
+    static void GLFWErrorCallback(int32_t error, const char* description) {
         PrintError("GLFW Error: %s\n", description);
     }
 };
@@ -85,8 +85,8 @@ Visualizer::~Visualizer()
 }
 
 bool Visualizer::CreateWindow(const std::string &window_name/* = "Open3D"*/,
-        const int width/* = 640*/, const int height/* = 480*/,
-        const int left/* = 50*/, const int top/* = 50*/)
+        const int32_t width/* = 640*/, const int32_t height/* = 480*/,
+        const int32_t left/* = 50*/, const int32_t top/* = 50*/)
 {
     window_name_ = window_name;
     if (window_) {  // window already created
@@ -126,7 +126,7 @@ bool Visualizer::CreateWindow(const std::string &window_name/* = "Open3D"*/,
     // Some hacks to get pixel_to_screen_coordinate_
     glfwSetWindowSize(window_, 100, 100);
     glfwSetWindowPos(window_, 100, 100);
-    int pixel_width_in_osx, pixel_height_in_osx;
+    int32_t pixel_width_in_osx, pixel_height_in_osx;
     glfwGetFramebufferSize(window_, &pixel_width_in_osx, &pixel_height_in_osx);
     if (pixel_width_in_osx > 0) {
         pixel_to_screen_coordinate_ = 100.0 / (double)pixel_width_in_osx;
@@ -147,7 +147,7 @@ bool Visualizer::CreateWindow(const std::string &window_name/* = "Open3D"*/,
     };
     glfwSetWindowRefreshCallback(window_, window_refresh_callback);
 
-    auto window_resize_callback = [](GLFWwindow *window, int w, int h) {
+    auto window_resize_callback = [](GLFWwindow *window, int32_t w, int32_t h) {
         static_cast<Visualizer *>(glfwGetWindowUserPointer(window))->
                 WindowResizeCallback(window, w, h);
     };
@@ -166,7 +166,7 @@ bool Visualizer::CreateWindow(const std::string &window_name/* = "Open3D"*/,
     glfwSetScrollCallback(window_, mouse_scroll_callback);
 
     auto mouse_button_callback = [](GLFWwindow *window,
-            int button, int action, int mods)
+            int32_t button, int32_t action, int32_t mods)
     {
         static_cast<Visualizer *>(glfwGetWindowUserPointer(window))->
                 MouseButtonCallback(window, button, action, mods);
@@ -174,7 +174,7 @@ bool Visualizer::CreateWindow(const std::string &window_name/* = "Open3D"*/,
     glfwSetMouseButtonCallback(window_, mouse_button_callback);
 
     auto key_press_callback = [](GLFWwindow *window,
-            int key, int scancode, int action, int mods)
+            int32_t key, int32_t scancode, int32_t action, int32_t mods)
     {
         static_cast<Visualizer *>(glfwGetWindowUserPointer(window))->
                 KeyPressCallback(window, key, scancode, action, mods);
@@ -202,7 +202,7 @@ bool Visualizer::CreateWindow(const std::string &window_name/* = "Open3D"*/,
         return false;
     }
 
-    int window_width, window_height;
+    int32_t window_width, window_height;
     glfwGetFramebufferSize(window_, &window_width, &window_height);
     WindowResizeCallback(window_, window_width, window_height);
 

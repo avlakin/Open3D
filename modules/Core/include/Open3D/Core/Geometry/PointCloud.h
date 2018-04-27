@@ -82,14 +82,14 @@ public:
     }
 
     void NormalizeNormals() {
-        for (size_t i = 0; i < normals_.size(); i++) {
+        for (uint32_t i = 0; i < normals_.size(); i++) {
             normals_[i].normalize();
         }
     }
 
     void PaintUniformColor(const Eigen::Vector3d &color) {
         colors_.resize(points_.size());
-        for (size_t i = 0; i < points_.size(); i++) {
+        for (uint32_t i = 0; i < points_.size(); i++) {
             colors_[i] = color;
         }
     }
@@ -111,7 +111,7 @@ std::shared_ptr<PointCloud> CreatePointCloudFromDepthImage(
         const Image &depth, const PinholeCameraIntrinsic &intrinsic,
         const Eigen::Matrix4d &extrinsic = Eigen::Matrix4d::Identity(),
         double depth_scale = 1000.0, double depth_trunc = 1000.0,
-        int stride = 1);
+        int32_t stride = 1);
 
 /// Factory function to create a pointcloud from an RGB-D image and a camera
 /// model (PointCloudFactory.cpp)
@@ -124,7 +124,7 @@ std::shared_ptr<PointCloud> CreatePointCloudFromRGBDImage(
 /// \return output pointcloud
 /// Points with indices in \param indices are selected.
 std::shared_ptr<PointCloud> SelectDownSample(const PointCloud &input,
-        const std::vector<size_t> &indices);
+        const std::vector<uint32_t> &indices);
 
 /// Function to downsample \param input pointcloud into output pointcloud with a voxel
 /// \param voxel_size defines the resolution of the voxel grid, smaller value
@@ -136,7 +136,7 @@ std::shared_ptr<PointCloud> VoxelDownSample(const PointCloud &input,
 /// Function to downsample \param input pointcloud into output pointcloud uniformly
 /// \param every_k_points indicates the sample rate.
 std::shared_ptr<PointCloud> UniformDownSample(const PointCloud &input,
-        size_t every_k_points);
+        uint32_t every_k_points);
 
 /// Function to crop \param input pointcloud into output pointcloud
 /// All points with coordinates less than \param min_bound or larger than

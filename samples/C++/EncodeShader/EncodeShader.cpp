@@ -62,7 +62,7 @@ void WriteFileHeader(FILE *file)
 std::string MakeString(const std::string &line)
 {
     std::string str;
-    for (size_t i = 0; i < line.size(); i++) {
+    for (uint32_t i = 0; i < line.size(); i++) {
         char c = line[i];
         if (c == '"') {
             str += "\\\"";
@@ -101,7 +101,7 @@ void WriteStringFooter(FILE *file)
     fprintf(file, "\n");
 }
 
-int main(int argc, char **args)
+int32_t main(int32_t argc, char **args)
 {
     if (argc <= 1) {
         PrintHelp();

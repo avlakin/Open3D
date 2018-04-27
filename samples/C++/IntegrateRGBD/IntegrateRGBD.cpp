@@ -62,7 +62,7 @@ void PrintHelp()
     printf("    --verbose n               : Set verbose level (0-4). Default: 2.\n");
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     using namespace open3d;
 
@@ -78,13 +78,13 @@ int main(int argc, char *argv[])
     bool save_pointcloud = ProgramOptionExists(argc, argv, "--save_pointcloud");
     bool save_mesh = ProgramOptionExists(argc, argv, "--save_mesh");
     bool save_voxel = ProgramOptionExists(argc, argv, "--save_voxel");
-    int every_k_frames = GetProgramOptionAsInt(argc, argv, "--every_k_frames",
+    int32_t every_k_frames = GetProgramOptionAsInt(argc, argv, "--every_k_frames",
             0);
     double length = GetProgramOptionAsDouble(argc, argv, "--length", 4.0);
-    int resolution = GetProgramOptionAsInt(argc, argv, "--resolution", 512);
+    int32_t resolution = GetProgramOptionAsInt(argc, argv, "--resolution", 512);
     double sdf_trunc_percentage = GetProgramOptionAsDouble(argc, argv,
             "--sdf_trunc_percentage", 0.01);
-    int verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
+    int32_t verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
     SetVerbosityLevel((VerbosityLevel)verbose);
 
     auto camera_trajectory = CreatePinholeCameraTrajectoryFromFile(
@@ -98,14 +98,14 @@ int main(int argc, char *argv[])
         return 0;
     }
     char buffer[DEFAULT_IO_BUFFER_SIZE];
-    int index = 0;
-    int save_index = 0;
+    int32_t index = 0;
+    int32_t save_index = 0;
     //UniformTSDFVolume volume(length, resolution, length * sdf_trunc_percentage,
     //      true);
     ScalableTSDFVolume volume(length / (double)resolution,
             length * sdf_trunc_percentage, true);
     FPSTimer timer("Process RGBD stream",
-            (int)camera_trajectory->extrinsic_.size());
+            (int32_t)camera_trajectory->extrinsic_.size());
     Image depth, color;
     while (fgets(buffer, DEFAULT_IO_BUFFER_SIZE, file)) {
         std::vector<std::string> st;
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
             volume.Integrate(*rgbd, camera_trajectory->intrinsic_,
                     camera_trajectory->extrinsic_[index]);
             index++;
-            if (index == (int)camera_trajectory->extrinsic_.size() ||
+            if (index == (int32_t)camera_trajectory->extrinsic_.size() ||
                     (every_k_frames > 0 && index % every_k_frames == 0)) {
                 PrintDebug("Saving fragment %d ...\n", save_index);
                 std::string save_index_str = std::to_string(save_index);

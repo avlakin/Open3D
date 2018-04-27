@@ -52,7 +52,7 @@ void pybind_camera(py::module &m)
     py::detail::bind_default_constructor<PinholeCameraIntrinsic>(pinhole_intr);
     py::detail::bind_copy_functions<PinholeCameraIntrinsic>(pinhole_intr);
     pinhole_intr
-        .def(py::init([](int w, int h, double fx, double fy,
+        .def(py::init([](int32_t w, int32_t h, double fx, double fy,
                 double cx, double cy) {
             return new PinholeCameraIntrinsic(w, h, fx, fy, cx, cy);
         }),"width"_a, "height"_a, "fx"_a, "fy"_a, "cx"_a, "cy"_a)

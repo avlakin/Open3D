@@ -85,7 +85,7 @@ Eigen::Vector2d SelectionPolygon::GetMaxBound() const
     return Eigen::Vector2d((*itr_x)(0), (*itr_y)(1));
 }
 
-void SelectionPolygon::FillPolygon(int width, int height)
+void SelectionPolygon::FillPolygon(int32_t width, int32_t height)
 {
     // Standard scan conversion code. See reference:
     // http://alienryderflex.com/polygon_fill/
@@ -94,27 +94,27 @@ void SelectionPolygon::FillPolygon(int width, int height)
     polygon_interior_mask_.PrepareImage(width, height, 1, 1);
     std::fill(polygon_interior_mask_.data_.begin(),
             polygon_interior_mask_.data_.end(), 0);
-    std::vector<int> nodes;
-    for (int y = 0; y < height; y++) {
+    std::vector<int32_t> nodes;
+    for (int32_t y = 0; y < height; y++) {
         nodes.clear();
-        for (size_t i = 0; i < polygon_.size(); i++) {
-            size_t j = (i + 1) % polygon_.size();
+        for (uint32_t i = 0; i < polygon_.size(); i++) {
+            uint32_t j = (i + 1) % polygon_.size();
             if ((polygon_[i](1) < y && polygon_[j](1) >= y) ||
                     (polygon_[j](1) < y && polygon_[i](1) >= y)) {
-                nodes.push_back((int)(polygon_[i](0) + (y - polygon_[i](1)) /
+                nodes.push_back((int32_t)(polygon_[i](0) + (y - polygon_[i](1)) /
                         (polygon_[j](1) - polygon_[i](1)) * (polygon_[j](0) -
                         polygon_[i](0)) + 0.5));
             }
         }
         std::sort(nodes.begin(), nodes.end());
-        for (size_t i = 0; i < nodes.size(); i+= 2) {
+        for (uint32_t i = 0; i < nodes.size(); i+= 2) {
             if (nodes[i] >= width) {
                 break;
             }
             if (nodes[i + 1] > 0) {
                 if (nodes[i] < 0) nodes[i] = 0;
                 if (nodes[i + 1] > width) nodes[i + 1] = width;
-                for (int x = nodes[i]; x < nodes[i + 1]; x++) {
+                for (int32_t x = nodes[i]; x < nodes[i + 1]; x++) {
                     polygon_interior_mask_.data_[x + y * width] = 1;
                 }
             }
@@ -148,7 +148,7 @@ std::shared_ptr<SelectionPolygonVolume> SelectionPolygon::
             ViewControlWithEditing::FreeMode) {
         return volume;
     }
-    int idx = 0;
+    int32_t idx = 0;
     switch (editing_view.GetEditingMode()) {
     case ViewControlWithEditing::OrthoNegativeX:
     case ViewControlWithEditing::OrthoPositiveX:
@@ -194,17 +194,17 @@ std::shared_ptr<PointCloud> SelectionPolygon::CropPointCloudInPolygon(
     return SelectDownSample(input, CropInPolygon(input.points_, view));
 }
 
-std::vector<size_t> SelectionPolygon::CropInRectangle(
+std::vector<uint32_t> SelectionPolygon::CropInRectangle(
         const std::vector<Eigen::Vector3d> &input, const ViewControl &view)
 {
-    std::vector<size_t> output_index;
+    std::vector<uint32_t> output_index;
     Eigen::Matrix4d mvp_matrix = view.GetMVPMatrix().cast<double>();
     double half_width = (double)view.GetWindowWidth() * 0.5;
     double half_height = (double)view.GetWindowHeight() * 0.5;
     auto min_bound = GetMinBound();
     auto max_bound = GetMaxBound();
     ResetConsoleProgress((int64_t)input.size(), "Cropping geometry: ");
-    for (size_t i = 0; i < input.size(); i++) {
+    for (uint32_t i = 0; i < input.size(); i++) {
         AdvanceConsoleProgress();
         const auto &point = input[i];
         Eigen::Vector4d pos = mvp_matrix * Eigen::Vector4d(point(0), point(1),
@@ -221,16 +221,16 @@ std::vector<size_t> SelectionPolygon::CropInRectangle(
     return output_index;
 }
 
-std::vector<size_t> SelectionPolygon::CropInPolygon(
+std::vector<uint32_t> SelectionPolygon::CropInPolygon(
         const std::vector<Eigen::Vector3d> &input, const ViewControl &view)
 {
-    std::vector<size_t> output_index;
+    std::vector<uint32_t> output_index;
     Eigen::Matrix4d mvp_matrix = view.GetMVPMatrix().cast<double>();
     double half_width = (double)view.GetWindowWidth() * 0.5;
     double half_height = (double)view.GetWindowHeight() * 0.5;
     std::vector<double> nodes;
     ResetConsoleProgress((int64_t)input.size(), "Cropping geometry: ");
-    for (size_t k = 0; k < input.size(); k++) {
+    for (uint32_t k = 0; k < input.size(); k++) {
         AdvanceConsoleProgress();
         const auto &point = input[k];
         Eigen::Vector4d pos = mvp_matrix * Eigen::Vector4d(point(0), point(1),
@@ -240,8 +240,8 @@ std::vector<size_t> SelectionPolygon::CropInPolygon(
         double x = (pos(0) + 1.0) * half_width;
         double y = (pos(1) + 1.0) * half_height;
         nodes.clear();
-        for (size_t i = 0; i < polygon_.size(); i++) {
-            size_t j = (i + 1) % polygon_.size();
+        for (uint32_t i = 0; i < polygon_.size(); i++) {
+            uint32_t j = (i + 1) % polygon_.size();
             if ((polygon_[i](1) < y && polygon_[j](1) >= y) ||
                     (polygon_[j](1) < y && polygon_[i](1) >= y)) {
                 nodes.push_back(polygon_[i](0) + (y - polygon_[i](1)) /

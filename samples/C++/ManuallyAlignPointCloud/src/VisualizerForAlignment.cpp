@@ -69,8 +69,8 @@ bool VisualizerForAlignment::AddSourceAndTarget(
     return AddGeometry(source_copy_ptr_) && AddGeometry(target_copy_ptr_);
 }
 
-void VisualizerForAlignment::KeyPressCallback(GLFWwindow *window, int key,
-        int scancode, int action, int mods)
+void VisualizerForAlignment::KeyPressCallback(GLFWwindow *window, int32_t key,
+        int32_t scancode, int32_t action, int32_t mods)
 {
     if (action == GLFW_PRESS && (mods & GLFW_MOD_CONTROL)) {
         const char *filename;
@@ -273,12 +273,12 @@ bool VisualizerForAlignment::AlignWithManualAnnotation()
     if (source_idx.empty() || target_idx.empty() ||
             source_idx.size() != target_idx.size()) {
         PrintWarning("# of picked points mismatch: %d in source, %d in target.\n",
-                (int)source_idx.size(), (int)target_idx.size());
+                (int32_t)source_idx.size(), (int32_t)target_idx.size());
         return false;
     }
     TransformationEstimationPointToPoint p2p(with_scaling_);
     CorrespondenceSet corres;
-    for (size_t i = 0; i < source_idx.size(); i++) {
+    for (uint32_t i = 0; i < source_idx.size(); i++) {
         corres.push_back(Eigen::Vector2i(source_idx[i], target_idx[i]));
     }
     PrintInfo("Error is %.4f before alignment.\n",

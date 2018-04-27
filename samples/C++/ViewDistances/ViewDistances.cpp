@@ -56,7 +56,7 @@ void PrintHelp()
     printf("    --without_gui             : Without GUI.\n");
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     using namespace open3d;
 
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
         PrintHelp();
         return 0;
     }
-    int verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
+    int32_t verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
     SetVerbosityLevel((VerbosityLevel)verbose);
     double max_distance = GetProgramOptionAsDouble(argc, argv, "--max_distance",
             0.0);
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
     }
     pcd->colors_.resize(pcd->points_.size());
     ColorMapHot colormap;
-    for (size_t i = 0; i < pcd->points_.size(); i++) {
+    for (uint32_t i = 0; i < pcd->points_.size(); i++) {
         pcd->colors_[i] = colormap.GetColor(distances[i] / max_distance);
     }
     if (ProgramOptionExists(argc, argv, "--write_color_back")) {

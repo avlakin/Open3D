@@ -193,7 +193,7 @@ public:
 
     // Image options
     ImageStretchOption image_stretch_option_ = ImageStretchOption::OriginalSize;
-    int image_max_depth_ = 3000;
+    int32_t image_max_depth_ = 3000;
 
     // Coordinate frame
     bool show_coordinate_frame_ = false;

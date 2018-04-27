@@ -50,17 +50,17 @@ namespace open3d {
 namespace {
 
 std::tuple<std::shared_ptr<Image>, std::shared_ptr<Image>>
-        InitializeCorrespondenceMap(int width, int height)
+        InitializeCorrespondenceMap(int32_t width, int32_t height)
 {
     // initialization: filling with any (u,v) to (-1,-1)
     auto correspondence_map = std::make_shared<Image>();
     auto depth_buffer = std::make_shared<Image>();
     correspondence_map->PrepareImage(width, height, 2, 4);
     depth_buffer->PrepareImage(width, height, 1, 4);
-    for (int v = 0; v < correspondence_map->height_; v++) {
-        for (int u = 0; u < correspondence_map->width_; u++) {
-            *PointerAt<int>(*correspondence_map, u, v, 0) = -1;
-            *PointerAt<int>(*correspondence_map, u, v, 1) = -1;
+    for (int32_t v = 0; v < correspondence_map->height_; v++) {
+        for (int32_t u = 0; u < correspondence_map->width_; u++) {
+            *PointerAt<int32_t>(*correspondence_map, u, v, 0) = -1;
+            *PointerAt<int32_t>(*correspondence_map, u, v, 1) = -1;
             *PointerAt<float>(*depth_buffer, u, v, 0) = -1.0f;
         }
     }
@@ -69,21 +69,21 @@ std::tuple<std::shared_ptr<Image>, std::shared_ptr<Image>>
 
 inline void AddElementToCorrespondenceMap(
         Image &correspondence_map, Image &depth_buffer,
-        int u_s, int v_s, int u_t, int v_t, float transformed_d_t) {
-    int exist_u_t, exist_v_t;
+        int32_t u_s, int32_t v_s, int32_t u_t, int32_t v_t, float transformed_d_t) {
+    int32_t exist_u_t, exist_v_t;
     double exist_d_t;
-    exist_u_t = *PointerAt<int>(correspondence_map, u_s, v_s, 0);
-    exist_v_t = *PointerAt<int>(correspondence_map, u_s, v_s, 1);
+    exist_u_t = *PointerAt<int32_t>(correspondence_map, u_s, v_s, 0);
+    exist_v_t = *PointerAt<int32_t>(correspondence_map, u_s, v_s, 1);
     if (exist_u_t != -1 && exist_v_t != -1) {
         exist_d_t = *PointerAt<float>(depth_buffer, u_s, v_s);
         if (transformed_d_t < exist_d_t) { // update nearer point as correspondence
-            *PointerAt<int>(correspondence_map, u_s, v_s, 0) = u_t;
-            *PointerAt<int>(correspondence_map, u_s, v_s, 1) = v_t;
+            *PointerAt<int32_t>(correspondence_map, u_s, v_s, 0) = u_t;
+            *PointerAt<int32_t>(correspondence_map, u_s, v_s, 1) = v_t;
             *PointerAt<float>(depth_buffer, u_s, v_s) = transformed_d_t;
         }
     } else { // register correspondence
-        *PointerAt<int>(correspondence_map, u_s, v_s, 0) = u_t;
-        *PointerAt<int>(correspondence_map, u_s, v_s, 1) = v_t;
+        *PointerAt<int32_t>(correspondence_map, u_s, v_s, 0) = u_t;
+        *PointerAt<int32_t>(correspondence_map, u_s, v_s, 1) = v_t;
         *PointerAt<float>(depth_buffer, u_s, v_s) = transformed_d_t;
     }
 }
@@ -92,10 +92,10 @@ void MergeCorrespondenceMaps(
         Image &correspondence_map, Image &depth_buffer,
         Image &correspondence_map_part, Image &depth_buffer_part)
 {
-    for (int v_s = 0; v_s < correspondence_map.height_; v_s++) {
-        for (int u_s = 0; u_s < correspondence_map.width_; u_s++) {
-            int u_t = *PointerAt<int>(correspondence_map_part, u_s, v_s, 0);
-            int v_t = *PointerAt<int>(correspondence_map_part, u_s, v_s, 1);
+    for (int32_t v_s = 0; v_s < correspondence_map.height_; v_s++) {
+        for (int32_t u_s = 0; u_s < correspondence_map.width_; u_s++) {
+            int32_t u_t = *PointerAt<int32_t>(correspondence_map_part, u_s, v_s, 0);
+            int32_t v_t = *PointerAt<int32_t>(correspondence_map_part, u_s, v_s, 1);
             if (u_t != -1 && v_t != -1) {
                 float transformed_d_t = *PointerAt<float>(
                         depth_buffer_part, u_s, v_s);
@@ -106,13 +106,13 @@ void MergeCorrespondenceMaps(
     }
 }
 
-int CountCorrespondence(const Image &correspondence_map)
+int32_t CountCorrespondence(const Image &correspondence_map)
 {
-    int correspondence_count = 0;
-    for (int v_s = 0; v_s < correspondence_map.height_; v_s++) {
-        for (int u_s = 0; u_s < correspondence_map.width_; u_s++) {
-            int u_t = *PointerAt<int>(correspondence_map, u_s, v_s, 0);
-            int v_t = *PointerAt<int>(correspondence_map, u_s, v_s, 1);
+    int32_t correspondence_count = 0;
+    for (int32_t v_s = 0; v_s < correspondence_map.height_; v_s++) {
+        for (int32_t u_s = 0; u_s < correspondence_map.width_; u_s++) {
+            int32_t u_t = *PointerAt<int32_t>(correspondence_map, u_s, v_s, 0);
+            int32_t v_t = *PointerAt<int32_t>(correspondence_map, u_s, v_s, 1);
             if (u_t != -1 && v_t != -1) {
                 correspondence_count++;
             }
@@ -150,15 +150,15 @@ std::shared_ptr<CorrespondenceSetPixelWise> ComputeCorrespondence(
 #ifdef _OPENMP
 #pragma omp for nowait
 #endif
-    for (int v_t = 0; v_t < depth_t.height_; v_t++) {
-        for (int u_t = 0; u_t < depth_t.width_; u_t++) {
+    for (int32_t v_t = 0; v_t < depth_t.height_; v_t++) {
+        for (int32_t u_t = 0; u_t < depth_t.width_; u_t++) {
             double d_t = *PointerAt<float>(depth_t, u_t, v_t);
             if (!std::isnan(d_t)) {
                 Eigen::Vector3d uv_in_t =
                         d_t * KRK_inv * Eigen::Vector3d(u_t, v_t, 1.0) + Kt;
                 double transformed_d_t = uv_in_t(2);
-                int u_s = (int)(uv_in_t(0) / transformed_d_t + 0.5);
-                int v_s = (int)(uv_in_t(1) / transformed_d_t + 0.5);
+                int32_t u_s = (int32_t)(uv_in_t(0) / transformed_d_t + 0.5);
+                int32_t v_s = (int32_t)(uv_in_t(1) / transformed_d_t + 0.5);
                 if (u_s >= 0 && u_s < depth_t.width_ &&
                     v_s >= 0 && v_s < depth_t.height_) {
                     double d_s = *PointerAt<float>(depth_s, u_s, v_s);
@@ -186,13 +186,13 @@ std::shared_ptr<CorrespondenceSetPixelWise> ComputeCorrespondence(
 #endif
 
     auto correspondence = std::make_shared<CorrespondenceSetPixelWise>();
-    int correspondence_count = CountCorrespondence(*correspondence_map);
+    int32_t correspondence_count = CountCorrespondence(*correspondence_map);
     correspondence->resize(correspondence_count);
-    int cnt = 0;
-    for (int v_s = 0; v_s < correspondence_map->height_; v_s++) {
-        for (int u_s = 0; u_s < correspondence_map->width_; u_s++) {
-            int u_t = *PointerAt<int>(*correspondence_map, u_s, v_s, 0);
-            int v_t = *PointerAt<int>(*correspondence_map, u_s, v_s, 1);
+    int32_t cnt = 0;
+    for (int32_t v_s = 0; v_s < correspondence_map->height_; v_s++) {
+        for (int32_t u_s = 0; u_s < correspondence_map->width_; u_s++) {
+            int32_t u_t = *PointerAt<int32_t>(*correspondence_map, u_s, v_s, 0);
+            int32_t v_t = *PointerAt<int32_t>(*correspondence_map, u_s, v_s, 1);
             if (u_t != -1 && v_t != -1) {
                 Eigen::Vector4i pixel_correspondence(u_s, v_s, u_t, v_t);
                 (*correspondence)[cnt] = pixel_correspondence;
@@ -217,8 +217,8 @@ std::shared_ptr<Image> ConvertDepthImageToXYZImage(
     const double oy = intrinsic_matrix(1, 2);
     image_xyz->PrepareImage(depth.width_, depth.height_, 3, 4);
 
-    for (int y = 0; y < image_xyz->height_; y++) {
-        for (int x = 0; x < image_xyz->width_; x++) {
+    for (int32_t y = 0; y < image_xyz->height_; y++) {
+        for (int32_t x = 0; x < image_xyz->width_; x++) {
             float *px = PointerAt<float>(*image_xyz, x, y, 0);
             float *py = PointerAt<float>(*image_xyz, x, y, 1);
             float *pz = PointerAt<float>(*image_xyz, x, y, 2);
@@ -233,11 +233,11 @@ std::shared_ptr<Image> ConvertDepthImageToXYZImage(
 
 std::vector<Eigen::Matrix3d>
         CreateCameraMatrixPyramid(
-        const PinholeCameraIntrinsic &pinhole_camera_intrinsic, int levels)
+        const PinholeCameraIntrinsic &pinhole_camera_intrinsic, int32_t levels)
 {
     std::vector<Eigen::Matrix3d> pyramid_camera_matrix;
     pyramid_camera_matrix.reserve(levels);
-    for (int i = 0; i < levels; i++) {
+    for (int32_t i = 0; i < levels; i++) {
         Eigen::Matrix3d level_camera_matrix;
         if (i == 0)
             level_camera_matrix = pinhole_camera_intrinsic.intrinsic_matrix_;
@@ -275,9 +275,9 @@ Eigen::Matrix6d CreateInfomationMatrix(
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-        for (auto row = 0; row < correspondence->size(); row++) {
-            int u_t = (*correspondence)[row](2);
-            int v_t = (*correspondence)[row](3);
+        for (int32_t row = 0; row < static_cast<int32_t>(correspondence->size()); row++) {
+            int32_t u_t = (*correspondence)[row](2);
+            int32_t v_t = (*correspondence)[row](3);
             double x = *PointerAt<float>(*xyz_t, u_t, v_t, 0);
             double y = *PointerAt<float>(*xyz_t, u_t, v_t, 1);
             double z = *PointerAt<float>(*xyz_t, u_t, v_t, 2);
@@ -318,11 +318,11 @@ void NormalizeIntensity(Image &image_s, Image &image_t,
         return;
     }
     double mean_s = 0.0, mean_t = 0.0;
-    for (int row = 0; row < correspondence.size(); row++) {
-        int u_s = correspondence[row](0);
-        int v_s = correspondence[row](1);
-        int u_t = correspondence[row](2);
-        int v_t = correspondence[row](3);
+    for (int32_t row = 0; row < static_cast<int32_t>(correspondence.size()); row++) {
+        int32_t u_s = correspondence[row](0);
+        int32_t v_s = correspondence[row](1);
+        int32_t u_t = correspondence[row](2);
+        int32_t v_t = correspondence[row](3);
         mean_s += *PointerAt<float>(image_s, u_s, v_s);
         mean_t += *PointerAt<float>(image_t, u_t, v_t);
     }
@@ -342,8 +342,8 @@ std::shared_ptr<Image> PreprocessDepth(
 {
     std::shared_ptr<Image> depth_processed = std::make_shared<Image>();
     *depth_processed = depth_orig;
-    for (int y = 0; y < depth_processed->height_; y++) {
-        for (int x = 0; x < depth_processed->width_; x++) {
+    for (int32_t y = 0; y < depth_processed->height_; y++) {
+        for (int32_t x = 0; x < depth_processed->width_; x++) {
             float *p = PointerAt<float>(*depth_processed, x, y);
             if ((*p < option.min_depth_ || *p > option.max_depth_ || *p <= 0))
                 *p = std::numeric_limits<float>::quiet_NaN();
@@ -396,7 +396,7 @@ std::tuple<std::shared_ptr<RGBDImage>, std::shared_ptr<RGBDImage>>
     auto correspondence = ComputeCorrespondence(
             pinhole_camera_intrinsic.intrinsic_matrix_, odo_init,
             *source_depth, *target_depth, option);
-    int corresps_count_required = (int)(source_gray->height_ *
+    uint32_t corresps_count_required = (uint32_t)(source_gray->height_ *
             source_gray->width_ * option.minimum_correspondence_ratio_ + 0.5);
     if (correspondence->size() < corresps_count_required) {
         PrintWarning("[InitializeRGBDPair] Bad initial pose\n");
@@ -409,7 +409,7 @@ std::tuple<std::shared_ptr<RGBDImage>, std::shared_ptr<RGBDImage>>
 }
 
 std::tuple<bool, Eigen::Matrix4d> DoSingleIteration(
-    int iter, int level,
+    int32_t iter, int32_t level,
     const RGBDImage &source, const RGBDImage &target,
     const Image &source_xyz,
     const RGBDImage &target_dx, const RGBDImage &target_dy,
@@ -420,9 +420,9 @@ std::tuple<bool, Eigen::Matrix4d> DoSingleIteration(
 {
     auto correspondence = ComputeCorrespondence(
             intrinsic, extrinsic_initial, source.depth_, target.depth_, option);
-    int corresps_count_required = (int)(source.color_.height_ *
+    int32_t corresps_count_required = (int32_t)(source.color_.height_ *
             source.color_.width_ * option.minimum_correspondence_ratio_ + 0.5);
-    int corresps_count = (int)correspondence->size();
+    int32_t corresps_count = (int32_t)correspondence->size();
     if (corresps_count < corresps_count_required) {
         PrintWarning("[ComputeOdometry] Too fewer correspondences (%d found / %d required)\n",
                 corresps_count, corresps_count_required);
@@ -430,7 +430,7 @@ std::tuple<bool, Eigen::Matrix4d> DoSingleIteration(
     }
 
     auto f_lambda = [&]
-            (int i, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r) {
+            (int32_t i, std::vector<Eigen::Vector6d> &J_r, std::vector<double> &r) {
         jacobian_method.ComputeJacobianAndResidual(i, J_r, r,
                 source, target, source_xyz, target_dx, target_dy,
                 intrinsic, extrinsic_initial, *correspondence);
@@ -460,8 +460,8 @@ std::tuple<bool, Eigen::Matrix4d> ComputeMultiscale(
         const RGBDOdometryJacobian &jacobian_method,
         const OdometryOption &option)
 {
-    std::vector<int> iter_counts = option.iteration_number_per_pyramid_level_;
-    int num_levels = (int)iter_counts.size();
+    std::vector<int32_t> iter_counts = option.iteration_number_per_pyramid_level_;
+    int32_t num_levels = (int32_t)iter_counts.size();
 
     auto source_pyramid = CreateRGBDImagePyramid(source, num_levels);
     auto target_pyramid = CreateRGBDImagePyramid(target, num_levels);
@@ -475,9 +475,9 @@ std::tuple<bool, Eigen::Matrix4d> ComputeMultiscale(
 
     std::vector<Eigen::Matrix3d> pyramid_camera_matrix =
             CreateCameraMatrixPyramid(pinhole_camera_intrinsic,
-            (int)iter_counts.size());
+            (int32_t)iter_counts.size());
 
-    for (int level = num_levels - 1; level >= 0; level--) {
+    for (int32_t level = num_levels - 1; level >= 0; level--) {
         const Eigen::Matrix3d level_camera_matrix = pyramid_camera_matrix[level];
 
         auto source_xyz_level = ConvertDepthImageToXYZImage(
@@ -491,7 +491,7 @@ std::tuple<bool, Eigen::Matrix4d> ComputeMultiscale(
         auto target_dy_level = PackRGBDImage(target_pyramid_dy[level]->color_,
                 target_pyramid_dy[level]->depth_);
 
-        for (int iter = 0; iter < iter_counts[num_levels - level - 1]; iter++) {
+        for (int32_t iter = 0; iter < iter_counts[num_levels - level - 1]; iter++) {
             Eigen::Matrix4d curr_odo;
             bool is_success;
             std::tie(is_success, curr_odo) = DoSingleIteration(

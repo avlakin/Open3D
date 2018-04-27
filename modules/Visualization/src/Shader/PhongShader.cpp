@@ -167,7 +167,7 @@ void PhongShader::SetLighting(const ViewControl &view,
     const auto &box = view.GetBoundingBox();
     light_position_world_data_.setOnes();
     light_color_data_.setOnes();
-    for (int i = 0; i < 4; i++) {
+    for (int32_t i = 0; i < 4; i++) {
         light_position_world_data_.block<3, 1>(0, i) =
                 box.GetCenter().cast<GLfloat>() + (float)box.GetSize() * (
                 (float)option.light_position_relative_[i](0) * view.GetRight() +
@@ -233,7 +233,7 @@ bool PhongShaderForPointCloud::PrepareBinding(const Geometry &geometry,
     points.resize(pointcloud.points_.size());
     normals.resize(pointcloud.points_.size());
     colors.resize(pointcloud.points_.size());
-    for (size_t i = 0; i < pointcloud.points_.size(); i++) {
+    for (uint32_t i = 0; i < pointcloud.points_.size(); i++) {
         const auto &point = pointcloud.points_[i];
         const auto &normal = pointcloud.normals_[i];
         points[i] = point.cast<float>();
@@ -323,11 +323,11 @@ bool PhongShaderForTriangleMesh::PrepareBinding(const Geometry &geometry,
     normals.resize(mesh.triangles_.size() * 3);
     colors.resize(mesh.triangles_.size() * 3);
 
-    for (size_t i = 0; i < mesh.triangles_.size(); i++) {
+    for (uint32_t i = 0; i < mesh.triangles_.size(); i++) {
         const auto &triangle = mesh.triangles_[i];
-        for (size_t j = 0; j < 3; j++) {
-            size_t idx = i * 3 + j;
-            size_t vi = triangle(j);
+        for (uint32_t j = 0; j < 3; j++) {
+            uint32_t idx = i * 3 + j;
+            uint32_t vi = triangle(j);
             const auto &vertex = mesh.vertices_[vi];
             points[idx] = vertex.cast<float>();
 

@@ -67,8 +67,8 @@ public:
             std::shared_ptr<PointCloud> target);
 
 protected:
-    void KeyPressCallback(GLFWwindow *window, int key, int scancode, int action,
-            int mods) override;
+    void KeyPressCallback(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action,
+            int32_t mods) override;
     bool SaveSessionToFile(const std::string &filename);
     bool LoadSessionFromFile(const std::string &filename);
     bool AlignWithManualAnnotation();

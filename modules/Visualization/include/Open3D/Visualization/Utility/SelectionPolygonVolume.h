@@ -62,7 +62,7 @@ public:
 private:
     std::shared_ptr<PointCloud> CropPointCloudInPolygon(
             const PointCloud &input) const;
-    std::vector<size_t> CropInPolygon(
+    std::vector<uint32_t> CropInPolygon(
             const std::vector<Eigen::Vector3d> &input) const;
 
 public:

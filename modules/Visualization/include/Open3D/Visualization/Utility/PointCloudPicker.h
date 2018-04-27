@@ -64,7 +64,7 @@ public:
 
 public:
     std::shared_ptr<const Geometry> pointcloud_ptr_;
-    std::vector<size_t> picked_indices_;
+    std::vector<uint32_t> picked_indices_;
 };
 
 }   // namespace open3d

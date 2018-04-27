@@ -65,7 +65,7 @@ class PoseGraphEdge : public IJsonConvertible
 {
 public:
     PoseGraphEdge(
-            int source_node_id = -1, int target_node_id = -1,
+            int32_t source_node_id = -1, int32_t target_node_id = -1,
             const Eigen::Matrix4d &transformation = Eigen::Matrix4d::Identity(),
             const Eigen::Matrix6d &information = Eigen::Matrix6d::Identity(),
             bool uncertain = false,
@@ -83,8 +83,8 @@ public:
     bool ConvertFromJsonValue(const Json::Value &value) override;
 
 public:
-    int source_node_id_;
-    int target_node_id_;
+    int32_t source_node_id_;
+    int32_t target_node_id_;
     Eigen::Matrix4d transformation_;
     Eigen::Matrix6d information_;
     /// odometry edge has uncertain == false

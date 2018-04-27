@@ -54,10 +54,10 @@ public:
 public:
     bool LoadFromFile(const std::string &filename) {
         FILE* fid = fopen(filename.c_str(), "rb");
-        fread(&dataset_size_, sizeof(int), 1, fid);
-        fread(&dimension_, sizeof(int), 1, fid);
+        fread(&dataset_size_, sizeof(int32_t), 1, fid);
+        fread(&dimension_, sizeof(int32_t), 1, fid);
         data_.resize(dataset_size_ * dimension_);
-        for (int i = 0; i < dataset_size_; i++) {
+        for (int32_t i = 0; i < dataset_size_; i++) {
             Eigen::Vector3f pts;
             fread(&pts(0), sizeof(float), 3, fid);
             fread(((float *)data_.data()) + i * dimension_, sizeof(float),
@@ -72,13 +72,13 @@ public:
         return true;
     }
 
-    int SearchKNN(std::vector<float> &data, int i, int knn,
-            std::vector<int> &indices, std::vector<float> &distance2) {
+    int32_t SearchKNN(std::vector<float> &data, int32_t i, int32_t knn,
+            std::vector<int32_t> &indices, std::vector<float> &distance2) {
         flann::Matrix<float> query_flann(
                 ((float *)data.data()) + i * dimension_, 1, dimension_);
         indices.resize(knn);
         distance2.resize(knn);
-        flann::Matrix<int> indices_flann(indices.data(), query_flann.rows, knn);
+        flann::Matrix<int32_t> indices_flann(indices.data(), query_flann.rows, knn);
         flann::Matrix<float> dists_flann(distance2.data(), query_flann.rows,
                 knn);
         return flann_index_->knnSearch(query_flann, indices_flann, dists_flann,
@@ -89,8 +89,8 @@ public:
     std::vector<float> data_;
     std::unique_ptr<flann::Matrix<float>> flann_dataset_;
     std::unique_ptr<flann::Index<flann::L2<float>>> flann_index_;
-    int dimension_ = 0;
-    int dataset_size_ = 0;
+    int32_t dimension_ = 0;
+    int32_t dataset_size_ = 0;
 };
 
 void PrintHelp()
@@ -108,7 +108,7 @@ void PrintHelp()
 }
 
 bool ReadLogFile(const std::string &filename,
-        std::vector<std::pair<int, int>> &pair_ids,
+        std::vector<std::pair<int32_t, int32_t>> &pair_ids,
         std::vector<Eigen::Matrix4d> &transformations)
 {
     using namespace open3d;
@@ -120,7 +120,7 @@ bool ReadLogFile(const std::string &filename,
         return false;
     }
     char line_buffer[DEFAULT_IO_BUFFER_SIZE];
-    int i, j, k;
+    int32_t i, j, k;
     Eigen::Matrix4d trans;
     while (fgets(line_buffer, DEFAULT_IO_BUFFER_SIZE, f)) {
         if (strlen(line_buffer) > 0 && line_buffer[0] != '#') {
@@ -171,7 +171,7 @@ void WriteBinaryResult(const std::string &filename, std::vector<double> &data)
     fclose(f);
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     using namespace open3d;
 
@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    int verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
+    int32_t verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
     SetVerbosityLevel((VerbosityLevel)verbose);
     std::string log_filename = GetProgramOptionAsString(argc, argv, "--log");
     std::string pcd_dirname = GetProgramOptionAsString(argc, argv, "--dir");
@@ -202,23 +202,23 @@ int main(int argc, char *argv[])
             pcd_names);
     std::vector<PointCloud> pcds(pcd_names.size());
     std::vector<KDTreeFlann> kdtrees(pcd_names.size());
-    for (auto i = 0; i < pcd_names.size(); i++) {
+    for (uint32_t i = 0; i < pcd_names.size(); i++) {
         ReadPointCloud(pcd_dirname + "cloud_bin_" + std::to_string(i) + ".pcd",
                 pcds[i]);
         kdtrees[i].SetGeometry(pcds[i]);
     }
 
-    std::vector<std::pair<int, int>> pair_ids;
+    std::vector<std::pair<int32_t, int32_t>> pair_ids;
     std::vector<Eigen::Matrix4d> transformations;
     ReadLogFile(log_filename, pair_ids, transformations);
-    int total_point_num = 0;
-    int total_correspondence_num = 0;
-    for (auto k = 0; k < pair_ids.size(); k++) {
+    int32_t total_point_num = 0;
+    int32_t total_correspondence_num = 0;
+    for (uint32_t k = 0; k < pair_ids.size(); k++) {
         PointCloud source = pcds[pair_ids[k].second];
         source.Transform(transformations[k]);
-        std::vector<int> indices(1);
+        std::vector<int32_t> indices(1);
         std::vector<double> distance2(1);
-        int correspondence_num = 0;
+        int32_t correspondence_num = 0;
         for (const auto &pt : source.points_) {
             if (kdtrees[pair_ids[k].first].SearchKNN(pt, 1, indices,
                     distance2) > 0) {
@@ -228,10 +228,10 @@ int main(int argc, char *argv[])
             }
         }
         total_correspondence_num += correspondence_num;
-        total_point_num += (int)source.points_.size();
+        total_point_num += (int32_t)source.points_.size();
         PrintInfo("#%d <-- #%d : %d out of %d (%.2f%%).\n",
                 pair_ids[k].first, pair_ids[k].second, correspondence_num,
-                (int)source.points_.size(),
+                (int32_t)source.points_.size(),
                 correspondence_num * 100.0 / source.points_.size());
     }
     PrintWarning("Total %d out of %d (%.2f%% coverage).\n\n",
@@ -244,33 +244,33 @@ int main(int argc, char *argv[])
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static) num_threads(16)
 #endif
-        for (auto i = 0; i < pcd_names.size(); i++) {
+        for (int32_t i = 0; i < static_cast<int32_t>(pcd_names.size()); i++) {
             feature_trees[i].LoadFromFile(pcd_dirname + "cloud_bin_" +
                     std::to_string(i) + "." + feature);
         }
         PrintInfo("All KDTrees built.\n");
-        int total_point_num = 0;
-        int total_correspondence_num = 0;
-        int total_positive = 0;
+        int32_t total_point_num = 0;
+        int32_t total_correspondence_num = 0;
+        int32_t total_positive = 0;
 
-        for (auto k = 0; k < pair_ids.size(); k++) {
+        for (uint32_t k = 0; k < pair_ids.size(); k++) {
             PointCloud source = pcds[pair_ids[k].second];
-            total_point_num += (int)source.points_.size();
+            total_point_num += (int32_t)source.points_.size();
         }
         std::vector<double> true_dis(total_point_num, -1.0);
         total_point_num = 0;
 
-        for (auto k = 0; k < pair_ids.size(); k++) {
+        for (uint32_t k = 0; k < pair_ids.size(); k++) {
             PointCloud source = pcds[pair_ids[k].second];
             source.Transform(transformations[k]);
-            std::vector<int> indices(1);
+            std::vector<int32_t> indices(1);
             std::vector<double> distance2(1);
             std::vector<float> fdistance2(1);
-            int positive = 0;
-            int correspondence_num = 0;
+            int32_t positive = 0;
+            int32_t correspondence_num = 0;
             std::vector<bool> has_correspondence(
                     pcds[pair_ids[k].second].points_.size(), false);
-            for (auto i = 0; i < source.points_.size(); i++) {
+            for (uint32_t i = 0; i < source.points_.size(); i++) {
                 const auto &pt = source.points_[i];
                 if (kdtrees[pair_ids[k].first].SearchKNN(pt, 1, indices,
                         distance2) > 0) {
@@ -283,7 +283,7 @@ int main(int argc, char *argv[])
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static) num_threads(16) private(indices, fdistance2)
 #endif
-            for (auto i = 0; i < source.points_.size(); i++) {
+            for (int32_t i = 0; i < static_cast<int32_t>(source.points_.size()); i++) {
                 if (has_correspondence[i]) {
                     if (feature_trees[pair_ids[k].first].SearchKNN(
                             feature_trees[pair_ids[k].second].data_, i, 1,
@@ -303,10 +303,10 @@ int main(int argc, char *argv[])
             }
             total_correspondence_num += correspondence_num;
             total_positive += positive;
-            total_point_num += (int)source.points_.size();
+            total_point_num += (int32_t)source.points_.size();
             PrintInfo("#%d <-- #%d : %d out of %d out of %d (%.2f%% w.r.t. correspondences).\n",
                     pair_ids[k].first, pair_ids[k].second, positive,
-                    correspondence_num, (int)source.points_.size(),
+                    correspondence_num, (int32_t)source.points_.size(),
                     positive * 100.0 / correspondence_num);
         }
         PrintWarning("Total %d out of %d out of %d (%.2f%% w.r.t. correspondences).\n\n",

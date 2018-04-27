@@ -81,8 +81,8 @@ public:
     /// Function to create a window and initialize GLFW
     /// This function MUST be called from the main thread.
     bool CreateWindow(const std::string &window_name = "Open3D",
-            const int width = 640, const int height = 480,
-            const int left = 50, const int top = 50);
+            const int32_t width = 640, const int32_t height = 480,
+            const int32_t left = 50, const int32_t top = 50);
 
     /// Function to destroy a window
     /// This function MUST be called from the main thread.
@@ -173,13 +173,13 @@ protected:
 
     // callback functions
     virtual void WindowRefreshCallback(GLFWwindow *window);
-    virtual void WindowResizeCallback(GLFWwindow *window, int w, int h);
+    virtual void WindowResizeCallback(GLFWwindow *window, int32_t w, int32_t h);
     virtual void MouseMoveCallback(GLFWwindow* window, double x, double y);
     virtual void MouseScrollCallback(GLFWwindow* window, double x, double y);
     virtual void MouseButtonCallback(GLFWwindow* window,
-            int button, int action, int mods);
+            int32_t button, int32_t action, int32_t mods);
     virtual void KeyPressCallback(GLFWwindow *window,
-            int key, int scancode, int action, int mods);
+            int32_t key, int32_t scancode, int32_t action, int32_t mods);
     virtual void WindowCloseCallback(GLFWwindow *window);
 
 protected:

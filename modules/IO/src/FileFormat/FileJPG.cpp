@@ -61,8 +61,8 @@ bool ReadImageFromJPG(const std::string &filename, Image &image)
     jpeg_read_header(&cinfo, TRUE);
 
     // We only support two channel types: gray, and RGB.
-    int num_of_channels = 3;
-    int bytes_per_channel = 1;
+    int32_t num_of_channels = 3;
+    int32_t bytes_per_channel = 1;
     switch (cinfo.jpeg_color_space) {
     case JCS_RGB:
     case JCS_YCbCr:
@@ -86,7 +86,7 @@ bool ReadImageFromJPG(const std::string &filename, Image &image)
     jpeg_start_decompress(&cinfo);
     image.PrepareImage(cinfo.output_width, cinfo.output_height,
             num_of_channels, bytes_per_channel);
-    int row_stride = cinfo.output_width * cinfo.output_components;
+    int32_t row_stride = cinfo.output_width * cinfo.output_components;
     buffer = (*cinfo.mem->alloc_sarray)
             ((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
     uint8_t *pdata = image.data_.data();
@@ -102,7 +102,7 @@ bool ReadImageFromJPG(const std::string &filename, Image &image)
 }
 
 bool WriteImageToJPG(const std::string &filename, const Image &image,
-        int quality/* = 90*/)
+        int32_t quality/* = 90*/)
 {
     if (image.HasData() == false) {
         PrintWarning("Write JPG failed: image has no data.\n");
@@ -134,7 +134,7 @@ bool WriteImageToJPG(const std::string &filename, const Image &image,
     jpeg_set_defaults(&cinfo);
     jpeg_set_quality(&cinfo, quality, TRUE);
     jpeg_start_compress(&cinfo, TRUE);
-    int row_stride = image.width_ * image.num_of_channels_;
+    int32_t row_stride = image.width_ * image.num_of_channels_;
     const uint8_t *pdata = image.data_.data();
     std::vector<uint8_t> buffer(row_stride);
     while (cinfo.next_scanline < cinfo.image_height) {

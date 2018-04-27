@@ -52,8 +52,8 @@ public:
 public:
     std::shared_ptr<PointCloud> source_ptr_;    // Original source pointcloud
     std::shared_ptr<PointCloud> target_ptr_;    // Original target pointcloud
-    std::vector<size_t> source_indices_;    // Manually annotated point indices
-    std::vector<size_t> target_indices_;    // Manually annotated point indices
+    std::vector<uint32_t> source_indices_;    // Manually annotated point indices
+    std::vector<uint32_t> target_indices_;    // Manually annotated point indices
     Eigen::Matrix4d transformation_;    // Current alignment result
     double voxel_size_ = -1.0;
     double max_correspondence_distance_ = -1.0;

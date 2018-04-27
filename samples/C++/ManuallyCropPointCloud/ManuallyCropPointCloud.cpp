@@ -53,7 +53,7 @@ void PrintHelp()
     printf("    --without_dialog          : Disable dialogs. Default files will be used.\n");
 }
 
-int main(int argc, char **argv)
+int32_t main(int32_t argc, char **argv)
 {
     using namespace open3d;
 
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    int verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
+    int32_t verbose = GetProgramOptionAsInt(argc, argv, "--verbose", 2);
     SetVerbosityLevel((VerbosityLevel)verbose);
     double voxel_size = GetProgramOptionAsDouble(argc, argv, "--voxel_size",
             -1.0);

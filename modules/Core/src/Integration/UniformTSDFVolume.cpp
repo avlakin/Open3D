@@ -46,7 +46,7 @@
 
 namespace open3d {
 
-UniformTSDFVolume::UniformTSDFVolume(double length, int resolution,
+UniformTSDFVolume::UniformTSDFVolume(double length, int32_t resolution,
         double sdf_trunc, bool with_color,
         const Eigen::Vector3d &origin/* = Eigen::Vector3d::Zero()*/) :
         TSDFVolume(length / (double)resolution, sdf_trunc, with_color),
@@ -98,9 +98,9 @@ std::shared_ptr<PointCloud> UniformTSDFVolume::ExtractPointCloud()
 {
     auto pointcloud = std::make_shared<PointCloud>();
     double half_voxel_length = voxel_length_ * 0.5;
-    for (int x = 1; x < resolution_ - 1; x++) {
-        for (int y = 1; y < resolution_ - 1; y++) {
-            for (int z = 1; z < resolution_ - 1; z++) {
+    for (int32_t x = 1; x < resolution_ - 1; x++) {
+        for (int32_t y = 1; y < resolution_ - 1; y++) {
+            for (int32_t z = 1; z < resolution_ - 1; z++) {
                 Eigen::Vector3i idx0(x, y, z);
                 float w0 = weight_[IndexOf(idx0)];
                 float f0 = tsdf_[IndexOf(idx0)];
@@ -109,7 +109,7 @@ std::shared_ptr<PointCloud> UniformTSDFVolume::ExtractPointCloud()
                             half_voxel_length + voxel_length_ * x,
                             half_voxel_length + voxel_length_ * y,
                             half_voxel_length + voxel_length_ * z);
-                    for (int i = 0; i < 3; i++) {
+                    for (int32_t i = 0; i < 3; i++) {
                         Eigen::Vector3d p1 = p0;
                         p1(i) += voxel_length_;
                         Eigen::Vector3i idx1 = idx0;
@@ -148,16 +148,16 @@ std::shared_ptr<TriangleMesh> UniformTSDFVolume::ExtractTriangleMesh()
     // http://paulbourke.net/geometry/polygonise/
     auto mesh = std::make_shared<TriangleMesh>();
     double half_voxel_length = voxel_length_ * 0.5;
-    std::unordered_map<Eigen::Vector4i, int, hash_eigen::hash<Eigen::Vector4i>>
+    std::unordered_map<Eigen::Vector4i, int32_t, hash_eigen::hash<Eigen::Vector4i>>
             edgeindex_to_vertexindex;
-    int edge_to_index[12];
-    for (int x = 0; x < resolution_ - 1; x++) {
-        for (int y = 0; y < resolution_ - 1; y++) {
-            for (int z = 0; z < resolution_ - 1; z++) {
-                int cube_index = 0;
+    int32_t edge_to_index[12];
+    for (int32_t x = 0; x < resolution_ - 1; x++) {
+        for (int32_t y = 0; y < resolution_ - 1; y++) {
+            for (int32_t z = 0; z < resolution_ - 1; z++) {
+                int32_t cube_index = 0;
                 float f[8];
                 Eigen::Vector3d c[8];
-                for (int i = 0; i < 8; i++ ) {
+                for (int32_t i = 0; i < 8; i++ ) {
                     Eigen::Vector3i idx = Eigen::Vector3i(x, y, z) + shift[i];
                     if (weight_[IndexOf(idx)] == 0.0f) {
                         cube_index = 0;
@@ -175,15 +175,15 @@ std::shared_ptr<TriangleMesh> UniformTSDFVolume::ExtractTriangleMesh()
                 if (cube_index == 0 || cube_index == 255) {
                     continue;
                 }
-                for (int i = 0; i < 12; i++) {
+                for (int32_t i = 0; i < 12; i++) {
                     if (edge_table[cube_index] & (1 << i)) {
                         Eigen::Vector4i edge_index =
                                 Eigen::Vector4i(x, y, z, 0) + edge_shift[i];
                         if (edgeindex_to_vertexindex.find(edge_index) ==
                                 edgeindex_to_vertexindex.end()) {
-                            edge_to_index[i] = (int)mesh->vertices_.size();
+                            edge_to_index[i] = (int32_t)mesh->vertices_.size();
                             edgeindex_to_vertexindex[edge_index] =
-                                    (int)mesh->vertices_.size();
+                                    (int32_t)mesh->vertices_.size();
                             Eigen::Vector3d pt(
                                     half_voxel_length +
                                     voxel_length_ * edge_index(0),
@@ -207,7 +207,7 @@ std::shared_ptr<TriangleMesh> UniformTSDFVolume::ExtractTriangleMesh()
                         }
                     }
                 }
-                for (int i = 0; tri_table[cube_index][i] != -1; i += 3) {
+                for (int32_t i = 0; tri_table[cube_index][i] != -1; i += 3) {
                     mesh->triangles_.push_back(Eigen::Vector3i(
                             edge_to_index[tri_table[cube_index][i]],
                             edge_to_index[tri_table[cube_index][i + 2]],
@@ -226,13 +226,13 @@ std::shared_ptr<PointCloud> UniformTSDFVolume::ExtractVoxelPointCloud()
     float *p_tsdf = (float *)tsdf_.data();
     float *p_weight = (float *)weight_.data();
     float *p_color = (float *)color_.data();
-    for (int x = 0; x < resolution_; x++) {
-        for (int y = 0; y < resolution_; y++) {
+    for (int32_t x = 0; x < resolution_; x++) {
+        for (int32_t y = 0; y < resolution_; y++) {
             Eigen::Vector3d pt(
                     half_voxel_length + voxel_length_ * x,
                     half_voxel_length + voxel_length_ * y,
                     half_voxel_length);
-            for (int z = 0; z < resolution_; z++, pt(2) += voxel_length_,
+            for (int32_t z = 0; z < resolution_; z++, pt(2) += voxel_length_,
                     p_tsdf++, p_weight++, p_color += 3) {
                 if (*p_weight != 0.0f && *p_tsdf < 0.98f &&
                         *p_tsdf >= -0.98f ) {
@@ -268,9 +268,9 @@ void UniformTSDFVolume::IntegrateWithDepthToCameraDistanceMultiplier(
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static)
 #endif
-    for (int x = 0; x < resolution_; x++) {
-        for (int y = 0; y < resolution_; y++) {
-            int idx_shift = x * resolution_ * resolution_ + y * resolution_;
+    for (int32_t x = 0; x < resolution_; x++) {
+        for (int32_t y = 0; y < resolution_; y++) {
+            int32_t idx_shift = x * resolution_ * resolution_ + y * resolution_;
             float *p_tsdf = (float *)tsdf_.data() + idx_shift;
             float *p_weight = (float *)weight_.data() + idx_shift;
             float *p_color = (float *)color_.data() + idx_shift * 3;
@@ -281,7 +281,7 @@ void UniformTSDFVolume::IntegrateWithDepthToCameraDistanceMultiplier(
                     (float)origin_(1),
                     half_voxel_length_f + (float)origin_(2),
                     1.0f);
-            for (int z = 0; z < resolution_; z++,
+            for (int32_t z = 0; z < resolution_; z++,
                     voxel_pt_camera(0) += extrinsic_scaled_f(0, 2),
                     voxel_pt_camera(1) += extrinsic_scaled_f(1, 2),
                     voxel_pt_camera(2) += extrinsic_scaled_f(2, 2),
@@ -293,8 +293,8 @@ void UniformTSDFVolume::IntegrateWithDepthToCameraDistanceMultiplier(
                             voxel_pt_camera(2) + cy + 0.5f;
                     if (u_f >= 0.0001f && u_f < safe_width_f &&
                             v_f >= 0.0001f && v_f < safe_height_f) {
-                        int u = (int)u_f;
-                        int v = (int)v_f;
+                        int32_t u = (int32_t)u_f;
+                        int32_t v = (int32_t)v_f;
                         float d = *PointerAt<float>(image.depth_, u, v);
                         if (d > 0.0f) {
                             float sdf = (d - voxel_pt_camera(2)) * (
@@ -334,7 +334,7 @@ Eigen::Vector3d UniformTSDFVolume::GetNormalAt(const Eigen::Vector3d &p)
 {
     Eigen::Vector3d n;
     const double half_gap = 0.99 * voxel_length_;
-    for (int i = 0; i < 3; i++) {
+    for (int32_t i = 0; i < 3; i++) {
         Eigen::Vector3d p0 = p;
         p0(i) -= half_gap;
         Eigen::Vector3d p1 = p;
@@ -348,8 +348,8 @@ double UniformTSDFVolume::GetTSDFAt(const Eigen::Vector3d &p)
 {
     Eigen::Vector3i idx;
     Eigen::Vector3d p_grid = p / voxel_length_ - Eigen::Vector3d(0.5, 0.5, 0.5);
-    for (int i = 0; i < 3; i++) {
-        idx(i) = (int)std::floor(p_grid(i));
+    for (int32_t i = 0; i < 3; i++) {
+        idx(i) = (int32_t)std::floor(p_grid(i));
     }
     Eigen::Vector3d r = p_grid - idx.cast<double>();
     return (1 - r(0)) * (
