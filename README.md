@@ -1,13 +1,14 @@
 # Open3D: A Modern Library for 3D Data Processing
 
-[![Build Status](https://travis-ci.org/Sahloul/Open3D.svg?branch=master)](https://travis-ci.org/Sahloul/Open3D)
-[![Build status](https://ci.appveyor.com/api/projects/status/4cf22otffmfyuif2?svg=true)](https://ci.appveyor.com/project/Sahloul/open3d)
+[![Build Status (Travis CI)](https://travis-ci.org/Open-3D/Open3D.svg?branch=master)](https://travis-ci.org/Open-3D/Open3D)
+[![Build status (AppVeyor)](https://ci.appveyor.com/api/projects/status/2a7o5awtmpetjs73?svg=true)](https://ci.appveyor.com/project/Sahloul/open3d)
+
 
 ## About this project
 
 Open3D is an open-source library that supports rapid development of software that deals with 3D data. The Open3D frontend exposes a set of carefully selected data structures and algorithms in both C++ and Python. The backend is highly optimized and is set up for parallelization. We welcome contributions from the open-source community.
 
-Although the Open3D project is currently maintained by `Hamdi Sahloul`, it was initiated by `Qianyi Zhou` and `Jaesik Park`, who have wrote [a paper](http://www.open3d.org/paper.pdf), and they ask you to kindly cite it! Their project is [archived here](http://legacy-code.open-3d.org).
+Although the Open3D project is currently maintained by the Open3D community, it was initiated by `Qianyi Zhou` and `Jaesik Park`, who have wrote [a paper](http://www.open3d.org/paper.pdf), and they ask you to kindly cite it! Their project is [archived here](http://legacy-code.open-3d.org).
 
 ## Core features
 

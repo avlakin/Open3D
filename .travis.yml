@@ -1,10 +1,19 @@
 # Copyright (c) 2018 Hamdi Sahloul <hamdisahloul@hotmail.com>
 # Redistribution and use in full or partial is allowed according to the terms of the MIT license.
 
+notifications:
+  slack:
+    rooms:
+      - secure: lPnPsie7aSsjlDmDgHV6mE6tFJmaw1jRNqumK5K82PRoBZCwbhMK4qwu1Q1KQcll0ZVVkFGfnMq2MV+wvONE6f9POEp7i0lN0eIbQAsJ2dYKE7dQTZ6X0JVVrZwy6iYBdlKcj4t1FiA5BNHqrWExfVeV4FbXoyy/syRQRjLwg1+a353wUIroPEQzo2MO89DHXnu+30Av3lDHzS3D2vEi2p9Zyg5pjtTXQ17aiuXPQk+eH/P4IDY3prdnijyAKuDTiPlencMWeSeafeN5xvDMRW8+ljUFaoyVTMln+DTiXPHMgO8g8eLQ42b9kl4rk5oyEBiTTzObfynw3ybr8YGWiI2L0mpvlDMfAoXBtU5vbPU4a0OP6EeMXB+Oyir5sqhAP9jgeHiV9g/QtympHGOUaCoQ40eDqgn0h9tRNdmuVOuTjIHU/kzlwKu1wn32lRNUjO/XGr6uF57H0eL/g6XbWYU22fmJJHyeHg17Gr01+DWBbnN6Z0ckHzisWLfExcoNBpGKm6P1NlZk7I2Vg/wfit2bPTYIu36uGp0TFJqtwNDuLkLGQfHMEb9tZGGRazHR4vOQ27EU/szBZTcOMniiEGU6mq/31Z7vEy/axDG60Qsx9bfgV9Mu7gpfqF5B1Hifg6+Z+XSoEm158u7HAtMIsN7NA3cZiEB4dByRRGTMbK0=
+    on_success: change
+    on_failure: always
+
 env:
   global:
     - SHARED=OFF
     - COMMAND_EVAL=""
+    - COMMAND_EVAL=""
+    - secure: "hg3LFd1gYcRVYwg8CQDM3JefkkCQb3MoOXSjpp17NOFhRcYAl/iQZEg2u3GmlYaYp0GLl5P8J3KWSAHGNCsSdn7XHOJKer4bhw8qnbimnM3jLO3XdByTH9f8GXKM8lD84ocWvQNQfGOfLg6zorc/IF58zIp+7J1JJVLDIsEx9akrN3CnaJrEXPDRptxXSv1TeK4YvfhE1oTAGc92WUviFtGsitSMZnnNZHwl2JUffGuQ6izb/vfenXG4YjsI4Ugf2NLpTk08Qso42M3j5vRyd0qyzrBxBtjBwKO7YbER10MF37z2vAFIcf52hNeC8QVQ6cOFwXUvmNcTvY7OS2oeg3LYH5KonVY++00fmCqMdA7D5oUkyS6FHsBzw17BPA5gYVKw93k1gYzFMFctryEyklJ9wNw1nQhcXK+BkgGvUmTqf/qx8r+8R8LIWWpDuj1moYaNla7xKcpo0SZHrtyvpYotGCfjRL3xbr7vUdmhywRJ9G6yUNVvA55MjbKBXb2xzjA688QhUVq23mpO4kNhSQJH6Kx6A8Z5zmKaf3+WXDW4CGWBS9vqZHVcLQ1mXG7dzgbcklLsCHsF+aAvTidiyn4yoU4BxrE1xHOz0whmo/CJOcaJgXea8ouS7RlIkfol10h6c4A/NAlawHhaEe/GKSwPfodW8IbXE+hlt7t94NM="
 
 matrix:
   allow_failures:
@@ -75,7 +84,7 @@ before_install:
       brew update;
       echo $COMMAND_EVAL;
       eval $COMMAND_EVAL;
-      brew install cmake libusb pkg-config glfw glew libpng jpeg pkg-config jsoncpp eigen;
+      brew install cmake libusb pkg-config liblzf glfw glew libpng jpeg pkg-config jsoncpp eigen;
       brew install doxygen sphinx-doc pandoc;
       export PATH="/usr/local/opt/sphinx-doc/bin:$PATH";
       sudo python -m ensurepip --upgrade;
